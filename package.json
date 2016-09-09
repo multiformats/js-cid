@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "cid implementation",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
