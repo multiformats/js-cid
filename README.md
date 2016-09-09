@@ -2,10 +2,10 @@
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://ipn.io)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
-[![Coverage Status](https://coveralls.io/repos/github/ipld/js-cid/badge.svg?branch=master)](https://coveralls.io/github/ipld/js-cid?branch=master)
-[![Travis CI](https://travis-ci.org/ipld/js-cid.svg?branch=master)](https://travis-ci.org/ipld/js-cid)
-[![Circle CI](https://circleci.com/gh/ipld/js-cid.svg?style=svg)](https://circleci.com/gh/ipld/js-cid)
-[![Dependency Status](https://david-dm.org/ipld/js-cid.svg?style=flat-square)](https://david-dm.org/ipld/js-cid)
+[![Coverage Status](https://coveralls.io/repos/github/ipfs/js-cid/badge.svg?branch=master)](https://coveralls.io/github/ipfs/js-cid?branch=master)
+[![Travis CI](https://travis-ci.org/ipfs/js-cid.svg?branch=master)](https://travis-ci.org/ipfs/js-cid)
+[![Circle CI](https://circleci.com/gh/ipfs/js-cid.svg?style=svg)](https://circleci.com/gh/ipfs/js-cid)
+[![Dependency Status](https://david-dm.org/ipfs/js-cid.svg?style=flat-square)](https://david-dm.org/ipfs/js-cid)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
 > CID implementation in JavaScript.
