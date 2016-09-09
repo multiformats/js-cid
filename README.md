@@ -10,7 +10,28 @@
 
 > CID implementation in JavaScript.
 
-## Installation
+## Table of Contents
+
+- [Install](#install)
+  - [In Node.js through npm](#in-nodejs-through-npm)
+  - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
+  - [In the Browser through `<script>` tag](#in-the-browser-through-script-tag)
+    - [Gotchas](#gotchas)
+- [Usage](#usage)
+- [API](#api)
+  - [`new CID(codec[, version, hash])`](#new-cidcodec-version-hash)
+  - [`.codec`](#codec)
+  - [`.version`](#version)
+  - [`.hash`](#hash)
+  - [`.buffer`](#buffer)
+  - [`.toString()`](#tostring)
+  - [`.toJSON()`](#tojson)
+  - [`CID.isCID(other)`](#cidiscidother)
+  - [`CID.codecs`](#cidcodecs)
+- [Contribute](#contribute)
+- [License](#license)
+
+## Install
 
 ### In Node.js through npm
 
@@ -71,6 +92,16 @@ const cid = new CID(base58Multihash)
 ### `CID.isCID(other)`
 
 ### `CID.codecs`
+
+## Contribute
+
+[![](https://cdn.rawgit.com/jbenet/contribute-ipfs-gif/master/img/contribute.gif)](https://github.com/ipfs/community/blob/master/contributing.md)
+
+Contributions welcome. Please check out [the issues](https://github.com/ipfs/js-cid/issues).
+
+Check out our [contributing document](https://github.com/ipfs/community/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
+
+Small note: If editing the Readme, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
