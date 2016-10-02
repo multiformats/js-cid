@@ -1,8 +1,13 @@
 'use strict'
 
+/*
+ * Consult table at: https://github.com/multiformats/multicodec
+ */
+
 module.exports = {
-  protobuf: 0,
-  raw: 1,
-  json: 2,
-  cbor: 3
+  raw: new Buffer('00', 'hex'),
+  'dag-pb': new Buffer('70', 'hex'),
+  'dag-cbor': new Buffer('71', 'hex'),
+  'eth-block': new Buffer('90', 'hex'),
+  'eth-tx': new Buffer('91', 'hex')
 }
