@@ -49,6 +49,8 @@
     "node": ">=4.2.2"
   },
   "contributors": [
-    "Friedel Ziegelmayer <dignifiedquire@gmail.com>"
+    "David Dias <daviddias.p@gmail.com>",
+    "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
+    "Richard Littauer <richard.littauer@gmail.com>"
   ]
 }
