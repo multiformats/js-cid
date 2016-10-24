@@ -75,7 +75,13 @@ const cid = new CID(base58Multihash)
 
 ## API
 
-### `new CID(codec[, version, hash])`
+### Constructor
+
+- `new CID(<version>, <codec>, <multihash>)`
+- `new CID(<cidStr>)`
+- `new CID(<cid.buffer>)`
+- `new CID(<multihash>)`
+- `new CID(<bs58 encoded multihash>)`
 
 ### `.codec`
 
@@ -85,7 +91,13 @@ const cid = new CID(base58Multihash)
 
 ### `.buffer`
 
-### `.toString()`
+### `.toV0()`
+
+### `.toV1()`
+
+### `.toBaseEncodedString(base)`
+
+Defaults to 'base58btc'
 
 ### `.toJSON()`
 
