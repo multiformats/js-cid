@@ -22,6 +22,7 @@ describe('CID', () => {
 
     it('handles Buffer multihash', (done) => {
       multihashing(Buffer('hello world'), 'sha2-256', (err, mh) => {
+        expect(err).to.not.exist
         const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
         const cid = new CID(mh)
