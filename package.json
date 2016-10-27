@@ -45,7 +45,7 @@
     "pre-commit": "^1.1.2"
   },
   "engines": {
-    "node": ">=4.2.2"
+    "node": ">=4.0.0"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",
