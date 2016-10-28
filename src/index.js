@@ -1,3 +1,4 @@
+/* @flow */
 'use strict'
 
 const mh = require('multihashes')
@@ -6,10 +7,16 @@ const multicodec = require('multicodec')
 
 const codecs = require('./codecs')
 
-// CID: <mbase><version><mcodec><mhash>
-
+/**
+ * Class representing a CID `<mbase><version><mcodec><mhash>`
+ *
+ * @class CID
+ */
 class CID {
-  /*
+  /**
+   * Construct a CID.
+   *
+   * Rough algorithm of construction:
    * if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
@@ -19,7 +26,14 @@ class CID {
    * else if (Number)
    *   -> construct CID by parts
    *
-   * ..if only JS had traits..
+   * @param {string} version
+   * @param {?number} codec
+   * @param {?Buffer} multihash
+   *
+   * @prop {number} version
+   * @prop {Buffer} multihash
+   * @prop {string} codec
+   *
    */
   constructor (version, codec, multihash) {
     if (typeof version === 'string') {
@@ -60,14 +74,22 @@ class CID {
     }
   }
 
+  /**
+   * The CID as a `Buffer`
+   *
+   * @return {Buffer}
+   * @readonly
+   *
+   * @memberOf CID
+   */
   get buffer () {
     switch (this.version) {
       case 0:
         return this.multihash
       case 1:
         return Buffer.concat([
-          Buffer('01', 'hex'),
-          Buffer(codecs[this.codec]),
+          new Buffer('01', 'hex'),
+          new Buffer(codecs[this.codec]),
           this.multihash
         ])
       default:
@@ -83,7 +105,14 @@ class CID {
     return this.buffer
   }
 
-  /* defaults to base58btc */
+  /**
+   * Encode the CID into a string.
+   *
+   * @param {string} base - Mutlibase to use for encoding
+   * @return {string}
+   *
+   * @memberOf CID
+   */
   toBaseEncodedString (base) {
     base = base || 'base58btc'
 
@@ -97,6 +126,21 @@ class CID {
     }
   }
 
+  /**
+   * @typedef {Object} SerializedCID
+   * @property {string} codec
+   * @property {number} version
+   * @property {Buffer} multihash
+   *
+   */
+
+  /**
+   * Serialize to a plain object.
+   *
+   * @return {SerializedCID}
+   *
+   * @memberOf CID
+   */
   toJSON () {
     return {
       codec: this.codec,
@@ -105,6 +149,14 @@ class CID {
     }
   }
 
+  /**
+   * Compare equality with another CID.
+   *
+   * @param {CID} other
+   * @return {boolean}
+   *
+   * @memberOf CID
+   */
   equals (other) {
     return this.codec === other.codec &&
       this.version === other.version &&
@@ -112,7 +164,22 @@ class CID {
   }
 }
 
+/**
+ * @type {Codecs}
+ * @memberOf CID
+ * @static
+ */
 CID.codecs = codecs
+
+/**
+ * Test if the given input is a valid CID object.
+ *
+ * @param {any} other
+ * @return {boolean}
+ *
+ * @memberOf CID
+ * @static
+ */
 CID.isCID = (other) => {
   return other.constructor.name === 'CID'
 }
