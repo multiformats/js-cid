@@ -3,7 +3,7 @@
 
 const expect = require('chai').expect
 const multihash = require('multihashes')
-const multihashing = require('multihashing')
+const multihashing = require('multihashing-async')
 
 const CID = require('../src')
 
@@ -20,17 +20,20 @@ describe('CID', () => {
       expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
     })
 
-    it('handles Buffer multihash', () => {
-      const mh = multihashing(Buffer('hello world'), 'sha2-256')
-      const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
+    it('handles Buffer multihash', (done) => {
+      multihashing(Buffer('hello world'), 'sha2-256', (err, mh) => {
+        expect(err).to.not.exist
+        const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
-      const cid = new CID(mh)
+        const cid = new CID(mh)
 
-      expect(cid).to.have.property('codec', 'dag-pb')
-      expect(cid).to.have.property('version', 0)
-      expect(cid).to.have.property('multihash').that.eql(mh)
+        expect(cid).to.have.property('codec', 'dag-pb')
+        expect(cid).to.have.property('version', 0)
+        expect(cid).to.have.property('multihash').that.eql(mh)
 
-      expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
+        expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
+        done()
+      })
     })
 
     it('create by parts', () => {
