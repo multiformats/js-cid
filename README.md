@@ -71,7 +71,7 @@ You will need to use Node.js `Buffer` API compatible, if you are running inside 
 const CID = require('cids')
 
 // V1 CID
-const cid = new CID(CID.codecs.raw, 1, myhash)
+const cid = new CID(1, CID.codecs.raw, multihash)
 
 // V0 CID
 const cid = new CID(base58Multihash)
