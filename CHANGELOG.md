@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/ipfs/js-cid/compare/v0.2.0...v0.3.0) (2016-12-05)
+
+
+### Features
+
+* **deps:** update to multihashes[@0](https://github.com/0).3.0 ([a0e331d](https://github.com/ipfs/js-cid/commit/a0e331d))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/ipfs/js-cid/compare/v0.1.1...v0.2.0) (2016-10-24)
 
