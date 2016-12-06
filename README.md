@@ -23,15 +23,6 @@
     - [Gotchas](#gotchas)
 - [Usage](#usage)
 - [API](#api)
-  - [`new CID(codec[, version, hash])`](#new-cidcodec-version-hash)
-  - [`.codec`](#codec)
-  - [`.version`](#version)
-  - [`.hash`](#hash)
-  - [`.buffer`](#buffer)
-  - [`.toString()`](#tostring)
-  - [`.toJSON()`](#tojson)
-  - [`CID.isCID(other)`](#cidiscidother)
-  - [`CID.codecs`](#cidcodecs)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -78,36 +69,6 @@ const cid = new CID(base58Multihash)
 ```
 
 ## API
-
-### Constructor
-
-- `new CID(<version>, <codec>, <multihash>)`
-- `new CID(<cidStr>)`
-- `new CID(<cid.buffer>)`
-- `new CID(<multihash>)`
-- `new CID(<bs58 encoded multihash>)`
-
-### `.codec`
-
-### `.version`
-
-### `.hash`
-
-### `.buffer`
-
-### `.toV0()`
-
-### `.toV1()`
-
-### `.toBaseEncodedString(base)`
-
-Defaults to 'base58btc'
-
-### `.toJSON()`
-
-### `CID.isCID(other)`
-
-### `CID.codecs`
 
 ## Contribute
 
