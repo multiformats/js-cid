@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "multibase": "^0.2.0",
-    "multicodec": "0.1.0",
+    "multicodec": "0.1.1",
     "multihashes": "^0.3.0"
   },
   "devDependencies": {
