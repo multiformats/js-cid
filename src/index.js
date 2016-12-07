@@ -6,10 +6,24 @@ const multicodec = require('multicodec')
 
 const codecs = require('./codecs')
 
-// CID: <mbase><version><mcodec><mhash>
+/**
+ * @typedef {Object} SerializedCID
+ * @param {string} codec
+ * @param {number} version
+ * @param {Buffer} multihash
+ *
+ */
 
+/**
+ * Class representing a CID `<mbase><version><mcodec><mhash>`
+ * , as defined in [ipld/cid](https://github.com/ipld/cid).
+ * @class CID
+ */
 class CID {
-  /*
+  /**
+   * Construct a CID.
+   *
+   * Rough algorithm of construction:
    * if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
@@ -19,7 +33,19 @@ class CID {
    * else if (Number)
    *   -> construct CID by parts
    *
-   * ..if only JS had traits..
+   * @param {string} version
+   * @param {number} [codec]
+   * @param {Buffer} [multihash]
+   *
+   * @example
+   * const CID = require('cids')
+   *
+   * // V1 CID
+   * const cid = new CID(CID.codecs.raw, 1, myhash)
+   *
+   * // V0 CID
+   * const cid = new CID(base58Multihash)
+   *
    */
   constructor (version, codec, multihash) {
     if (typeof version === 'string') {
@@ -54,20 +80,40 @@ class CID {
         throw new Error('version must be a number equal to 0 or 1')
       }
       mh.validate(multihash)
+
+      /**
+       * @type {string}
+       */
       this.codec = codec
+
+      /**
+       * @type {number}
+       */
       this.version = version
+
+      /**
+       * @type {Buffer}
+       */
       this.multihash = multihash
     }
   }
 
+  /**
+   * The CID as a `Buffer`
+   *
+   * @return {Buffer}
+   * @readonly
+   *
+   * @memberOf CID
+   */
   get buffer () {
     switch (this.version) {
       case 0:
         return this.multihash
       case 1:
         return Buffer.concat([
-          Buffer('01', 'hex'),
-          Buffer(codecs[this.codec]),
+          new Buffer('01', 'hex'),
+          new Buffer(codecs[this.codec]),
           this.multihash
         ])
       default:
@@ -83,7 +129,14 @@ class CID {
     return this.buffer
   }
 
-  /* defaults to base58btc */
+  /**
+   * Encode the CID into a string.
+   *
+   * @param {string} base - Mutlibase to use for encoding
+   * @return {string}
+   *
+   * @memberOf CID
+   */
   toBaseEncodedString (base) {
     base = base || 'base58btc'
 
@@ -96,7 +149,13 @@ class CID {
         throw new Error('Unsupported version')
     }
   }
-
+  /**
+   * Serialize to a plain object.
+   *
+   * @return {SerializedCID}
+   *
+   * @memberOf CID
+   */
   toJSON () {
     return {
       codec: this.codec,
@@ -105,16 +164,37 @@ class CID {
     }
   }
 
+  /**
+   * Compare equality with another CID.
+   *
+   * @param {CID} other
+   * @return {boolean}
+   *
+   * @memberOf CID
+   */
   equals (other) {
     return this.codec === other.codec &&
       this.version === other.version &&
       this.multihash.equals(other.multihash)
   }
+
+  /**
+   * Test if the given input is a valid CID object.
+   *
+   * @param {any} other
+   * @return {boolean}
+   *
+   */
+  static isCID (other) {
+    return other.constructor.name === 'CID'
+  }
 }
 
+/**
+ * @type {Codecs}
+ * @memberof CID
+ * @static
+ */
 CID.codecs = codecs
-CID.isCID = (other) => {
-  return other.constructor.name === 'CID'
-}
 
 module.exports = CID
