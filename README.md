@@ -23,7 +23,7 @@
     - [Gotchas](#gotchas)
 - [Usage](#usage)
 - [API](#api)
-  - [`new CID(codec[, version, hash])`](#new-cidcodec-version-hash)
+  - [`new CID(version, codec, hash])`](#new-cidcodec-version-hash)
   - [`.codec`](#codec)
   - [`.version`](#version)
   - [`.hash`](#hash)
@@ -71,7 +71,7 @@ You will need to use Node.js `Buffer` API compatible, if you are running inside 
 const CID = require('cids')
 
 // V1 CID
-const cid = new CID(1, CID.codecs.raw, multihash)
+const cid = new CID(1, 'dag-pb', multihash)
 
 // V0 CID
 const cid = new CID(base58Multihash)
