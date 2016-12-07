@@ -1,3 +1,13 @@
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/ipfs/js-cid/compare/v0.3.0...v0.3.1) (2016-12-07)
+
+
+### Bug Fixes
+
+* dependencies ([54f29f9](https://github.com/ipfs/js-cid/commit/54f29f9))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/ipfs/js-cid/compare/v0.2.0...v0.3.0) (2016-12-05)
 
