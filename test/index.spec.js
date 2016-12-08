@@ -85,14 +85,6 @@ describe('CID', () => {
       expect(cid).to.have.property('multihash')
     })
 
-    it('create by parts', () => {
-      const cid = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
-
-      expect(cid).to.have.property('codec', 'dag-cbor')
-      expect(cid).to.have.property('version', 1)
-      expect(cid).to.have.property('multihash')
-    })
-
     it('can roundtrip through cid.toBaseEncodedString()', () => {
       const cid1 = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
       const cid2 = new CID(cid1.toBaseEncodedString())
