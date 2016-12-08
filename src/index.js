@@ -4,6 +4,7 @@ const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
 
+const util = require('./util')
 const codecs = require('./codecs')
 
 // CID: <mbase><version><mcodec><mhash>
@@ -67,7 +68,7 @@ class CID {
       case 1:
         return Buffer.concat([
           Buffer('01', 'hex'),
-          Buffer(codecs[this.codec]),
+          Buffer(util.varintBufferEncode(codecs[this.codec])),
           this.multihash
         ])
       default:
