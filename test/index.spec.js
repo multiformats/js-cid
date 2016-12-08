@@ -84,6 +84,29 @@ describe('CID', () => {
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
     })
+
+    it('can roundtrip through cid.toBaseEncodedString()', () => {
+      const cid1 = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
+      const cid2 = new CID(cid1.toBaseEncodedString())
+
+      expect(cid1).to.have.property('codec').that.eql(cid2.codec)
+      expect(cid1).to.have.property('version').that.eql(cid2.version)
+      expect(cid1).to.have.property('multihash').that.eql(cid2.multihash)
+    })
+
+    it('handles multibyte varint encoded codec codes', () => {
+      const ethBlockHash = new Buffer('8a8e84c797605fbe75d5b5af107d4220a2db0ad35fd66d9be3d38d87c472b26d', 'hex')
+      const mh = multihash.encode(ethBlockHash, 'keccak-256')
+      const cid1 = new CID(1, 'eth-block', mh)
+      const cid2 = new CID(cid1.toBaseEncodedString())
+
+      expect(cid1).to.have.property('codec', 'eth-block')
+      expect(cid1).to.have.property('version', 1)
+      expect(cid1).to.have.property('multihash').that.eql(mh)
+      expect(cid2).to.have.property('codec', 'eth-block')
+      expect(cid2).to.have.property('version', 1)
+      expect(cid2).to.have.property('multihash').that.eql(mh)
+    })
   })
 
   describe('utilities', () => {
