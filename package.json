@@ -1,7 +1,7 @@
 {
   "name": "cids",
   "version": "0.3.4",
-  "description": "cid implementation",
+  "description": "CID Implementation in JavaScript",
   "main": "src/index.js",
   "scripts": {
     "test:node": "aegir-test node",
@@ -21,17 +21,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/ipfs/js-cid.git"
+    "url": "git://github.com/ipld/js-cid.git"
   },
   "keywords": [
     "multihash",
     "cid",
-    "ipfs"
+    "ipld"
   ],
   "author": "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ipfs/js-cid/issues"
+    "url": "https://github.com/ipld/js-cid/issues"
   },
   "dependencies": {
     "multibase": "^0.2.0",
