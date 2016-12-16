@@ -5,6 +5,7 @@ const multibase = require('multibase')
 const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table')
 const codecVarints = require('multicodec/src/varint-table')
+const multihash = require('multihashes')
 
 // CID: <mbase><version><mcodec><mhash>
 
@@ -73,6 +74,14 @@ class CID {
       default:
         throw new Error('unsupported version')
     }
+  }
+
+  get prefix () {
+    return Buffer.concat([
+      new Buffer(`0${this.version}`, 'hex'),
+      codecVarints[this.codec],
+      multihash.prefix(this.multihash)
+    ])
   }
 
   toV0 () {

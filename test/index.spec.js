@@ -49,6 +49,11 @@ describe('CID', () => {
         () => new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zIII')
       ).to.throw()
     })
+
+    it('.prefix', () => {
+      const cid = new CID(0, 'dag-pb', multihash.encode(new Buffer('abc'), 'sha2-256'))
+      expect(cid.prefix.toString('hex')).to.equal('00701203')
+    })
   })
 
   describe('v1', () => {
@@ -106,6 +111,11 @@ describe('CID', () => {
       expect(cid2).to.have.property('codec', 'eth-block')
       expect(cid2).to.have.property('version', 1)
       expect(cid2).to.have.property('multihash').that.eql(mh)
+    })
+
+    it('.prefix', () => {
+      const cid = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
+      expect(cid.prefix.toString('hex')).to.equal('01711203')
     })
   })
 
