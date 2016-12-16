@@ -12,7 +12,7 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/ipfs-js-cid.svg)](https://saucelabs.com/u/ipfs-js-cid)
 
-> CID implementation in JavaScript.
+> [CID](https://github.com/ipld/cid) implementation in JavaScript.
 
 ## Table of Contents
 
