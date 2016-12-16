@@ -105,9 +105,14 @@ Defaults to 'base58btc'
 
 ### `.toJSON()`
 
+### `.prefix()`
+
+returns a buffer with CID version + multicodec + hashAlg + hashLen
+
 ### `CID.isCID(other)`
 
 ### `CID.codecs`
+
 
 ## Contribute
 
