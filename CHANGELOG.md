@@ -1,3 +1,13 @@
+<a name="0.3.5"></a>
+## [0.3.5](https://github.com/ipld/js-cid/compare/v0.3.4...v0.3.5) (2016-12-16)
+
+
+### Features
+
+* add prefix feature ([7dae38e](https://github.com/ipld/js-cid/commit/7dae38e))
+
+
+
 <a name="0.3.4"></a>
 ## [0.3.4](https://github.com/ipfs/js-cid/compare/v0.3.3...v0.3.4) (2016-12-08)
 
