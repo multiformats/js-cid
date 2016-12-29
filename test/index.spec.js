@@ -17,7 +17,8 @@ describe('CID', () => {
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash').that.eql(multihash.fromB58String(mhStr))
 
-      expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
+      expect(cid.toV0String()).to.be.eql(mhStr)
+      expect(cid.toBaseEncodedString()).to.be.eql('zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
     })
 
     it('handles Buffer multihash', (done) => {
@@ -31,7 +32,8 @@ describe('CID', () => {
         expect(cid).to.have.property('version', 0)
         expect(cid).to.have.property('multihash').that.eql(mh)
 
-        expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
+        expect(cid.toV0String()).to.be.eql(mhStr)
+        expect(cid.toBaseEncodedString()).to.be.eql('zQmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4')
         done()
       })
     })
@@ -161,6 +163,50 @@ describe('CID', () => {
       expect(
         CID.isCID(new Buffer('hello world'))
       ).to.be.eql(false)
+    })
+  })
+
+  describe('toBaseEncodedString', () => {
+    const v0 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+    const v1 = new CID('zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS')
+
+    it('defaults to base58', () => {
+      expect(
+        v0.toBaseEncodedString()
+      ).to.be.eql(
+        'zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+      )
+
+      expect(
+        v1.toBaseEncodedString()
+      ).to.be.eql(
+        'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      )
+    })
+
+    it('respects the passed in encoding', () => {
+      expect(
+        v0.toBaseEncodedString('base16')
+      ).to.be.eql(
+        'f1220e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+      )
+      expect(
+        v0.toBaseEncodedString('base32')
+      ).to.be.eql(
+        'bjcby5qyrbjr7a4csnpx5gitfx3sjbhvza6ize3sngkjfmzdn4ffocv'
+      )
+
+      expect(
+        v1.toBaseEncodedString('base16')
+      ).to.be.eql(
+        'f17012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5'
+      )
+
+      expect(
+        v1.toBaseEncodedString('base32')
+      ).to.be.eql(
+        'bboajca4sski7glep3r7svhvt76vnin6cais2gupsbo3qqywh2kknevk6v'
+      )
     })
   })
 })
