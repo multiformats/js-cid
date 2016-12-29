@@ -209,4 +209,21 @@ describe('CID', () => {
       )
     })
   })
+
+  describe('toV0String', () => {
+    const v0 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+    const v1 = new CID('zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS')
+
+    it('v0: returns base58 encoded multihash, without multibase prefix', () => {
+      expect(v0.toV0String()).to.be.eql('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+    })
+
+    it('v1: throws', () => {
+      expect(
+        () => v1.toV0String()
+      ).to.throw(
+        /Not supported/
+      )
+    })
+  })
 })

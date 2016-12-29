@@ -93,7 +93,11 @@ class CID {
   }
 
   toV0String () {
-    return mh.toB58String(this.multihash)
+    if (this.version === 0) {
+      return mh.toB58String(this.multihash)
+    }
+
+    throw new Error(`Not supported on version: ${this.version}`)
   }
 
   /* defaults to base58btc */
