@@ -92,13 +92,20 @@ class CID {
     return this.buffer
   }
 
+  toV0String () {
+    if (this.version === 0) {
+      return mh.toB58String(this.multihash)
+    }
+
+    throw new Error(`Not supported on version: ${this.version}`)
+  }
+
   /* defaults to base58btc */
   toBaseEncodedString (base) {
     base = base || 'base58btc'
 
     switch (this.version) {
       case 0:
-        return mh.toB58String(this.multihash)
       case 1:
         return multibase.encode(base, this.buffer).toString()
       default:
