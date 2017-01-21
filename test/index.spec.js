@@ -136,15 +136,11 @@ describe('CID', () => {
     it('.equals v0 to v1 and vice versa', () => {
       const cidV1Str = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
       const cidV1 = new CID(cidV1Str)
-      const cidV0 = new CID(cidV1.toV0())
+      const cidV0 = cidV1.toV0()
 
-      expect(
-        cidV0.equals(cidV1)
-      ).to.be.eql(false)
+      expect(cidV0.equals(cidV1)).to.be.false
 
-      expect(
-        cidV1.equals(cidV0)
-      ).to.be.eql(false)
+      expect(cidV1.equals(cidV0)).to.be.false
 
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })

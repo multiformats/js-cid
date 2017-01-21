@@ -85,11 +85,15 @@ class CID {
   }
 
   toV0 () {
-    return this.multihash
+    if (this.codec !== 'dag-pb') {
+      throw new Error('Cannot convert a non dag-pb CID to CIDv0')
+    }
+
+    return new CID(0, this.codec, this.multihash)
   }
 
   toV1 () {
-    return this.buffer
+    return new CID(1, this.codec, this.multihash)
   }
 
   /* defaults to base58btc */
