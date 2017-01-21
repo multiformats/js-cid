@@ -97,8 +97,12 @@ class CID {
     base = base || 'base58btc'
 
     switch (this.version) {
-      case 0:
+      case 0: {
+        if (base !== 'base58btc') {
+          throw new Error('not supported with CIDv0, to support different bases, please migrate the instance do CIDv1, you can do that through cid.toV1()')
+        }
         return mh.toB58String(this.multihash)
+      }
       case 1:
         return multibase.encode(base, this.buffer).toString()
       default:

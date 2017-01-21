@@ -50,6 +50,12 @@ describe('CID', () => {
       ).to.throw()
     })
 
+    it('throws on trying to base encode CIDv0 in other base than base58 ', () => {
+      const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+      const cid = new CID(mhStr)
+      expect(() => cid.toBaseEncodedString('base16')).to.throw()
+    })
+
     it('.prefix', () => {
       const cid = new CID(0, 'dag-pb', multihash.encode(new Buffer('abc'), 'sha2-256'))
       expect(cid.prefix.toString('hex')).to.equal('00701203')
