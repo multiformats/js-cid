@@ -1,3 +1,14 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/ipld/js-cid/compare/v0.3.6...v0.4.0) (2017-01-25)
+
+
+### Bug Fixes
+
+* make toV0 and toV1 return CID objects ([32902e3](https://github.com/ipld/js-cid/commit/32902e3))
+* throw an error if another base is picked for cidv0 ([24f2c0b](https://github.com/ipld/js-cid/commit/24f2c0b))
+
+
+
 <a name="0.3.6"></a>
 ## [0.3.6](https://github.com/ipld/js-cid/compare/v0.3.5...v0.3.6) (2017-01-21)
 
