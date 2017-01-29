@@ -41,7 +41,7 @@
   "devDependencies": {
     "aegir": "^9.3.2",
     "chai": "^3.5.0",
-    "multihashing-async": "^0.3.0",
+    "multihashing-async": "^0.4.0",
     "pre-commit": "^1.2.2"
   },
   "engines": {
