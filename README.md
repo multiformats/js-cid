@@ -53,7 +53,7 @@ const CID = require('cids')
 
 ### In the Browser through `<script>` tag
 
-Loading this module through a script tag will make the ```multihash``` obj available in the global namespace.
+Loading this module through a script tag will make the ```Cids``` obj available in the global namespace.
 
 ```
 <script src="https://unpkg.com/cids/dist/index.min.js"></script>
