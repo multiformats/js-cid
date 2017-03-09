@@ -26,7 +26,7 @@
   - [`new CID(version, codec, hash])`](#new-cidcodec-version-hash)
   - [`.codec`](#codec)
   - [`.version`](#version)
-  - [`.hash`](#hash)
+  - [`.multihash`](#multihash)
   - [`.buffer`](#buffer)
   - [`.toString()`](#tostring)
   - [`.toJSON()`](#tojson)
@@ -91,9 +91,11 @@ const cid = new CID(base58Multihash)
 
 ### `.version`
 
-### `.hash`
+### `.multihash`
 
 ### `.buffer`
+
+### `.prefix`
 
 ### `.toV0()`
 
@@ -104,8 +106,6 @@ const cid = new CID(base58Multihash)
 Defaults to 'base58btc'
 
 ### `.toJSON()`
-
-### `.prefix()`
 
 returns a buffer with CID version + multicodec + hashAlg + hashLen
 
