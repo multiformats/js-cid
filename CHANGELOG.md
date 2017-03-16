@@ -1,3 +1,13 @@
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/ipld/js-cid/compare/v0.4.1...v0.4.2) (2017-03-16)
+
+
+### Bug Fixes
+
+* **package:** update multihashes to version 0.4.0 ([1d0c3c8](https://github.com/ipld/js-cid/commit/1d0c3c8))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/ipld/js-cid/compare/v0.4.0...v0.4.1) (2017-02-09)
 
