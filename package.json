@@ -34,14 +34,14 @@
     "url": "https://github.com/ipld/js-cid/issues"
   },
   "dependencies": {
-    "multibase": "~0.3.2",
-    "multicodec": "~0.1.5",
-    "multihashes": "~0.4.3"
+    "multibase": "~0.3.4",
+    "multicodec": "~0.1.7",
+    "multihashes": "~0.4.4"
   },
   "devDependencies": {
-    "aegir": "^10.0.0",
+    "aegir": "^11.0.0",
     "chai": "^3.5.0",
-    "multihashing-async": "~0.4.3",
+    "multihashing-async": "~0.4.4",
     "pre-commit": "^1.2.2"
   },
   "engines": {

@@ -22,7 +22,7 @@ describe('CID', () => {
 
     it('handles Buffer multihash', (done) => {
       multihashing(Buffer('hello world'), 'sha2-256', (err, mh) => {
-        expect(err).to.not.exist
+        expect(err).to.not.exist // eslint-disable-line
         const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
         const cid = new CID(mh)
@@ -144,9 +144,9 @@ describe('CID', () => {
       const cidV1 = new CID(cidV1Str)
       const cidV0 = cidV1.toV0()
 
-      expect(cidV0.equals(cidV1)).to.be.false
+      expect(cidV0.equals(cidV1)).to.equal(false)
 
-      expect(cidV1.equals(cidV0)).to.be.false
+      expect(cidV1.equals(cidV0)).to.equal(false)
 
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })
