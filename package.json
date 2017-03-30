@@ -9,11 +9,12 @@
     "test:browser": "aegir-test browser",
     "build": "aegir-build",
     "test": "aegir-test",
-    "release": "aegir-release",
-    "release-minor": "aegir-release --type minor",
-    "release-major": "aegir-release --type major",
+    "release": "aegir-release --docs",
+    "release-minor": "aegir-release --type minor --docs",
+    "release-major": "aegir-release --type major --docs",
     "coverage": "aegir-coverage",
-    "coverage-publish": "aegir-coverage publish"
+    "coverage-publish": "aegir-coverage publish",
+    "docs": "aegir-docs"
   },
   "pre-commit": [
     "lint",
