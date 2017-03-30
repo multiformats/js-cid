@@ -228,7 +228,7 @@ class CID {
    */
   static validateCID (other) {
     if (other == null) {
-      throw new Error('Nothing to see here')
+      throw new Error('null values are not valid CIDs')
     }
 
     if (!(other.version === 0 || other.version === 1)) {
