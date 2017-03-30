@@ -1,4 +1,5 @@
 /* eslint-env mocha */
+/* eslint max-nested-callbacks: ["error", 8] */
 'use strict'
 
 const chai = require('chai')
@@ -11,6 +12,18 @@ const multihashing = require('multihashing-async')
 const CID = require('../src')
 
 describe('CID', () => {
+  let hash
+
+  before((done) => {
+    multihashing(new Buffer('abc'), 'sha2-256', (err, d) => {
+      if (err) {
+        return done(err)
+      }
+      hash = d
+      done()
+    })
+  })
+
   describe('v0', () => {
     it('handles B58Str multihash', () => {
       const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
@@ -40,7 +53,7 @@ describe('CID', () => {
     })
 
     it('create by parts', () => {
-      const cid = new CID(0, 'dag-pb', multihash.encode(new Buffer('abc'), 'sha2-256'))
+      const cid = new CID(0, 'dag-pb', hash)
 
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 0)
@@ -60,8 +73,8 @@ describe('CID', () => {
     })
 
     it('.prefix', () => {
-      const cid = new CID(0, 'dag-pb', multihash.encode(new Buffer('abc'), 'sha2-256'))
-      expect(cid.prefix.toString('hex')).to.equal('00701203')
+      const cid = new CID(0, 'dag-pb', hash)
+      expect(cid.prefix.toString('hex')).to.equal('00701220')
     })
   })
 
@@ -92,7 +105,7 @@ describe('CID', () => {
     })
 
     it('create by parts', () => {
-      const cid = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
+      const cid = new CID(1, 'dag-cbor', hash)
 
       expect(cid).to.have.property('codec', 'dag-cbor')
       expect(cid).to.have.property('version', 1)
@@ -100,7 +113,7 @@ describe('CID', () => {
     })
 
     it('can roundtrip through cid.toBaseEncodedString()', () => {
-      const cid1 = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
+      const cid1 = new CID(1, 'dag-cbor', hash)
       const cid2 = new CID(cid1.toBaseEncodedString())
 
       expect(cid1).to.have.property('codec').that.eql(cid2.codec)
@@ -123,8 +136,8 @@ describe('CID', () => {
     })
 
     it('.prefix', () => {
-      const cid = new CID(1, 'dag-cbor', multihash.encode(new Buffer('xyz'), 'sha2-256'))
-      expect(cid.prefix.toString('hex')).to.equal('01711203')
+      const cid = new CID(1, 'dag-cbor', hash)
+      expect(cid.prefix.toString('hex')).to.equal('01711220')
     })
   })
 
@@ -167,5 +180,26 @@ describe('CID', () => {
         CID.isCID(new Buffer('hello world'))
       ).to.be.eql(false)
     })
+  })
+
+  describe('throws on invalid inputs', () => {
+    const invalid = [
+      'hello world',
+      'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L',
+      new Buffer('hello world'),
+      new Buffer('QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT')
+    ]
+
+    invalid.forEach((i) => it(`new CID(${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+      expect(() => new CID(i)).to.throw()
+    }))
+
+    invalid.forEach((i) => it(`new CID(0, 'dag-pb', ${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+      expect(() => new CID(0, 'dag-pb', i)).to.throw()
+    }))
+
+    invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+      expect(() => new CID(1, 'dag-pb', i)).to.throw()
+    }))
   })
 })

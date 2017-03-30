@@ -79,40 +79,7 @@ const cid = new CID(base58Multihash)
 
 ## API
 
-### Constructor
-
-- `new CID(<version>, <codec>, <multihash>)`
-- `new CID(<cidStr>)`
-- `new CID(<cid.buffer>)`
-- `new CID(<multihash>)`
-- `new CID(<bs58 encoded multihash>)`
-
-### `.codec`
-
-### `.version`
-
-### `.multihash`
-
-### `.buffer`
-
-### `.prefix`
-
-### `.toV0()`
-
-### `.toV1()`
-
-### `.toBaseEncodedString(base)`
-
-Defaults to 'base58btc'
-
-### `.toJSON()`
-
-returns a buffer with CID version + multicodec + hashAlg + hashLen
-
-### `CID.isCID(other)`
-
-### `CID.codecs`
-
+See https://ipld.github.io/js-cid
 
 ## Contribute
 
