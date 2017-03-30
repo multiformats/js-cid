@@ -1,3 +1,13 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/ipld/js-cid/compare/v0.4.2...v0.5.0) (2017-03-30)
+
+
+### Bug Fixes
+
+* add CID validation ([#30](https://github.com/ipld/js-cid/issues/30)) ([38e5dd0](https://github.com/ipld/js-cid/commit/38e5dd0))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/ipld/js-cid/compare/v0.4.1...v0.4.2) (2017-03-16)
 
