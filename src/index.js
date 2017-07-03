@@ -26,7 +26,8 @@ class CID {
    *
    * The algorithm for argument input is roughly:
    * ```
-   * if (str)
+   * if (cid) -> cid (idempotence)
+   * else if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
    * else if (Buffer)
@@ -38,7 +39,7 @@ class CID {
    * ..if only JS had traits..
    * ```
    *
-   * @param {string|Buffer} version
+   * @param {string|Buffer|CID} version
    * @param {string} [codec]
    * @param {Buffer} [multihash]
    *
@@ -49,9 +50,13 @@ class CID {
    * new CID(<cid.buffer>)
    * new CID(<multihash>)
    * new CID(<bs58 encoded multihash>)
+   * new CID(<CID>)
    *
    */
   constructor (version, codec, multihash) {
+    if (CID.isCID(version)) {
+      return version
+    }
     if (typeof version === 'string') {
       if (multibase.isEncoded(version)) { // CID String (encoded with multibase)
         const cid = multibase.decode(version)
