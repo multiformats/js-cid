@@ -28,7 +28,7 @@
   - [`.version`](#version)
   - [`.multihash`](#multihash)
   - [`.buffer`](#buffer)
-  - [`.toString()`](#tostring)
+  - [`.toBaseEncodedString(base)`](#tostring)
   - [`.toJSON()`](#tojson)
   - [`CID.isCID(other)`](#cidiscidother)
   - [`CID.codecs`](#cidcodecs)
