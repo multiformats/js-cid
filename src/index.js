@@ -49,9 +49,17 @@ class CID {
    * new CID(<cid.buffer>)
    * new CID(<multihash>)
    * new CID(<bs58 encoded multihash>)
+   * new CID(<cid>)
    *
    */
   constructor (version, codec, multihash) {
+    if (CID.isCID(version)) {
+      let cid = version
+      this.version = cid.version
+      this.codec = cid.codec
+      this.multihash = Buffer.from(cid.multihash)
+      return
+    }
     if (typeof version === 'string') {
       if (multibase.isEncoded(version)) { // CID String (encoded with multibase)
         const cid = multibase.decode(version)
