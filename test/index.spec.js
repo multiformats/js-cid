@@ -202,4 +202,16 @@ describe('CID', () => {
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
   })
+  
+  describe('idempotence', () => {
+    const h1 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+    const cid = new CID(h1)
+
+    it('is idempotent', () => {
+      expect(
+        cid.equals(new CID(cid))
+      ).to.be.eql(true)
+    })
+  })
+  
 })
