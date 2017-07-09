@@ -202,7 +202,7 @@ describe('CID', () => {
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
   })
-  
+
   describe('idempotence', () => {
     const h1 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
     const cid = new CID(h1)
@@ -213,5 +213,4 @@ describe('CID', () => {
       ).to.be.eql(true)
     })
   })
-  
 })
