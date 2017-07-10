@@ -148,11 +148,11 @@ describe('CID', () => {
     it('.equals v0 to v0', () => {
       expect(
         new CID(h1).equals(new CID(h1))
-      ).to.be.eql(true)
+      ).to.be.true
 
       expect(
         new CID(h1).equals(new CID(h2))
-      ).to.be.eql(false)
+      ).to.be.false
     })
 
     it('.equals v0 to v1 and vice versa', () => {
@@ -160,9 +160,9 @@ describe('CID', () => {
       const cidV1 = new CID(cidV1Str)
       const cidV0 = cidV1.toV0()
 
-      expect(cidV0.equals(cidV1)).to.equal(false)
+      expect(cidV0.equals(cidV1)).to.be.false
 
-      expect(cidV1.equals(cidV0)).to.equal(false)
+      expect(cidV1.equals(cidV0)).to.be.false
 
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })
@@ -170,15 +170,15 @@ describe('CID', () => {
     it('.isCid', () => {
       expect(
         CID.isCID(new CID(h1))
-      ).to.be.eql(true)
+      ).to.be.true
 
       expect(
         CID.isCID(false)
-      ).to.be.eql(false)
+      ).to.be.false
 
       expect(
         CID.isCID(new Buffer('hello world'))
-      ).to.be.eql(false)
+      ).to.be.false
     })
   })
 
