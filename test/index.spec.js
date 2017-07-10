@@ -202,4 +202,20 @@ describe('CID', () => {
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
   })
+
+  describe('idempotence', () => {
+    const h1 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+    const cid1 = new CID(h1)
+    const cid2 = new CID(cid1)
+
+    it('constructor accept constructed instance', () => {
+      expect(
+        cid1.equals(cid2)
+      ).to.be.eql(true)
+
+      expect(
+        cid1 !== cid2
+      ).to.be.eql(true)
+    })
+  })
 })
