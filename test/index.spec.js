@@ -148,11 +148,11 @@ describe('CID', () => {
     it('.equals v0 to v0', () => {
       expect(
         new CID(h1).equals(new CID(h1))
-      ).to.be.eql(true)
+      ).to.equal(true)
 
       expect(
         new CID(h1).equals(new CID(h2))
-      ).to.be.eql(false)
+      ).to.equal(false)
     })
 
     it('.equals v0 to v1 and vice versa', () => {
@@ -170,15 +170,15 @@ describe('CID', () => {
     it('.isCid', () => {
       expect(
         CID.isCID(new CID(h1))
-      ).to.be.eql(true)
+      ).to.equal(true)
 
       expect(
         CID.isCID(false)
-      ).to.be.eql(false)
+      ).to.equal(false)
 
       expect(
         CID.isCID(new Buffer('hello world'))
-      ).to.be.eql(false)
+      ).to.equal(false)
     })
   })
 
@@ -209,13 +209,8 @@ describe('CID', () => {
     const cid2 = new CID(cid1)
 
     it('constructor accept constructed instance', () => {
-      expect(
-        cid1.equals(cid2)
-      ).to.be.eql(true)
-
-      expect(
-        cid1 !== cid2
-      ).to.be.eql(true)
+      expect(cid1.equals(cid2)).to.equal(true)
+      expect(cid1 === cid2).to.equal(false)
     })
   })
 })
