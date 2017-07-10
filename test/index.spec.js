@@ -209,13 +209,8 @@ describe('CID', () => {
     const cid2 = new CID(cid1)
 
     it('constructor accept constructed instance', () => {
-      expect(
-        cid1.equals(cid2)
-      ).to.be.eql(true)
-
-      expect(
-        cid1 !== cid2
-      ).to.be.eql(true)
+      expect(cid1.equals(cid2)).to.be.true
+      expect(cid1 === cid2).to.be.false
     })
   })
 })
