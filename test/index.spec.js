@@ -205,11 +205,16 @@ describe('CID', () => {
 
   describe('idempotence', () => {
     const h1 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
-    const cid = new CID(h1)
+    const cid1 = new CID(h1)
+    const cid2 = new CID(cid1)
 
-    it('is idempotent', () => {
+    it('constructor accept CID instance', () => {
       expect(
-        cid.equals(new CID(cid))
+        cid1.equals(cid2)
+      ).to.be.eql(true)
+
+      expect(
+        cid1 !== cid2
       ).to.be.eql(true)
     })
   })
