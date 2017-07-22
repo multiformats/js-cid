@@ -36,14 +36,14 @@
   },
   "dependencies": {
     "multibase": "~0.3.4",
-    "multicodec": "~0.1.7",
+    "multicodec": "~0.1.8",
     "multihashes": "~0.4.5"
   },
   "devDependencies": {
     "aegir": "^11.0.2",
-    "chai": "^4.0.2",
-    "dirty-chai": "^2.0.0",
-    "multihashing-async": "~0.4.5",
+    "chai": "^4.1.0",
+    "dirty-chai": "^2.0.1",
+    "multihashing-async": "~0.4.6",
     "pre-commit": "^1.2.2"
   },
   "engines": {
