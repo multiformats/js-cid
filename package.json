@@ -4,17 +4,17 @@
   "description": "CID Implementation in JavaScript",
   "main": "src/index.js",
   "scripts": {
-    "test:node": "aegir-test node",
-    "lint": "aegir-lint",
-    "test:browser": "aegir-test browser",
-    "build": "aegir-build",
-    "test": "aegir-test",
-    "release": "aegir-release --docs",
-    "release-minor": "aegir-release --type minor --docs",
-    "release-major": "aegir-release --type major --docs",
-    "coverage": "aegir-coverage",
-    "coverage-publish": "aegir-coverage publish",
-    "docs": "aegir-docs"
+    "lint": "aegir lint",
+    "test": "aegir test",
+    "test:node": "aegir test --target node",
+    "test:browser": "aegir test --target browser",
+    "build": "aegir build",
+    "release": "aegir release --docs",
+    "release-minor": "aegir release --type minor --docs",
+    "release-major": "aegir release --type major --docs",
+    "coverage": "aegir coverage",
+    "coverage-publish": "aegir coverage --provider coveralls",
+    "docs": "aegir docs"
   },
   "pre-commit": [
     "lint",
@@ -36,12 +36,12 @@
   },
   "dependencies": {
     "multibase": "~0.3.4",
-    "multicodec": "~0.1.8",
-    "multihashes": "~0.4.5"
+    "multicodec": "~0.2.3",
+    "multihashes": "~0.4.9"
   },
   "devDependencies": {
-    "aegir": "^11.0.2",
-    "chai": "^4.1.0",
+    "aegir": "^12.0.8",
+    "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
     "multihashing-async": "~0.4.6",
     "pre-commit": "^1.2.2"

@@ -15,7 +15,7 @@ describe('CID', () => {
   let hash
 
   before((done) => {
-    multihashing(new Buffer('abc'), 'sha2-256', (err, d) => {
+    multihashing(Buffer.from('abc'), 'sha2-256', (err, d) => {
       if (err) {
         return done(err)
       }
@@ -37,7 +37,7 @@ describe('CID', () => {
     })
 
     it('handles Buffer multihash', (done) => {
-      multihashing(Buffer('hello world'), 'sha2-256', (err, mh) => {
+      multihashing(Buffer.from('hello world'), 'sha2-256', (err, mh) => {
         expect(err).to.not.exist()
         const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
@@ -47,7 +47,7 @@ describe('CID', () => {
         expect(cid).to.have.property('version', 0)
         expect(cid).to.have.property('multihash').that.eql(mh)
 
-        expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
+        expect(cid.toBaseEncodedString()).to.eql(mhStr)
         done()
       })
     })
@@ -93,7 +93,7 @@ describe('CID', () => {
 
     it('handles CID (no multibase)', () => {
       const cidStr = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
-      const cidBuf = new Buffer('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
+      const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
 
       const cid = new CID(cidBuf)
 
@@ -122,7 +122,7 @@ describe('CID', () => {
     })
 
     it('handles multibyte varint encoded codec codes', () => {
-      const ethBlockHash = new Buffer('8a8e84c797605fbe75d5b5af107d4220a2db0ad35fd66d9be3d38d87c472b26d', 'hex')
+      const ethBlockHash = Buffer.from('8a8e84c797605fbe75d5b5af107d4220a2db0ad35fd66d9be3d38d87c472b26d', 'hex')
       const mh = multihash.encode(ethBlockHash, 'keccak-256')
       const cid1 = new CID(1, 'eth-block', mh)
       const cid2 = new CID(cid1.toBaseEncodedString())
@@ -146,13 +146,8 @@ describe('CID', () => {
     const h2 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1o'
 
     it('.equals v0 to v0', () => {
-      expect(
-        new CID(h1).equals(new CID(h1))
-      ).to.equal(true)
-
-      expect(
-        new CID(h1).equals(new CID(h2))
-      ).to.equal(false)
+      expect(new CID(h1).equals(new CID(h1))).to.equal(true)
+      expect(new CID(h1).equals(new CID(h2))).to.equal(false)
     })
 
     it('.equals v0 to v1 and vice versa', () => {
@@ -161,9 +156,7 @@ describe('CID', () => {
       const cidV0 = cidV1.toV0()
 
       expect(cidV0.equals(cidV1)).to.equal(false)
-
       expect(cidV1.equals(cidV0)).to.equal(false)
-
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })
 
@@ -177,7 +170,7 @@ describe('CID', () => {
       ).to.equal(false)
 
       expect(
-        CID.isCID(new Buffer('hello world'))
+        CID.isCID(Buffer.from('hello world'))
       ).to.equal(false)
     })
   })
@@ -186,8 +179,8 @@ describe('CID', () => {
     const invalid = [
       'hello world',
       'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L',
-      new Buffer('hello world'),
-      new Buffer('QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT')
+      Buffer.from('hello world'),
+      Buffer.from('QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT')
     ]
 
     invalid.forEach((i) => it(`new CID(${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {

@@ -118,8 +118,8 @@ class CID {
         return this.multihash
       case 1:
         return Buffer.concat([
-          Buffer('01', 'hex'),
-          Buffer(codecVarints[this.codec]),
+          Buffer.from('01', 'hex'),
+          Buffer.from(codecVarints[this.codec]),
           this.multihash
         ])
       default:
@@ -135,7 +135,7 @@ class CID {
    */
   get prefix () {
     return Buffer.concat([
-      new Buffer(`0${this.version}`, 'hex'),
+      Buffer.from(`0${this.version}`, 'hex'),
       codecVarints[this.codec],
       multihash.prefix(this.multihash)
     ])

@@ -6,9 +6,10 @@ const multibase = require('multibase')
 const codecs = require('../../src').codecs
 const multihashing = require('multihashing')
 
-const mh = multihashing(Buffer('oh, hey!'), 'sha2-256')
+const mh = multihashing(Buffer.from('oh, hey!'), 'sha2-256')
+
 const cid = Buffer.concat([
-  new Buffer('01', 'hex'),
+  Buffer.from('01', 'hex'),
   codecs.dagPB,
   mh
 ])
