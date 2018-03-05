@@ -76,6 +76,15 @@ describe('CID', () => {
       const cid = new CID(0, 'dag-pb', hash)
       expect(cid.prefix.toString('hex')).to.equal('00701220')
     })
+
+    it('.buffer', () => {
+      const codec = 'dag-pb'
+      const cid = new CID(0, codec, hash)
+      const buffer = cid.buffer
+      expect(buffer).to.exist()
+      const str = buffer.toString('hex')
+      expect(str).to.equals('1220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
+    })
   })
 
   describe('v1', () => {
@@ -138,6 +147,15 @@ describe('CID', () => {
     it('.prefix', () => {
       const cid = new CID(1, 'dag-cbor', hash)
       expect(cid.prefix.toString('hex')).to.equal('01711220')
+    })
+
+    it('.buffer', () => {
+      const codec = 'dag-cbor' // Invalid codec will cause an error: Issue #46
+      const cid = new CID(1, codec, hash)
+      const buffer = cid.buffer
+      expect(buffer).to.exist()
+      const str = buffer.toString('hex')
+      expect(str).to.equals('01711220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
     })
   })
 
