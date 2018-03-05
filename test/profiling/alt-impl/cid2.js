@@ -20,7 +20,7 @@ const multihash = require('multihashes')
  * , as defined in [ipld/cid](https://github.com/ipld/cid).
  * @class CID
  */
-class CID {
+class CID2 {
   /**
    * Create a new CID.
    *
@@ -53,7 +53,7 @@ class CID {
    *
    */
   constructor (version, codec, multihash) {
-    if (CID.isCID(version)) {
+    if (CID2.isCID(version)) {
       let cid = version
       this.version = cid.version
       this.codec = cid.codec
@@ -101,7 +101,7 @@ class CID {
      */
     this.multihash = multihash
 
-    CID.validateCID(this)
+    CID2.validateCID(this)
   }
 
   /**
@@ -144,23 +144,23 @@ class CID {
   /**
    * Convert to a CID of version `0`.
    *
-   * @returns {CID}
+   * @returns {CID2}
    */
   toV0 () {
     if (this.codec !== 'dag-pb') {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
     }
 
-    return new CID(0, this.codec, this.multihash)
+    return new CID2(0, this.codec, this.multihash)
   }
 
   /**
    * Convert to a CID of version `1`.
    *
-   * @returns {CID}
+   * @returns {CID2}
    */
   toV1 () {
-    return new CID(1, this.codec, this.multihash)
+    return new CID2(1, this.codec, this.multihash)
   }
 
   /**
@@ -202,7 +202,7 @@ class CID {
   /**
    * Compare equality with another CID.
    *
-   * @param {CID} other
+   * @param {CID2} other
    * @returns {bool}
    */
   equals (other) {
@@ -219,7 +219,7 @@ class CID {
    */
   static isCID (other) {
     try {
-      let errorMsg = CID._checkCIDComponents(other)
+      let errorMsg = CID2._checkCIDComponents(other)
       return !(errorMsg)
     } catch (err) {
       return false
@@ -234,7 +234,7 @@ class CID {
    * @returns {void}
    */
   static validateCID (other) {
-    let errorMsg = CID._checkCIDComponents(other)
+    let errorMsg = CID2._checkCIDComponents(other)
     if (errorMsg) {
       throw new Error(errorMsg)
     }
@@ -270,6 +270,6 @@ class CID {
   }
 }
 
-CID.codecs = codecs
+CID2.codecs = codecs
 
-module.exports = CID
+module.exports = CID2

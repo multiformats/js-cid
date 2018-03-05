@@ -20,7 +20,7 @@ const multihash = require('multihashes')
  * , as defined in [ipld/cid](https://github.com/ipld/cid).
  * @class CID
  */
-class CID {
+class CID1 {
   /**
    * Create a new CID.
    *
@@ -53,7 +53,7 @@ class CID {
    *
    */
   constructor (version, codec, multihash) {
-    if (CID.isCID(version)) {
+    if (CID1.isCID(version)) {
       let cid = version
       this.version = cid.version
       this.codec = cid.codec
@@ -101,7 +101,7 @@ class CID {
      */
     this.multihash = multihash
 
-    CID.validateCID(this)
+    CID1.validateCID(this)
   }
 
   /**
@@ -144,23 +144,23 @@ class CID {
   /**
    * Convert to a CID of version `0`.
    *
-   * @returns {CID}
+   * @returns {CID1}
    */
   toV0 () {
     if (this.codec !== 'dag-pb') {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
     }
 
-    return new CID(0, this.codec, this.multihash)
+    return new CID1(0, this.codec, this.multihash)
   }
 
   /**
    * Convert to a CID of version `1`.
    *
-   * @returns {CID}
+   * @returns {CID1}
    */
   toV1 () {
-    return new CID(1, this.codec, this.multihash)
+    return new CID1(1, this.codec, this.multihash)
   }
 
   /**
@@ -202,7 +202,7 @@ class CID {
   /**
    * Compare equality with another CID.
    *
-   * @param {CID} other
+   * @param {CID1} other
    * @returns {bool}
    */
   equals (other) {
@@ -219,11 +219,12 @@ class CID {
    */
   static isCID (other) {
     try {
-      let errorMsg = CID._checkCIDComponents(other)
-      return !(errorMsg)
+      CID1.validateCID(other)
     } catch (err) {
       return false
     }
+
+    return true
   }
 
   /**
@@ -234,42 +235,26 @@ class CID {
    * @returns {void}
    */
   static validateCID (other) {
-    let errorMsg = CID._checkCIDComponents(other)
-    if (errorMsg) {
-      throw new Error(errorMsg)
-    }
-  }
-
-  /**
-   * Test if the given input is a valid CID object.
-   * Returns an error message if it is not, or
-   * Throws an error its multihash is invalid.
-   *
-   * @param {any} other
-   * @returns {string}
-   */
-  static _checkCIDComponents (other) {
     if (other == null) {
-      return 'null values are not valid CIDs'
+      throw new Error('null values are not valid CIDs')
     }
 
     if (!(other.version === 0 || other.version === 1)) {
-      return 'Invalid version, must be a number equal to 1 or 0'
+      throw new Error('Invalid version, must be a number equal to 1 or 0')
     }
 
     if (typeof other.codec !== 'string') {
-      return 'codec must be string'
+      throw new Error('codec must be string')
     }
 
     if (!Buffer.isBuffer(other.multihash)) {
-      return 'multihash must be a Buffer'
+      throw new Error('multihash must be a Buffer')
     }
 
     mh.validate(other.multihash)
-    return null
   }
 }
 
-CID.codecs = codecs
+CID1.codecs = codecs
 
-module.exports = CID
+module.exports = CID1
