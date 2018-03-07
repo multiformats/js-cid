@@ -40,10 +40,11 @@ class CIDPerfX {
 const reps = 10000
 const cidPerf = new CIDPerfX()
 
-console.log(`Starting a test: Will run "new CID()" ${reps} times.`)
+console.log(`Test: Will run "new CID()" ${reps} times.`)
 // We just give ~1 second for the JS engine to start and 'rest', etc.
 // before starting new tests.
 sleep(1000).then(() => {
+  console.log(`Starting a test...`)
   console.time('run'); [...Array(reps).keys()].map(i => {
     cidPerf.run(i)
   })

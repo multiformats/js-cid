@@ -219,12 +219,7 @@ class CID {
    * @returns {bool}
    */
   static isCID (other) {
-    try {
-      let errorMsg = CIDUtil.checkCIDComponents(other)
-      return !(errorMsg)
-    } catch (err) {
-      return false
-    }
+    return !(CIDUtil.checkCIDComponents(other))
   }
 
   /**

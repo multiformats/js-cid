@@ -5,8 +5,8 @@ const mh = require('multihashes')
 var CIDUtil = {
   /**
    * Test if the given input is a valid CID object.
-   * Returns an error message if it is not, or
-   * Throws an error its multihash is invalid.
+   * Returns an error message if it is not.
+   * Returns undefined if it is a valid CID.
    *
    * @param {any} other
    * @returns {string}
@@ -25,11 +25,18 @@ var CIDUtil = {
     }
 
     if (!Buffer.isBuffer(other.multihash)) {
-      throw new Error('multihash must be a Buffer')
+      return 'multihash must be a Buffer'
     }
 
-    mh.validate(other.multihash)
-    return null
+    try {
+      mh.validate(other.multihash)
+    } catch (err) {
+      let errorMsg = err.message
+      if (!errorMsg) { // Just in case mh.validate() throws an error with empty error message
+        errorMsg = 'Multihash validation failed'
+      }
+      return errorMsg
+    }
   }
 }
 
