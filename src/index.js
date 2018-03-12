@@ -6,6 +6,7 @@ const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table')
 const codecVarints = require('multicodec/src/varint-table')
 const multihash = require('multihashes')
+const CIDUtil = require('./cid-util')
 
 /**
  * @typedef {Object} SerializedCID
@@ -218,13 +219,7 @@ class CID {
    * @returns {bool}
    */
   static isCID (other) {
-    try {
-      CID.validateCID(other)
-    } catch (err) {
-      return false
-    }
-
-    return true
+    return !(CIDUtil.checkCIDComponents(other))
   }
 
   /**
@@ -235,23 +230,10 @@ class CID {
    * @returns {void}
    */
   static validateCID (other) {
-    if (other == null) {
-      throw new Error('null values are not valid CIDs')
+    let errorMsg = CIDUtil.checkCIDComponents(other)
+    if (errorMsg) {
+      throw new Error(errorMsg)
     }
-
-    if (!(other.version === 0 || other.version === 1)) {
-      throw new Error('Invalid version, must be a number equal to 1 or 0')
-    }
-
-    if (typeof other.codec !== 'string') {
-      throw new Error('codec must be string')
-    }
-
-    if (!Buffer.isBuffer(other.multihash)) {
-      throw new Error('multihash must be a Buffer')
-    }
-
-    mh.validate(other.multihash)
   }
 }
 
