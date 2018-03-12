@@ -1,3 +1,13 @@
+<a name="0.5.3"></a>
+## [0.5.3](https://github.com/ipld/js-cid/compare/v0.5.2...v0.5.3) (2018-03-12)
+
+
+### Bug Fixes
+
+* [#39](https://github.com/ipld/js-cid/issues/39) - Improve constructor performance ([#45](https://github.com/ipld/js-cid/issues/45)) ([dc0bfd3](https://github.com/ipld/js-cid/commit/dc0bfd3))
+
+
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/ipld/js-cid/compare/v0.5.1...v0.5.2) (2017-10-06)
 

@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "CID Implementation in JavaScript",
   "main": "src/index.js",
   "scripts": {
