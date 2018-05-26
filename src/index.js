@@ -4,7 +4,6 @@ const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table')
-const codecVarints = require('multicodec/src/varint-table')
 const multihash = require('multihashes')
 const CIDUtil = require('./cid-util')
 
@@ -120,7 +119,7 @@ class CID {
       case 1:
         return Buffer.concat([
           Buffer.from('01', 'hex'),
-          Buffer.from(codecVarints[this.codec]),
+          multicodec.getCodeVarint(this.codec),
           this.multihash
         ])
       default:
@@ -137,7 +136,7 @@ class CID {
   get prefix () {
     return Buffer.concat([
       Buffer.from(`0${this.version}`, 'hex'),
-      codecVarints[this.codec],
+      multicodec.getCodeVarint(this.codec),
       multihash.prefix(this.multihash)
     ])
   }

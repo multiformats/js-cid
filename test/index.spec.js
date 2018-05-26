@@ -157,6 +157,14 @@ describe('CID', () => {
       const str = buffer.toString('hex')
       expect(str).to.equals('01711220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
     })
+
+    it('throws error on unknown codec when base encoding it', () => {
+      expect(() => {
+        new CID(1, 'this-codec-doesnt-exist', hash).toBaseEncodedString()
+      }).to.throw(
+        'Codec `this-codec-doesnt-exist` not found'
+      )
+    })
   })
 
   describe('utilities', () => {
