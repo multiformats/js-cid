@@ -5,6 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ipfs/js-cid/badge.svg?branch=master)](https://coveralls.io/github/ipfs/js-cid?branch=master)
 [![Dependency Status](https://david-dm.org/ipld/js-cid.svg?style=flat-square)](https://david-dm.org/ipld/js-cid)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+[![Greenkeeper badge](https://badges.greenkeeper.io/ipld/js-cid.svg)](https://greenkeeper.io/)
 
 > [CID](https://github.com/ipld/cid) implementation in JavaScript.
 
