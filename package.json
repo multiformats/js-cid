@@ -17,7 +17,7 @@
     "coverage-publish": "aegir coverage --provider coveralls",
     "docs": "aegir docs"
   },
-  "pre-commit": [
+  "pre-push": [
     "lint",
     "test"
   ],
