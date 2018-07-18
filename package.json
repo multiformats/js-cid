@@ -36,16 +36,16 @@
   },
   "dependencies": {
     "class-is": "^1.1.0",
-    "multibase": "~0.4.0",
+    "multibase": "~0.5.0",
     "multicodec": "~0.2.7",
-    "multihashes": "~0.4.13"
+    "multihashes": "~0.4.14"
   },
   "devDependencies": {
-    "aegir": "^13.0.6",
+    "aegir": "^15.2.0",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
-    "multihashing": "^0.3.2",
-    "multihashing-async": "^0.4.8",
+    "multihashing": "~0.3.2",
+    "multihashing-async": "~0.5.1",
     "pre-commit": "^1.2.2"
   },
   "engines": {
