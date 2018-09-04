@@ -199,6 +199,19 @@ describe('CID', () => {
         CID.isCID(Buffer.from('hello world'))
       ).to.equal(false)
     })
+
+    it('.toString() outputs default base encoded CID', () => {
+      const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+      const cid = new CID(mhStr)
+      expect(`${cid}`).to.equal(mhStr)
+    })
+
+    it('.toString(base) outputs base encoded CID', () => {
+      const b58v1Str = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      const b32v1Str = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
+      const cid = new CID(b58v1Str)
+      expect(cid.toString('base32')).to.equal(b32v1Str)
+    })
   })
 
   describe('throws on invalid inputs', () => {
