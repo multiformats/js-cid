@@ -186,6 +186,10 @@ class CID {
     }
   }
 
+  toString (base) {
+    return this.toBaseEncodedString(base)
+  }
+
   /**
    * Serialize to a plain object.
    *
