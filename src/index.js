@@ -235,5 +235,5 @@ CID.codecs = codecs
 
 module.exports = withIs(CID, {
   className: 'CID',
-  symbolName: 'cids/CID'
+  symbolName: '@ipld/js-cid/CID'
 })
