@@ -216,7 +216,6 @@ class CID {
       this.multihash.equals(other.multihash)
   }
 
-
   /**
    * Test if the given input is a valid CID object.
    * Throws if it is not.
@@ -236,5 +235,5 @@ CID.codecs = codecs
 
 module.exports = withIs(CID, {
   className: 'CID',
-  symbolName: 'cids/CID',
+  symbolName: 'cids/CID'
 })
