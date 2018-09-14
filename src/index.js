@@ -6,6 +6,7 @@ const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table')
 const multihash = require('multihashes')
 const CIDUtil = require('./cid-util')
+const withIs = require('class-is')
 
 /**
  * @typedef {Object} SerializedCID
@@ -53,7 +54,7 @@ class CID {
    *
    */
   constructor (version, codec, multihash) {
-    if (CID.isCID(version)) {
+    if (module.exports.isCID(version)) {
       let cid = version
       this.version = cid.version
       this.codec = cid.codec
@@ -216,16 +217,6 @@ class CID {
   }
 
   /**
-   * Test if the given input is a CID.
-   *
-   * @param {any} other
-   * @returns {bool}
-   */
-  static isCID (other) {
-    return !(CIDUtil.checkCIDComponents(other))
-  }
-
-  /**
    * Test if the given input is a valid CID object.
    * Throws if it is not.
    *
@@ -242,4 +233,7 @@ class CID {
 
 CID.codecs = codecs
 
-module.exports = CID
+module.exports = withIs(CID, {
+  className: 'CID',
+  symbolName: '@ipld/js-cid/CID'
+})
