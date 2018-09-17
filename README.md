@@ -75,7 +75,7 @@ const cid = new CID(base58Multihash)
 
 ### CID.isCid(cid)
 
-Returns true if object is a valid CID instance, false if otherwise.
+Returns true if object is a valid CID instance, false if not valid.
 
 It's important to use this method rather than `instanceof` checks in
 order to handle CID objects from different versions of this module.
@@ -83,7 +83,7 @@ order to handle CID objects from different versions of this module.
 ### CID.validateCID(cid)
 
 Validates the different components (version, codec, multihash) of the CID
-instance. Returns true if valid, false if otherwise.
+instance. Returns true if valid, false if not valid.
 
 ### new CID(version, codec, multihash)
 
@@ -126,6 +126,8 @@ section of the multihash.
 #### cid.toV0()
 
 Returns the CID encoded in version 0. Only works for `dag-pb` codecs.
+
+Throws if codec is not `dag-pb`.
 
 #### cid.toV1()
 
