@@ -19,10 +19,6 @@
 ## Table of Contents
 
 - [Install](#install)
-  - [In Node.js through npm](#in-nodejs-through-npm)
-  - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
-  - [In the Browser through `<script>` tag](#in-the-browser-through-script-tag)
-    - [Gotchas](#gotchas)
 - [Usage](#usage)
 - [API](#api)
 - [Contribute](#contribute)
@@ -60,19 +56,91 @@ You will need to use Node.js `Buffer` API compatible, if you are running inside 
 
 ## Usage
 
+Basic usage is quite simple.
+
 ```js
 const CID = require('cids')
 
-// V1 CID
 const cid = new CID(1, 'dag-pb', multihash)
+```
 
-// V0 CID
+If you have a base encoded string for a multihash you can also create
+an instance from the encoded string.
+
+```js
 const cid = new CID(base58Multihash)
 ```
 
 ## API
 
-See https://ipld.github.io/js-cid
+### CID.isCid(cid)
+
+Returns true if object is a valid CID instance, false if not valid.
+
+It's important to use this method rather than `instanceof` checks in
+order to handle CID objects from different versions of this module.
+
+### CID.validateCID(cid)
+
+Validates the different components (version, codec, multihash) of the CID
+instance. Returns true if valid, false if not valid.
+
+### new CID(version, codec, multihash)
+
+`version` must be either 0 or 1.
+
+`codec` must be a string of a valid [registered codec](https://github.com/multiformats/multicodec/blob/master/table.csv).
+
+`multihash` must be a `Buffer` instance of a valid [multihash](https://github.com/multiformats/multihash).
+
+### new CID(baseEncodedString)
+
+Additionally, you can instantiate an instance from a base encoded
+string.
+
+### new CID(Buffer)
+
+Additionally, you can instantiate an instance from a buffer.
+
+#### cid.codec
+
+Property containing the codec string.
+
+#### cid.version
+
+Property containing the CID version integer.
+
+#### cid.multihash
+
+Property containing the multihash buffer.
+
+#### cid.buffer
+
+Property containing the full CID encoded as a `Buffer`.
+
+#### cid.prefix
+
+Proprety containing a buffer of the CID version, codec, and the prefix
+section of the multihash.
+
+#### cid.toV0()
+
+Returns the CID encoded in version 0. Only works for `dag-pb` codecs.
+
+Throws if codec is not `dag-pb`.
+
+#### cid.toV1()
+
+Returns the CID encoded in version 1.
+
+#### cid.toBaseEncodedString(base='base58btc')
+
+Returns a base encodec string of the CID. Defaults to `base58btc`.
+
+#### cid.equals(cid)
+
+Compare cid instance. Returns true if CID's are identical, false if
+otherwise.
 
 ## Contribute
 
