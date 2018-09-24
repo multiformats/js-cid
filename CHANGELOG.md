@@ -1,3 +1,21 @@
+<a name="0.5.4"></a>
+## [0.5.4](https://github.com/ipld/js-cid/compare/v0.5.3...v0.5.4) (2018-09-24)
+
+
+### Bug Fixes
+
+* linter errors ([9f9359d](https://github.com/ipld/js-cid/commit/9f9359d))
+* migrate to class-is for instance comparise, fixes [#53](https://github.com/ipld/js-cid/issues/53) ([6b6873b](https://github.com/ipld/js-cid/commit/6b6873b))
+* remove direct access to codec lookup table ([4027108](https://github.com/ipld/js-cid/commit/4027108))
+* use org/repo convention ([5805660](https://github.com/ipld/js-cid/commit/5805660))
+
+
+### Features
+
+* add toString function ([f47e68c](https://github.com/ipld/js-cid/commit/f47e68c))
+
+
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://github.com/ipld/js-cid/compare/v0.5.2...v0.5.3) (2018-03-12)
 
