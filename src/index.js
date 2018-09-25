@@ -21,7 +21,7 @@ const withIs = require('class-is')
  * , as defined in [ipld/cid](https://github.com/ipld/cid).
  * @class CID
  */
-const CID = withIs(class {
+const CID = withIs(class _CID {
   /**
    * Create a new CID.
    *
