@@ -17,11 +17,20 @@ const withIs = require('class-is')
  */
 
 /**
+ * Test if the given input is a CID.
+ * @function isCID
+ * @memberof CID
+ * @static
+ * @param {any} other
+ * @returns {bool}
+ */
+
+/**
  * Class representing a CID `<mbase><version><mcodec><mhash>`
  * , as defined in [ipld/cid](https://github.com/ipld/cid).
  * @class CID
  */
-const CID = withIs(class _CID {
+class CID {
   /**
    * Create a new CID.
    *
@@ -152,7 +161,7 @@ const CID = withIs(class _CID {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
     }
 
-    return new CID(0, this.codec, this.multihash)
+    return new _CID(0, this.codec, this.multihash)
   }
 
   /**
@@ -161,7 +170,7 @@ const CID = withIs(class _CID {
    * @returns {CID}
    */
   toV1 () {
-    return new CID(1, this.codec, this.multihash)
+    return new _CID(1, this.codec, this.multihash)
   }
 
   /**
@@ -229,11 +238,13 @@ const CID = withIs(class _CID {
       throw new Error(errorMsg)
     }
   }
-}, {
+}
+
+const _CID = withIs(CID, {
   className: 'CID',
   symbolName: '@ipld/js-cid/CID'
 })
 
-CID.codecs = codecs
+_CID.codecs = codecs
 
-module.exports = CID
+module.exports = _CID
