@@ -198,6 +198,14 @@ describe('CID', () => {
       expect(
         CID.isCID(Buffer.from('hello world'))
       ).to.equal(false)
+
+      expect(
+        CID.isCID(new CID(h1).toV0())
+      ).to.equal(true)
+
+      expect(
+        CID.isCID(new CID(h1).toV1())
+      ).to.equal(true)
     })
 
     it('.toString() outputs default base encoded CID', () => {

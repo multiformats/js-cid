@@ -21,7 +21,7 @@ const withIs = require('class-is')
  * , as defined in [ipld/cid](https://github.com/ipld/cid).
  * @class CID
  */
-class CID {
+const CID = withIs(class {
   /**
    * Create a new CID.
    *
@@ -229,11 +229,11 @@ class CID {
       throw new Error(errorMsg)
     }
   }
-}
-
-CID.codecs = codecs
-
-module.exports = withIs(CID, {
+}, {
   className: 'CID',
   symbolName: '@ipld/js-cid/CID'
 })
+
+CID.codecs = codecs
+
+module.exports = CID
