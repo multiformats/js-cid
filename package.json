@@ -53,6 +53,7 @@
     "npm": ">=3.0.0"
   },
   "contributors": [
+    "Alan Shaw <alan.shaw@protocol.ai>",
     "Alan Shaw <alan@tableflip.io>",
     "David Dias <daviddias.p@gmail.com>",
     "Enrico Marino <enrico.marino@email.com>",
