@@ -1,3 +1,13 @@
+<a name="0.5.5"></a>
+## [0.5.5](https://github.com/ipld/js-cid/compare/v0.5.4...v0.5.5) (2018-09-25)
+
+
+### Bug Fixes
+
+* toV0 and toV1 create instances that cause isCID be false ([14ab8e4](https://github.com/ipld/js-cid/commit/14ab8e4))
+
+
+
 <a name="0.5.4"></a>
 ## [0.5.4](https://github.com/ipld/js-cid/compare/v0.5.3...v0.5.4) (2018-09-24)
 
