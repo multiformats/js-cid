@@ -70,7 +70,7 @@ const cid = new CID(base58Multihash)
 
 ## API
 
-### CID.isCid(cid)
+### CID.isCID(cid)
 
 Returns true if object is a valid CID instance, false if not valid.
 
