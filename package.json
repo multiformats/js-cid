@@ -14,7 +14,6 @@
     "release-minor": "aegir release --type minor --docs",
     "release-major": "aegir release --type major --docs",
     "coverage": "aegir coverage",
-    "coverage-publish": "aegir coverage --provider coveralls",
     "docs": "aegir docs"
   },
   "pre-push": [
