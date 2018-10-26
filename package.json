@@ -41,7 +41,7 @@
     "multihashes": "~0.4.14"
   },
   "devDependencies": {
-    "aegir": "^15.2.0",
+    "aegir": "^17.0.0",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
     "multihashing": "~0.3.2",
