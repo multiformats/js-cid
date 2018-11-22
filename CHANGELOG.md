@@ -1,3 +1,15 @@
+<a name="0.5.6"></a>
+## [0.5.6](https://github.com/ipld/js-cid/compare/v0.5.5...v0.5.6) (2018-11-22)
+
+
+### Bug Fixes
+
+* add class name ([b9fc845](https://github.com/ipld/js-cid/commit/b9fc845))
+* generated docs, re-add isCID ([5b826fc](https://github.com/ipld/js-cid/commit/5b826fc))
+* **package:** update multibase to version 0.6.0 ([e4e6508](https://github.com/ipld/js-cid/commit/e4e6508))
+
+
+
 <a name="0.5.5"></a>
 ## [0.5.5](https://github.com/ipld/js-cid/compare/v0.5.4...v0.5.5) (2018-09-25)
 
