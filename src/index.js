@@ -27,7 +27,7 @@ const withIs = require('class-is')
 
 /**
  * Class representing a CID `<mbase><version><mcodec><mhash>`
- * , as defined in [ipld/cid](https://github.com/ipld/cid).
+ * , as defined in [ipld/cid](https://github.com/multiformats/cid).
  * @class CID
  */
 class CID {
