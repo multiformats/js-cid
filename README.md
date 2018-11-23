@@ -2,12 +2,12 @@
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai/)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
-[![Coverage Status](https://coveralls.io/repos/github/ipfs/js-cid/badge.svg?branch=master)](https://coveralls.io/github/ipfs/js-cid?branch=master)
-[![Dependency Status](https://david-dm.org/ipld/js-cid.svg?style=flat-square)](https://david-dm.org/ipld/js-cid)
+[![Coverage Status](https://coveralls.io/repos/github/multiformats/js-cid/badge.svg?branch=master)](https://coveralls.io/github/multiformats/js-cid?branch=master)
+[![Dependency Status](https://david-dm.org/multiformats/js-cid.svg?style=flat-square)](https://david-dm.org/multiformats/js-cid)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
-[![Greenkeeper badge](https://badges.greenkeeper.io/ipld/js-cid.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/multiformats/js-cid.svg)](https://greenkeeper.io/)
 
-> [CID](https://github.com/ipld/cid) implementation in JavaScript.
+> [CID](https://github.com/multiformats/cid) implementation in JavaScript.
 
 ## Lead Maintainer
 
@@ -143,7 +143,7 @@ otherwise.
 
 [![](https://cdn.rawgit.com/jbenet/contribute-ipfs-gif/master/img/contribute.gif)](https://github.com/ipfs/community/blob/master/contributing.md)
 
-Contributions welcome. Please check out [the issues](https://github.com/ipld/js-cid/issues).
+Contributions welcome. Please check out [the issues](https://github.com/multiformats/js-cid/issues).
 
 Check out our [contributing document](https://github.com/ipfs/community/blob/master/contributing.md) for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS [Code of Conduct](https://github.com/ipfs/community/blob/master/code-of-conduct.md).
 
