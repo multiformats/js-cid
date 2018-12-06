@@ -1,3 +1,13 @@
+<a name="0.5.7"></a>
+## [0.5.7](https://github.com/multiformats/js-cid/compare/v0.5.6...v0.5.7) (2018-12-06)
+
+
+### Bug Fixes
+
+* stricter validation for CID v1 to v0 conversion ([0bd7318](https://github.com/multiformats/js-cid/commit/0bd7318))
+
+
+
 <a name="0.5.6"></a>
 ## [0.5.6](https://github.com/ipld/js-cid/compare/v0.5.5...v0.5.6) (2018-11-22)
 
