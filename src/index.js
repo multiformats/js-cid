@@ -4,7 +4,6 @@ const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table')
-const multihash = require('multihashes')
 const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
 
@@ -147,7 +146,7 @@ class CID {
     return Buffer.concat([
       Buffer.from(`0${this.version}`, 'hex'),
       multicodec.getCodeVarint(this.codec),
-      multihash.prefix(this.multihash)
+      mh.prefix(this.multihash)
     ])
   }
 
@@ -159,6 +158,16 @@ class CID {
   toV0 () {
     if (this.codec !== 'dag-pb') {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
+    }
+
+    const { name, length } = mh.decode(this.multihash)
+
+    if (name !== 'sha2-256') {
+      throw new Error('Cannot convert non sha2-256 multihash CID to CIDv0')
+    }
+
+    if (length !== 32) {
+      throw new Error('Cannot convert non 32 byte multihash CID to CIDv0')
     }
 
     return new _CID(0, this.codec, this.multihash)
