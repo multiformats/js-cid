@@ -253,4 +253,51 @@ describe('CID', () => {
       expect(cid1 === cid2).to.equal(false)
     })
   })
+
+  describe('conversion v0 <-> v1', () => {
+    it('should convert v0 to v1', done => {
+      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
+        if (err) return done(err)
+        const cid = new CID(0, 'dag-pb', hash).toV1()
+        expect(cid.version).to.equal(1)
+        done()
+      })
+    })
+
+    it('should convert v1 to v0', done => {
+      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
+        if (err) return done(err)
+        const cid = new CID(1, 'dag-pb', hash).toV0()
+        expect(cid.version).to.equal(0)
+        done()
+      })
+    })
+
+    it('should not convert v1 to v0 if not dag-pb codec', done => {
+      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
+        if (err) return done(err)
+        const cid = new CID(1, 'dag-cbor', hash)
+        expect(() => cid.toV0()).to.throw('Cannot convert a non dag-pb CID to CIDv0')
+        done()
+      })
+    })
+
+    it('should not convert v1 to v0 if not sha2-256 multihash', done => {
+      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-512', (err, hash) => {
+        if (err) return done(err)
+        const cid = new CID(1, 'dag-pb', hash)
+        expect(() => cid.toV0()).to.throw('Cannot convert non sha2-256 multihash CID to CIDv0')
+        done()
+      })
+    })
+
+    it('should not convert v1 to v0 if not 32 byte multihash', done => {
+      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', 31, (err, hash) => {
+        if (err) return done(err)
+        const cid = new CID(1, 'dag-pb', hash)
+        expect(() => cid.toV0()).to.throw('Cannot convert non 32 byte multihash CID to CIDv0')
+        done()
+      })
+    })
+  })
 })
