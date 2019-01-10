@@ -63,7 +63,7 @@ class CID {
    */
   constructor (version, codec, multihash) {
     if (module.exports.isCID(version)) {
-      let cid = version
+      const cid = version
       this.version = cid.version
       this.codec = cid.codec
       this.multihash = Buffer.from(cid.multihash)
@@ -72,7 +72,8 @@ class CID {
     if (typeof version === 'string') {
       if (multibase.isEncoded(version)) { // CID String (encoded with multibase)
         const cid = multibase.decode(version)
-        version = parseInt(cid.slice(0, 1).toString('hex'), 16)
+        const firstByte = cid.slice(0, 1)
+        version = parseInt(firstByte.toString('hex'), 16)
         codec = multicodec.getCodec(cid.slice(1))
         multihash = multicodec.rmPrefix(cid.slice(1))
       } else { // bs58 string encoded multihash
@@ -81,16 +82,15 @@ class CID {
         version = 0
       }
     } else if (Buffer.isBuffer(version)) {
-      const firstByte = version.slice(0, 1)
-      const v = parseInt(firstByte.toString('hex'), 16)
-      if (v === 0 || v === 1) { // CID
-        const cid = version
-        version = v
+      const cid = version
+      const firstByte = cid.slice(0, 1)
+      version = parseInt(firstByte.toString('hex'), 16)
+      if (version === 0 || version === 1) { // CID
         codec = multicodec.getCodec(cid.slice(1))
         multihash = multicodec.rmPrefix(cid.slice(1))
       } else { // multihash
         codec = 'dag-pb'
-        multihash = version
+        multihash = cid
         version = 0
       }
     }
