@@ -8,6 +8,7 @@ const expect = chai.expect
 chai.use(dirtyChai)
 const multihash = require('multihashes')
 const multihashing = require('multihashing-async')
+const multicodec = require('multicodec')
 
 const CID = require('../src')
 
@@ -30,6 +31,7 @@ describe('CID', () => {
       const cid = new CID(mhStr)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', multicodec.DAG_PB)
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash').that.eql(multihash.fromB58String(mhStr))
 
@@ -44,6 +46,7 @@ describe('CID', () => {
         const cid = new CID(mh)
 
         expect(cid).to.have.property('codec', 'dag-pb')
+        expect(cid).to.have.property('code', multicodec.DAG_PB)
         expect(cid).to.have.property('version', 0)
         expect(cid).to.have.property('multihash').that.eql(mh)
 
@@ -56,6 +59,7 @@ describe('CID', () => {
       const cid = new CID(0, 'dag-pb', hash)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', multicodec.DAG_PB)
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash')
     })
@@ -94,6 +98,7 @@ describe('CID', () => {
       const cid = new CID(cidStr)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', multicodec.DAG_PB)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
 
@@ -107,6 +112,7 @@ describe('CID', () => {
       const cid = new CID(cidBuf)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', multicodec.DAG_PB)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
 
@@ -117,6 +123,16 @@ describe('CID', () => {
       const cid = new CID(1, 'dag-cbor', hash)
 
       expect(cid).to.have.property('codec', 'dag-cbor')
+      expect(cid).to.have.property('code', multicodec.DAG_CBOR)
+      expect(cid).to.have.property('version', 1)
+      expect(cid).to.have.property('multihash')
+    })
+
+    it('can be created by parts with multicodec constant', () => {
+      const cid = new CID(1, multicodec.DAG_CBOR, hash)
+
+      expect(cid).to.have.property('codec', 'dag-cbor')
+      expect(cid).to.have.property('code', multicodec.DAG_CBOR)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
     })
@@ -126,6 +142,7 @@ describe('CID', () => {
       const cid2 = new CID(cid1.toBaseEncodedString())
 
       expect(cid1).to.have.property('codec').that.eql(cid2.codec)
+      expect(cid1).to.have.property('code').that.eql(cid2.code)
       expect(cid1).to.have.property('version').that.eql(cid2.version)
       expect(cid1).to.have.property('multihash').that.eql(cid2.multihash)
     })
@@ -137,9 +154,11 @@ describe('CID', () => {
       const cid2 = new CID(cid1.toBaseEncodedString())
 
       expect(cid1).to.have.property('codec', 'eth-block')
+      expect(cid1).to.have.property('code', multicodec.ETH_BLOCK)
       expect(cid1).to.have.property('version', 1)
       expect(cid1).to.have.property('multihash').that.eql(mh)
       expect(cid2).to.have.property('codec', 'eth-block')
+      expect(cid2).to.have.property('code', multicodec.ETH_BLOCK)
       expect(cid2).to.have.property('version', 1)
       expect(cid2).to.have.property('multihash').that.eql(mh)
     })

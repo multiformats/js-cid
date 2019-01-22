@@ -9,6 +9,7 @@ const withIs = require('class-is')
 
 /**
  * @typedef {Object} SerializedCID
+ * @param {number} code
  * @param {string} codec
  * @param {number} version
  * @param {Buffer} multihash
@@ -48,7 +49,7 @@ class CID {
    * ```
    *
    * @param {string|Buffer} version
-   * @param {string} [codec]
+   * @param {number|string} [codec] Passing in as string is deprecated
    * @param {Buffer} [multihash]
    *
    * @example
@@ -62,10 +63,11 @@ class CID {
    *
    */
   constructor (version, codec, multihash) {
+    let code
     if (module.exports.isCID(version)) {
       const cid = version
       this.version = cid.version
-      this.codec = cid.codec
+      this.code = cid.code
       this.multihash = Buffer.from(cid.multihash)
       return
     }
@@ -74,10 +76,10 @@ class CID {
         const cid = multibase.decode(version)
         const firstByte = cid.slice(0, 1)
         version = parseInt(firstByte.toString('hex'), 16)
-        codec = multicodec.getCodec(cid.slice(1))
+        code = multicodec.getCode(cid.slice(1))
         multihash = multicodec.rmPrefix(cid.slice(1))
       } else { // bs58 string encoded multihash
-        codec = 'dag-pb'
+        code = multicodec.DAG_PB
         multihash = mh.fromB58String(version)
         version = 0
       }
@@ -86,19 +88,31 @@ class CID {
       const firstByte = cid.slice(0, 1)
       version = parseInt(firstByte.toString('hex'), 16)
       if (version === 0 || version === 1) { // CID
-        codec = multicodec.getCodec(cid.slice(1))
+        code = multicodec.getCode(cid.slice(1))
         multihash = multicodec.rmPrefix(cid.slice(1))
       } else { // multihash
-        codec = 'dag-pb'
+        code = multicodec.DAG_PB
         multihash = cid
         version = 0
+      }
+    } else {
+      // cids < 0.6 was using only strings, support this case for backwards
+      // compatibility reasons
+      if (typeof codec === 'string') {
+        const constantName = codec.toUpperCase().replace(/-/g, '_')
+        code = multicodec[constantName]
+        if (code === undefined) {
+          throw new Error(`Codec \`${codec}\` not found`)
+        }
+      } else {
+        code = codec
       }
     }
 
     /**
-     * @type {string}
+     * @type {number}
      */
-    this.codec = codec
+    this.code = code
 
     /**
      * @type {number}
@@ -128,7 +142,7 @@ class CID {
       case 1:
         return Buffer.concat([
           Buffer.from('01', 'hex'),
-          multicodec.getCodeVarint(this.codec),
+          Buffer.from(multicodec.getVarint(this.code)),
           this.multihash
         ])
       default:
@@ -145,9 +159,18 @@ class CID {
   get prefix () {
     return Buffer.concat([
       Buffer.from(`0${this.version}`, 'hex'),
-      multicodec.getCodeVarint(this.codec),
+      Buffer.from(multicodec.getVarint(this.code)),
       mh.prefix(this.multihash)
     ])
+  }
+
+  /**
+   * @private
+   * @type {string} (deprecatd) The codec as string. It's only there for
+   * backwards compatibility. Use `code` instead.
+   */
+  get codec () {
+    return multicodec.print[this.code]
   }
 
   /**
@@ -156,13 +179,13 @@ class CID {
    * @returns {CID}
    */
   toV0 () {
-    if (this.codec !== 'dag-pb') {
+    if (this.code !== multicodec.DAG_PB) {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
     }
 
-    const { name, length } = mh.decode(this.multihash)
+    const { code, length } = mh.decode(this.multihash)
 
-    if (name !== 'sha2-256') {
+    if (code !== multicodec.SHA2_256) {
       throw new Error('Cannot convert non sha2-256 multihash CID to CIDv0')
     }
 
@@ -170,7 +193,7 @@ class CID {
       throw new Error('Cannot convert non 32 byte multihash CID to CIDv0')
     }
 
-    return new _CID(0, this.codec, this.multihash)
+    return new _CID(0, this.code, this.multihash)
   }
 
   /**
@@ -179,7 +202,7 @@ class CID {
    * @returns {CID}
    */
   toV1 () {
-    return new _CID(1, this.codec, this.multihash)
+    return new _CID(1, this.code, this.multihash)
   }
 
   /**
@@ -216,6 +239,7 @@ class CID {
    */
   toJSON () {
     return {
+      code: this.code,
       codec: this.codec,
       version: this.version,
       hash: this.multihash
@@ -229,7 +253,14 @@ class CID {
    * @returns {bool}
    */
   equals (other) {
-    return this.codec === other.codec &&
+    let sameCodec
+    // The other CID is < cids 0.6
+    if (other.code === undefined) {
+      sameCodec = this.codec === other.codec
+    } else {
+      sameCodec = this.code === other.code
+    }
+    return sameCodec &&
       this.version === other.version &&
       this.multihash.equals(other.multihash)
   }

@@ -20,8 +20,16 @@ var CIDUtil = {
       return 'Invalid version, must be a number equal to 1 or 0'
     }
 
-    if (typeof other.codec !== 'string') {
-      return 'codec must be string'
+    // Only check codec if code isn't set. That's the case for older CIDs
+    // create with cids < 0.6.
+    if (other.code !== undefined) {
+      if (typeof other.code !== 'number') {
+        return 'code must be a number'
+      }
+    } else {
+      if (typeof other.codec !== 'string') {
+        return 'codec must be a string'
+      }
     }
 
     if (!Buffer.isBuffer(other.multihash)) {
