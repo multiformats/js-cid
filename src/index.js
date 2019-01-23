@@ -185,21 +185,21 @@ class CID {
   /**
    * Encode the CID into a string.
    *
-   * @param {string} [base='base58btc'] - Base encoding to use.
+   * @param {string} [base='base32'] - Base encoding to use. For v0 CIDs this
+   * defaults to 'base58btc' and if passed MUST have that value. For v1 CIDs
+   * it defaults to base32.
    * @returns {string}
    */
   toBaseEncodedString (base) {
-    base = base || 'base58btc'
-
     switch (this.version) {
       case 0: {
-        if (base !== 'base58btc') {
+        if (base && base !== 'base58btc') {
           throw new Error('not supported with CIDv0, to support different bases, please migrate the instance do CIDv1, you can do that through cid.toV1()')
         }
         return mh.toB58String(this.multihash)
       }
       case 1:
-        return multibase.encode(base, this.buffer).toString()
+        return multibase.encode(base || 'base32', this.buffer).toString()
       default:
         throw new Error('Unsupported version')
     }

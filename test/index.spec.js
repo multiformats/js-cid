@@ -97,7 +97,7 @@ describe('CID', () => {
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
 
-      expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
+      expect(cid.toBaseEncodedString('base58btc')).to.be.eql(cidStr)
     })
 
     it('handles CID (no multibase)', () => {
@@ -110,7 +110,7 @@ describe('CID', () => {
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
 
-      expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
+      expect(cid.toBaseEncodedString('base58btc')).to.be.eql(cidStr)
     })
 
     it('create by parts', () => {
