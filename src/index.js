@@ -122,18 +122,26 @@ class CID {
    * @memberOf CID
    */
   get buffer () {
-    switch (this.version) {
-      case 0:
-        return this.multihash
-      case 1:
-        return Buffer.concat([
+    let buffer = this._buffer
+
+    if (!buffer) {
+      if (this.version === 0) {
+        buffer = this.multihash
+      } else if (this.version === 1) {
+        buffer = Buffer.concat([
           Buffer.from('01', 'hex'),
           multicodec.getCodeVarint(this.codec),
           this.multihash
         ])
-      default:
+      } else {
         throw new Error('unsupported version')
+      }
+
+      // Cache this buffer so it doesn't have to be recreated
+      Object.defineProperty(this, '_buffer', { value: buffer })
     }
+
+    return buffer
   }
 
   /**
