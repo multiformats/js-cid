@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
