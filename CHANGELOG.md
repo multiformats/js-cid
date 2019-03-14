@@ -1,3 +1,13 @@
+<a name="0.5.8"></a>
+## [0.5.8](https://github.com/multiformats/js-cid/compare/v0.5.7...v0.5.8) (2019-03-14)
+
+
+### Performance Improvements
+
+* cache buffer form of CID when created ([c7fc646](https://github.com/multiformats/js-cid/commit/c7fc646))
+
+
+
 <a name="0.5.7"></a>
 ## [0.5.7](https://github.com/multiformats/js-cid/compare/v0.5.6...v0.5.7) (2018-12-06)
 
