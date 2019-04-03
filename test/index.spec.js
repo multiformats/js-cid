@@ -167,6 +167,32 @@ describe('CID', () => {
     })
   })
 
+  describe('.toString', () => {
+    it('returns a CID string', () => {
+      const cid = new CID(hash)
+      expect(cid.toString()).to.equal('QmatYkNGZnELf8cAGdyJpUca2PyY4szai3RHyyWofNY1pY')
+    })
+
+    it('returns a string in the same base as the string passed to the constructor - base64 flavour', () => {
+      const base64Str = 'mAXASIOnrbGCADfkPyOI37VMkbzluh1eaukBqqnl2oFaFnuIt'
+      const cid = new CID(base64Str)
+      expect(cid.toString()).to.equal(base64Str)
+    })
+
+    it('returns a string in the same base as the string passed to the constructor - base16 flavour', () => {
+      const base16Str = 'f01701220e9eb6c60800df90fc8e237ed53246f396e87579aba406aaa7976a056859ee22d'
+      const cid = new CID(base16Str)
+      expect(cid.toString()).to.equal(base16Str)
+    })
+
+    it('returns a string in the base provided', () => {
+      const b58v1Str = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      const b32v1Str = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
+      const cid = new CID(b58v1Str)
+      expect(cid.toString('base32')).to.equal(b32v1Str)
+    })
+  })
+
   describe('utilities', () => {
     const h1 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
     const h2 = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1o'
@@ -206,19 +232,6 @@ describe('CID', () => {
       expect(
         CID.isCID(new CID(h1).toV1())
       ).to.equal(true)
-    })
-
-    it('.toString() outputs default base encoded CID', () => {
-      const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
-      const cid = new CID(mhStr)
-      expect(`${cid}`).to.equal(mhStr)
-    })
-
-    it('.toString(base) outputs base encoded CID', () => {
-      const b58v1Str = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
-      const b32v1Str = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
-      const cid = new CID(b58v1Str)
-      expect(cid.toString('base32')).to.equal(b32v1Str)
     })
   })
 

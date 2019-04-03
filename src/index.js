@@ -12,7 +12,6 @@ const withIs = require('class-is')
  * @param {string} codec
  * @param {number} version
  * @param {Buffer} multihash
- *
  */
 
 /**
@@ -35,70 +34,85 @@ class CID {
    *
    * The algorithm for argument input is roughly:
    * ```
-   * if (str)
+   * if (cid)
+   *   -> create a copy
+   * else if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
    * else if (Buffer)
-   *   if (0 or 1) -> CID
+   *   if (1st byte is 0 or 1) -> CID
    *   else -> multihash
    * else if (Number)
    *   -> construct CID by parts
-   *
-   * ..if only JS had traits..
    * ```
    *
    * @param {string|Buffer} version
    * @param {string} [codec]
    * @param {Buffer} [multihash]
+   * @param {string} [multibaseName]
    *
    * @example
-   *
-   * new CID(<version>, <codec>, <multihash>)
+   * new CID(<version>, <codec>, <multihash>, <multibaseName>)
    * new CID(<cidStr>)
    * new CID(<cid.buffer>)
    * new CID(<multihash>)
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
-   *
    */
-  constructor (version, codec, multihash) {
+  constructor (version, codec, multihash, multibaseName = 'base58btc') {
     if (module.exports.isCID(version)) {
-      let cid = version
+      // version is an exising CID instance
+      const cid = version
       this.version = cid.version
       this.codec = cid.codec
       this.multihash = Buffer.from(cid.multihash)
+      this.multibaseName = cid.multibaseName
       return
     }
+
     if (typeof version === 'string') {
-      if (multibase.isEncoded(version)) { // CID String (encoded with multibase)
+      // e.g. 'base32' or false
+      const baseName = multibase.isEncoded(version)
+      if (baseName) {
+        // version is a CID String encoded with multibase, so v1
         const cid = multibase.decode(version)
-        version = parseInt(cid.slice(0, 1).toString('hex'), 16)
-        codec = multicodec.getCodec(cid.slice(1))
-        multihash = multicodec.rmPrefix(cid.slice(1))
-      } else { // bs58 string encoded multihash
-        codec = 'dag-pb'
-        multihash = mh.fromB58String(version)
-        version = 0
+        this.version = parseInt(cid.slice(0, 1).toString('hex'), 16)
+        this.codec = multicodec.getCodec(cid.slice(1))
+        this.multihash = multicodec.rmPrefix(cid.slice(1))
+        this.multibaseName = baseName
+      } else {
+        // version is a base58btc string multihash, so v0
+        this.version = 0
+        this.codec = 'dag-pb'
+        this.multihash = mh.fromB58String(version)
+        this.multibaseName = 'base58btc'
       }
-    } else if (Buffer.isBuffer(version)) {
-      const firstByte = version.slice(0, 1)
-      const v = parseInt(firstByte.toString('hex'), 16)
-      if (v === 0 || v === 1) { // CID
-        const cid = version
-        version = v
-        codec = multicodec.getCodec(cid.slice(1))
-        multihash = multicodec.rmPrefix(cid.slice(1))
-      } else { // multihash
-        codec = 'dag-pb'
-        multihash = version
-        version = 0
-      }
+      CID.validateCID(this)
+      return
     }
 
-    /**
-     * @type {string}
-     */
-    this.codec = codec
+    if (Buffer.isBuffer(version)) {
+      const firstByte = version.slice(0, 1)
+      const v = parseInt(firstByte.toString('hex'), 16)
+      if (v === 0 || v === 1) {
+        // version is a CID buffer
+        const cid = version
+        this.version = v
+        this.codec = multicodec.getCodec(cid.slice(1))
+        this.multihash = multicodec.rmPrefix(cid.slice(1))
+        this.multibaseName = (v === 0) ? 'base58btc' : multibaseName
+      } else {
+        // version is a raw multihash buffer, so v0
+        this.version = 0
+        this.codec = 'dag-pb'
+        this.multihash = version
+        this.multibaseName = 'base58btc'
+      }
+      CID.validateCID(this)
+      return
+    }
+
+    // otherwise, assemble the CID from the parameters
 
     /**
      * @type {number}
@@ -106,9 +120,19 @@ class CID {
     this.version = version
 
     /**
+     * @type {string}
+     */
+    this.codec = codec
+
+    /**
      * @type {Buffer}
      */
     this.multihash = multihash
+
+    /**
+     * @type {string}
+     */
+    this.multibaseName = multibaseName
 
     CID.validateCID(this)
   }
@@ -193,12 +217,10 @@ class CID {
   /**
    * Encode the CID into a string.
    *
-   * @param {string} [base='base58btc'] - Base encoding to use.
+   * @param {string} [base=this.multibaseName] - Base encoding to use.
    * @returns {string}
    */
-  toBaseEncodedString (base) {
-    base = base || 'base58btc'
-
+  toBaseEncodedString (base = this.multibaseName) {
     switch (this.version) {
       case 0: {
         if (base !== 'base58btc') {
