@@ -266,6 +266,11 @@ describe('CID', () => {
     invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
+
+    const invalidVersions = [-1, 2]
+    invalidVersions.forEach((i) => it(`new CID(${i}, 'dag-pb', buffer)`, () => {
+      expect(() => new CID(i, 'dag-pb', hash)).to.throw()
+    }))
   })
 
   describe('idempotence', () => {
@@ -326,14 +331,44 @@ describe('CID', () => {
     })
   })
 
-  describe('buffer reuse', () => {
+  describe('caching', () => {
     it('should cache CID as buffer', done => {
       multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
         if (err) return done(err)
         const cid = new CID(1, 'dag-pb', hash)
         expect(cid.buffer).to.equal(cid.buffer)
+        expect(Object.hasOwnProperty('buffer')).to.be.false()
         done()
       })
+    })
+    it('should cache string representation when it matches the multibaseName it was constructed with', () => {
+      // not string to cache yet
+      const cid = new CID(1, 'dag-pb', hash, 'base32')
+      expect(cid.string).to.be.undefined()
+
+      // we dont cache alternate base encodings yet.
+      expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
+      expect(cid.string).to.be.undefined()
+
+      const base32String = 'bafybeif2pall7dybz7vecqka3zo24irdwabwdi4wc55jznaq75q7eaavvu'
+      expect(cid.toBaseEncodedString()).to.equal(base32String)
+
+      // it cached!
+      expect(cid.string).to.equal(base32String)
+      expect(Object.hasOwnProperty('_string')).to.be.false()
+      expect(cid.toBaseEncodedString()).to.equal(base32String)
+      expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
+
+      // alternate base not cached!
+      expect(cid.string).to.equal(base32String)
+    })
+    it('should cache string representation when constructed with one', () => {
+      const base32String = 'bafybeif2pall7dybz7vecqka3zo24irdwabwdi4wc55jznaq75q7eaavvu'
+      const cid = new CID(base32String)
+      expect(cid.string).to.equal(base32String)
+      expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
+      expect(cid.string).to.equal(base32String)
+      expect(cid.toBaseEncodedString()).to.equal(base32String)
     })
   })
 })

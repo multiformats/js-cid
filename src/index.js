@@ -88,6 +88,7 @@ class CID {
         this.multibaseName = 'base58btc'
       }
       CID.validateCID(this)
+      Object.defineProperty(this, 'string', { value: version })
       return
     }
 
@@ -221,18 +222,25 @@ class CID {
    * @returns {string}
    */
   toBaseEncodedString (base = this.multibaseName) {
-    switch (this.version) {
-      case 0: {
-        if (base !== 'base58btc') {
-          throw new Error('not supported with CIDv0, to support different bases, please migrate the instance do CIDv1, you can do that through cid.toV1()')
-        }
-        return mh.toB58String(this.multihash)
-      }
-      case 1:
-        return multibase.encode(base, this.buffer).toString()
-      default:
-        throw new Error('Unsupported version')
+    if (this.string && base === this.multibaseName) {
+      return this.string
     }
+    let str = null
+    if (this.version === 0) {
+      if (base !== 'base58btc') {
+        throw new Error('not supported with CIDv0, to support different bases, please migrate the instance do CIDv1, you can do that through cid.toV1()')
+      }
+      str = mh.toB58String(this.multihash)
+    } else if (this.version === 1) {
+      str = multibase.encode(base, this.buffer).toString()
+    } else {
+      throw new Error('unsupported version')
+    }
+    if (base === this.multibaseName) {
+      // cache the string value
+      Object.defineProperty(this, 'string', { value: str })
+    }
+    return str
   }
 
   toString (base) {
