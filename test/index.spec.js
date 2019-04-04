@@ -66,7 +66,19 @@ describe('CID', () => {
       ).to.throw()
     })
 
-    it('throws on trying to base encode CIDv0 in other base than base58 ', () => {
+    it('throws on trying to create a CIDv0 with a codec other than dag-pb', () => {
+      expect(
+        () => new CID(0, 'dag-cbor', hash)
+      ).to.throw(`codec must be 'dag-pb' for CIDv0`)
+    })
+
+    it('throws on trying to create a CIDv0 with a base other than base58btc', () => {
+      expect(
+        () => new CID(0, 'dag-pb', hash, 'base32')
+      ).to.throw(`multibaseName must be 'base58btc' for CIDv0`)
+    })
+
+    it('throws on trying to base encode CIDv0 in other base than base58btc', () => {
       const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
       const cid = new CID(mhStr)
       expect(() => cid.toBaseEncodedString('base16')).to.throw()
