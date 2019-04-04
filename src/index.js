@@ -92,21 +92,22 @@ class CID {
       return
     }
 
-    if (Buffer.isBuffer(version)) {
-      const firstByte = version.slice(0, 1)
-      const v = parseInt(firstByte.toString('hex'), 16)
+    // It is an array-like object, e.g. Arraym, Buffer or TypedArray
+    if (version.length) {
+      // The first byte is the actual version
+      const v = version[0]
       if (v === 0 || v === 1) {
         // version is a CID buffer
         const cid = version
         this.version = v
         this.codec = multicodec.getCodec(cid.slice(1))
-        this.multihash = multicodec.rmPrefix(cid.slice(1))
+        this.multihash = Buffer.from(multicodec.rmPrefix(cid.slice(1)))
         this.multibaseName = (v === 0) ? 'base58btc' : multibaseName
       } else {
         // version is a raw multihash buffer, so v0
         this.version = 0
         this.codec = 'dag-pb'
-        this.multihash = version
+        this.multihash = Buffer.from(version)
         this.multibaseName = 'base58btc'
       }
       CID.validateCID(this)

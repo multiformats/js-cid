@@ -52,6 +52,40 @@ describe('CID', () => {
       })
     })
 
+    it('handles Uint8Array multihash', (done) => {
+      multihashing(Buffer.from('hello world'), 'sha2-256', (err, mh) => {
+        expect(err).to.not.exist()
+        const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
+        const mhUint8 = Uint8Array.from(mh)
+
+        const cid = new CID(mhUint8)
+
+        expect(cid).to.have.property('codec', 'dag-pb')
+        expect(cid).to.have.property('version', 0)
+        expect(cid).to.have.property('multihash').that.eql(mh)
+
+        expect(cid.toBaseEncodedString()).to.eql(mhStr)
+        done()
+      })
+    })
+
+    it('handles Array multihash', (done) => {
+      multihashing(Buffer.from('hello world'), 'sha2-256', (err, mh) => {
+        expect(err).to.not.exist()
+        const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
+        const mhArray = Uint8Array.from(mh)
+
+        const cid = new CID(mhArray)
+
+        expect(cid).to.have.property('codec', 'dag-pb')
+        expect(cid).to.have.property('version', 0)
+        expect(cid).to.have.property('multihash').that.eql(mh)
+
+        expect(cid.toBaseEncodedString()).to.eql(mhStr)
+        done()
+      })
+    })
+
     it('create by parts', () => {
       const cid = new CID(0, 'dag-pb', hash)
 
@@ -117,6 +151,34 @@ describe('CID', () => {
       const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
 
       const cid = new CID(cidBuf)
+
+      expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('version', 1)
+      expect(cid).to.have.property('multihash')
+
+      expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
+    })
+
+    it('handles CID by Uint8Array', () => {
+      const cidStr = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
+      const cidUint8 = Uint8Array.from(cidBuf)
+
+      const cid = new CID(cidUint8)
+
+      expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('version', 1)
+      expect(cid).to.have.property('multihash')
+
+      expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
+    })
+
+    it('handles CID by Array', () => {
+      const cidStr = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
+      const cidArray = Array.from(cidBuf)
+
+      const cid = new CID(cidArray)
 
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 1)
