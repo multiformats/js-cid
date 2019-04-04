@@ -24,6 +24,15 @@ var CIDUtil = {
       return 'codec must be string'
     }
 
+    if (other.version === 0) {
+      if (other.codec !== 'dag-pb') {
+        return `codec must be 'dag-pb' for CIDv0`
+      }
+      if (other.multibaseName !== 'base58btc') {
+        return `multibaseName must be 'base58btc' for CIDv0`
+      }
+    }
+
     if (!Buffer.isBuffer(other.multihash)) {
       return 'multihash must be a Buffer'
     }
