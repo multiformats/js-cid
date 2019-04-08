@@ -5,7 +5,7 @@
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
   "scripts": {
-    "lint": "aegir lint",
+    "lint": "aegir lint && flow check --color=always",
     "test": "aegir test",
     "test:node": "aegir test --target node",
     "test:browser": "aegir test --target browser",
@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "aegir": "^18.2.0",
+    "flow-bin": "0.96.0",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "multihashing": "~0.3.3",

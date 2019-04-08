@@ -1,3 +1,5 @@
+// @flow strict
+
 'use strict'
 
 const mh = require('multihashes')
@@ -7,11 +9,24 @@ const codecs = require('multicodec/src/base-table')
 const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
 
+/*::
+export type Version = 0 | 1
+export type Codec = string
+export type Multihash = Buffer
+export type BaseEncodedString = string
+export type MultibaseName = string
+export type SerializedCID = {
+  codec:Codec;
+  version:Version;
+  hash:Multihash;
+}
+*/
+
 /**
  * @typedef {Object} SerializedCID
  * @param {string} codec
  * @param {number} version
- * @param {Buffer} multihash
+ * @param {Buffer} hash
  */
 
 /**
@@ -28,7 +43,7 @@ const withIs = require('class-is')
  * , as defined in [ipld/cid](https://github.com/multiformats/cid).
  * @class CID
  */
-class CID {
+class CID /*:: <a> */{
   /**
    * Create a new CID.
    *
@@ -59,10 +74,23 @@ class CID {
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
    */
-  constructor (version, codec, multihash, multibaseName = 'base58btc') {
-    if (module.exports.isCID(version)) {
-      // version is an exising CID instance
-      const cid = version
+  /*::
+  +version:Version
+  +codec:Codec
+  +multihash:Multihash
+  +multibaseName:MultibaseName
+  string:?string
+  _buffer:?Buffer
+  static isCID:(mixed) => boolean
+  */
+  constructor (
+    version/*: CID<a> | BaseEncodedString | Buffer | Version */,
+    codec/*: ?Codec */ = undefined,
+    multihash/*: ?Multihash */ = undefined,
+    multibaseName/*: MultibaseName */ = 'base58btc'
+  ) {
+    const cid = CID.matchCID(version)
+    if (cid) {
       this.version = cid.version
       this.codec = cid.codec
       this.multihash = Buffer.from(cid.multihash)
@@ -76,7 +104,11 @@ class CID {
       if (baseName) {
         // version is a CID String encoded with multibase, so v1
         const cid = multibase.decode(version)
-        this.version = parseInt(cid.slice(0, 1).toString('hex'), 16)
+        // Type checker will fail because parseInt isn't guaranteed to return
+        // 0 or 1 it can be any int. Invariant is later enforced through
+        // `validateCID` and we use any type to make type-checker trust us.
+        const v/*: any */ = parseInt(cid.slice(0, 1).toString('hex'), 16)
+        this.version = v
         this.codec = multicodec.getCodec(cid.slice(1))
         this.multihash = multicodec.rmPrefix(cid.slice(1))
         this.multibaseName = baseName
@@ -92,7 +124,10 @@ class CID {
       return
     }
 
-    if (Buffer.isBuffer(version)) {
+    // type checker can refine type from predicate function like `isBuffer` but
+    // it can on instanceof check, which is why we use inline comment to enable
+    // that refinement.
+    if (Buffer.isBuffer(version) /*:: && version instanceof Buffer */) {
       const firstByte = version.slice(0, 1)
       const v = parseInt(firstByte.toString('hex'), 16)
       if (v === 0 || v === 1) {
@@ -114,21 +149,26 @@ class CID {
     }
 
     // otherwise, assemble the CID from the parameters
+    // type checker will not accept `version`, `codec`, `multihash` as is
+    // because types don't correspond to [number, string, Buffer] so we
+    // use any below as we know `CID.validateCID` will throw if types do not
+    // match up.
+    const [$version, $codec, $multihash]/*: any */ = [version, codec, multihash]
 
     /**
      * @type {number}
      */
-    this.version = version
+    this.version = $version
 
     /**
      * @type {string}
      */
-    this.codec = codec
+    this.codec = $codec
 
     /**
      * @type {Buffer}
      */
-    this.multihash = multihash
+    this.multihash = $multihash
 
     /**
      * @type {string}
@@ -146,7 +186,7 @@ class CID {
    *
    * @memberOf CID
    */
-  get buffer () {
+  get buffer ()/*: Buffer */ {
     let buffer = this._buffer
 
     if (!buffer) {
@@ -175,7 +215,7 @@ class CID {
    * @returns {Buffer}
    * @readonly
    */
-  get prefix () {
+  get prefix ()/*: Buffer */ {
     return Buffer.concat([
       Buffer.from(`0${this.version}`, 'hex'),
       multicodec.getCodeVarint(this.codec),
@@ -188,7 +228,7 @@ class CID {
    *
    * @returns {CID}
    */
-  toV0 () {
+  toV0 ()/*: CID<a> */ {
     if (this.codec !== 'dag-pb') {
       throw new Error('Cannot convert a non dag-pb CID to CIDv0')
     }
@@ -211,7 +251,7 @@ class CID {
    *
    * @returns {CID}
    */
-  toV1 () {
+  toV1 ()/*: CID<a> */ {
     return new _CID(1, this.codec, this.multihash)
   }
 
@@ -221,7 +261,7 @@ class CID {
    * @param {string} [base=this.multibaseName] - Base encoding to use.
    * @returns {string}
    */
-  toBaseEncodedString (base = this.multibaseName) {
+  toBaseEncodedString (base/*: MultibaseName */ = this.multibaseName)/*: BaseEncodedString */ {
     if (this.string && base === this.multibaseName) {
       return this.string
     }
@@ -243,7 +283,7 @@ class CID {
     return str
   }
 
-  toString (base) {
+  toString (base)/*: BaseEncodedString */ {
     return this.toBaseEncodedString(base)
   }
 
@@ -252,7 +292,7 @@ class CID {
    *
    * @returns {SerializedCID}
    */
-  toJSON () {
+  toJSON ()/*: SerializedCID */ {
     return {
       codec: this.codec,
       version: this.version,
@@ -263,13 +303,18 @@ class CID {
   /**
    * Compare equality with another CID.
    *
-   * @param {CID} other
+   * @param {any} other
    * @returns {bool}
    */
-  equals (other) {
-    return this.codec === other.codec &&
+  equals (other/*: mixed */)/*: boolean */ {
+    return (
+      other != null &&
+      typeof other === 'object' &&
+      this.codec === other.codec &&
       this.version === other.version &&
+      other.multihash instanceof Buffer &&
       this.multihash.equals(other.multihash)
+    )
   }
 
   /**
@@ -279,10 +324,28 @@ class CID {
    * @param {any} other
    * @returns {void}
    */
-  static validateCID (other) {
+  static validateCID (other/*: mixed */)/*: void */ {
     let errorMsg = CIDUtil.checkCIDComponents(other)
     if (errorMsg) {
       throw new Error(errorMsg)
+    }
+  }
+
+  /**
+   * Test if the given value is a valid CID object, if it is returns it back,
+   * otherwise returns undefined.
+   * @param {any} value
+   * @returns {?CID}
+   */
+  static matchCID (value/*: mixed */)/*: ?CID<a> */ {
+    if (module.exports.isCID(value)) {
+      // Type checker is unable to refine type through predicate function,
+      // but we know value is CID so we use any making type-checker trust
+      // our judgment.
+      const cid/*: any */ = value
+      return cid
+    } else {
+      return undefined
     }
   }
 }

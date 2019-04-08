@@ -212,6 +212,8 @@ describe('CID', () => {
     it('.equals v0 to v0', () => {
       expect(new CID(h1).equals(new CID(h1))).to.equal(true)
       expect(new CID(h1).equals(new CID(h2))).to.equal(false)
+      expect(new CID(h1).equals(h1)).to.equal(false)
+      expect(new CID(h1).equals({ string: h1 })).to.equal(false)
     })
 
     it('.equals v0 to v1 and vice versa', () => {
@@ -244,6 +246,36 @@ describe('CID', () => {
       expect(
         CID.isCID(new CID(h1).toV1())
       ).to.equal(true)
+    })
+
+    it('.matchCID', () => {
+      const c1 = new CID(h1)
+
+      expect(
+        CID.matchCID(c1)
+      ).to.equal(c1)
+
+      expect(
+        CID.matchCID(h1)
+      ).to.equal(undefined)
+
+      expect(
+        CID.matchCID(false)
+      ).to.equal(undefined)
+
+      expect(
+        CID.matchCID(Buffer.from('hello world'))
+      ).to.equal(undefined)
+
+      const c1v0 = new CID(h1).toV0()
+      expect(
+        CID.matchCID(c1v0)
+      ).to.equal(c1v0)
+
+      const c1v1 = new CID(h1).toV1()
+      expect(
+        CID.matchCID(c1v1)
+      ).to.equal(c1v1)
     })
   })
 

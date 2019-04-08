@@ -1,3 +1,5 @@
+// @flow strict
+
 'use strict'
 
 const mh = require('multihashes')
@@ -9,9 +11,9 @@ var CIDUtil = {
    * Returns undefined if it is a valid CID.
    *
    * @param {any} other
-   * @returns {string}
+   * @returns {?string}
    */
-  checkCIDComponents: function (other) {
+  checkCIDComponents: function (other /*: any */)/*: ?string */ {
     if (other == null) {
       return 'null values are not valid CIDs'
     }
