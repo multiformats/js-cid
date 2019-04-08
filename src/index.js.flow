@@ -4,9 +4,10 @@ export type Version = 0 | 1
 export type Codec = string
 export type Multihash = Buffer
 export type BaseEncodedString = string
+export type MultibaseName = string
 
 declare class CID<a> {
-  constructor(Version, Codec, Multihash): void;
+  constructor(Version, Codec, Multihash, multibaseName?:MultibaseName): void;
   constructor(BaseEncodedString): void;
   constructor(Buffer): void;
 
