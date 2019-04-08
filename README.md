@@ -54,20 +54,50 @@ You will need to use Node.js `Buffer` API compatible, if you are running inside 
 
 ## Usage
 
-Basic usage is quite simple.
+You can create an instance from a CID string or CID Buffer
 
 ```js
 const CID = require('cids')
 
-const cid = new CID(1, 'dag-pb', multihash)
+const cid = new CID('zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY')
+
+cid.version       // 1
+cid.codec         // 'dag-pb'
+cid.multibaseName // 'base58btc'
+cid.toString()
+// 'zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY'
 ```
 
-If you have a base encoded string for a multihash you can also create
-an instance from the encoded string.
+or by specifying the [cid version](https://github.com/multiformats/cid#versions), [multicodec name](https://github.com/multiformats/multicodec/blob/master/table.csv) and [multihash](https://github.com/multiformats/multihash):
 
 ```js
-const cid = new CID(base58Multihash)
+const CID = require('cids')
+const multihashing = require('multihashing-async')
+
+multihashing(Buffer.from('OMG!'), 'sha2-256', (err, hash) => {
+  const cid = new CID(1, 'dag-pb', hash)
+  console.log(cid.toString())
+  // zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY
+})
 ```
+
+The string form of CIDs currently defaults to `base58btc` flavour. (This is [soon to change to `base32`](https://github.com/ipfs/ipfs/issues/337). When creating a new instance you can optionally specify the default multibase to use when calling `toBaseEncodedString()` or `toString()`
+
+
+```js
+const cid = new CID(1, 'raw', hash, 'base32')
+console.log(cid.toString())
+// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
+```
+
+If you construct an instance from a valid CID string, the base you provided will be preserved as the default.
+
+```js
+const cid = new CID('bafkreigh2akiscaildcqabsyg3dfr6chu3fgpregiymsck7e7aqa4s52zy')
+cid.toString()
+// bafkreigh2akiscaildcqabsyg3dfr6chu3fgpregiymsck7e7aqa4s52zy
+```
+
 
 ## API
 
@@ -80,16 +110,18 @@ order to handle CID objects from different versions of this module.
 
 ### CID.validateCID(cid)
 
-Validates the different components (version, codec, multihash) of the CID
+Validates the different components (version, codec, multihash, multibaseName) of the CID
 instance. Returns true if valid, false if not valid.
 
-### new CID(version, codec, multihash)
+### new CID(version, codec, multihash, [multibaseName])
 
-`version` must be either 0 or 1.
+`version` must be [either 0 or 1](https://github.com/multiformats/cid#versions).
 
 `codec` must be a string of a valid [registered codec](https://github.com/multiformats/multicodec/blob/master/table.csv).
 
 `multihash` must be a `Buffer` instance of a valid [multihash](https://github.com/multiformats/multihash).
+
+`multibaseName` optional string. Must be a valid [multibase](https://github.com/multiformats/multibase/blob/master/multibase.csv) name. Default is `base58btc`.
 
 ### new CID(baseEncodedString)
 
@@ -112,6 +144,10 @@ Property containing the CID version integer.
 
 Property containing the multihash buffer.
 
+#### cid.multibaseName
+
+Property containing the default base to use when calling `.toString`
+
 #### cid.buffer
 
 Property containing the full CID encoded as a `Buffer`.
@@ -131,9 +167,13 @@ Throws if codec is not `dag-pb`.
 
 Returns the CID encoded in version 1.
 
-#### cid.toBaseEncodedString(base='base58btc')
+#### cid.toBaseEncodedString(base=this.multibaseName)
 
-Returns a base encodec string of the CID. Defaults to `base58btc`.
+Returns a base encodec string of the CID. Defaults to the base encoding in `this.multibaseName`
+
+#### cid.toString(base=this.multibaseName)
+
+Shorthand for `cid.toBaseEncodedString` described above.
 
 #### cid.equals(cid)
 
