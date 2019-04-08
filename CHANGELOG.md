@@ -1,3 +1,33 @@
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/multiformats/js-cid/compare/v0.5.8...v0.6.0) (2019-04-08)
+
+
+### Features
+
+* add flow typedefs ([1cf9740](https://github.com/multiformats/js-cid/commit/1cf9740))
+* cache string represntation ([537f604](https://github.com/multiformats/js-cid/commit/537f604))
+* preserve base when constructed from a string ([2e597b9](https://github.com/multiformats/js-cid/commit/2e597b9))
+
+
+### BREAKING CHANGES
+
+* previously base was not preserved and all CIDs would
+be normalised to base58btc when asking for their string representation.
+
+The default will change to base32 in https://github.com/multiformats/js-cid/pull/73/files
+
+The idea behind this change is that we shouldnt lose information when
+the user passes us a base encoded string, but keep it and use it as
+the default base so toString returns the same string they provided.
+
+I'd like this as a fix for ipld explorer, which currently forces all
+CIDs into base58btc, seee: https://github.com/ipfs-shipyard/ipfs-webui/issues/999
+
+License: MIT
+Signed-off-by: Oli Evans <oli@tableflip.io>
+
+
+
 <a name="0.5.8"></a>
 ## [0.5.8](https://github.com/multiformats/js-cid/compare/v0.5.7...v0.5.8) (2019-03-14)
 
