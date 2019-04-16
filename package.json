@@ -5,7 +5,8 @@
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
   "scripts": {
-    "lint": "aegir lint && flow check --color=always",
+    "lint": "aegir lint",
+    "check": "flow check --color=always",
     "test": "aegir test",
     "test:node": "aegir test --target node",
     "test:browser": "aegir test --target browser",
