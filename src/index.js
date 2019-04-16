@@ -43,6 +43,18 @@ export type SerializedCID = {
  * , as defined in [ipld/cid](https://github.com/multiformats/cid).
  * @class CID
  */
+// CID<a> is generic and type parameter `a` represents type of the data that
+// the CID addresses. While type parameter is not really used in this library
+// it is still useful in enabling other libraries to encode type information
+// e.g. it is possible to define functions like:
+// function get <a>(CID<a>):Promise<a>
+// function put <a>(a):Promise<CID<a>>
+// Which would allow type-checker to infer type of the following value:
+// const cid = await put({ x: 1, y: 2 })
+// ...
+// const point = await get(cid)
+// point.x //:number
+// point.z //:Cannot get `point.z` because property `z` is missing in object literal { x: 1, y: 2 }.
 class CID /*:: <a> */{
   /**
    * Create a new CID.
