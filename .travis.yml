@@ -23,6 +23,7 @@ jobs:
         - npx aegir commitlint --travis
         - npx aegir dep-check
         - npm run lint
+        - npm run check
 
     - stage: test
       name: chrome
