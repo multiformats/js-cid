@@ -32,6 +32,7 @@ describe('CID', () => {
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash').that.eql(multihash.fromB58String(mhStr))
+      expect(cid).to.have.property('multibaseName', 'base58btc')
 
       expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
     })
@@ -46,6 +47,7 @@ describe('CID', () => {
         expect(cid).to.have.property('codec', 'dag-pb')
         expect(cid).to.have.property('version', 0)
         expect(cid).to.have.property('multihash').that.eql(mh)
+        expect(cid).to.have.property('multibaseName', 'base58btc')
 
         expect(cid.toBaseEncodedString()).to.eql(mhStr)
         done()
@@ -58,6 +60,7 @@ describe('CID', () => {
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base58btc')
     })
 
     it('throws on invalid BS58Str multihash ', () => {
@@ -108,12 +111,13 @@ describe('CID', () => {
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base58btc')
 
       expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
     })
 
     it('handles CID (no multibase)', () => {
-      const cidStr = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
+      const cidStr = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
       const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
 
       const cid = new CID(cidBuf)
@@ -121,6 +125,7 @@ describe('CID', () => {
       expect(cid).to.have.property('codec', 'dag-pb')
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base32')
 
       expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
     })
@@ -131,6 +136,7 @@ describe('CID', () => {
       expect(cid).to.have.property('codec', 'dag-cbor')
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base32')
     })
 
     it('can roundtrip through cid.toBaseEncodedString()', () => {
@@ -140,6 +146,7 @@ describe('CID', () => {
       expect(cid1).to.have.property('codec').that.eql(cid2.codec)
       expect(cid1).to.have.property('version').that.eql(cid2.version)
       expect(cid1).to.have.property('multihash').that.eql(cid2.multihash)
+      expect(cid1).to.have.property('multibaseName').that.eql(cid2.multibaseName)
     })
 
     it('handles multibyte varint encoded codec codes', () => {
@@ -151,9 +158,11 @@ describe('CID', () => {
       expect(cid1).to.have.property('codec', 'eth-block')
       expect(cid1).to.have.property('version', 1)
       expect(cid1).to.have.property('multihash').that.eql(mh)
+      expect(cid1).to.have.property('multibaseName', 'base32')
       expect(cid2).to.have.property('codec', 'eth-block')
       expect(cid2).to.have.property('version', 1)
       expect(cid2).to.have.property('multihash').that.eql(mh)
+      expect(cid2).to.have.property('multibaseName', 'base32')
     })
 
     it('.prefix', () => {
@@ -199,9 +208,9 @@ describe('CID', () => {
 
     it('returns a string in the base provided', () => {
       const b58v1Str = 'zdj7Wd8AMwqnhJGQCbFxBVodGSBG84TM7Hs1rcJuQMwTyfEDS'
-      const b32v1Str = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
+      const b64urlv1Str = 'uAXASIHJSUj5lkfuP5VPWf_VahvhARLRqPkF24QxY-lKaSqvV'
       const cid = new CID(b58v1Str)
-      expect(cid.toString('base32')).to.equal(b32v1Str)
+      expect(cid.toString('base64url')).to.equal(b64urlv1Str)
     })
   })
 
