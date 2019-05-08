@@ -59,7 +59,7 @@ class CID {
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
    */
-  constructor (version, codec, multihash, multibaseName = 'base58btc') {
+  constructor (version, codec, multihash, multibaseName) {
     if (module.exports.isCID(version)) {
       // version is an exising CID instance
       const cid = version
@@ -95,13 +95,13 @@ class CID {
     if (Buffer.isBuffer(version)) {
       const firstByte = version.slice(0, 1)
       const v = parseInt(firstByte.toString('hex'), 16)
-      if (v === 0 || v === 1) {
+      if (v === 1) {
         // version is a CID buffer
         const cid = version
         this.version = v
         this.codec = multicodec.getCodec(cid.slice(1))
         this.multihash = multicodec.rmPrefix(cid.slice(1))
-        this.multibaseName = (v === 0) ? 'base58btc' : multibaseName
+        this.multibaseName = 'base32'
       } else {
         // version is a raw multihash buffer, so v0
         this.version = 0
@@ -133,7 +133,7 @@ class CID {
     /**
      * @type {string}
      */
-    this.multibaseName = multibaseName
+    this.multibaseName = multibaseName || (version === 0 ? 'base58btc' : 'base32')
 
     CID.validateCID(this)
   }
