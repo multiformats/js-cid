@@ -59,13 +59,13 @@ You can create an instance from a CID string or CID Buffer
 ```js
 const CID = require('cids')
 
-const cid = new CID('zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY')
+const cid = new CID('bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu')
 
 cid.version       // 1
 cid.codec         // 'dag-pb'
-cid.multibaseName // 'base58btc'
+cid.multibaseName // 'base32'
 cid.toString()
-// 'zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY'
+// 'bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu'
 ```
 
 or by specifying the [cid version](https://github.com/multiformats/cid#versions), [multicodec name](https://github.com/multiformats/multicodec/blob/master/table.csv) and [multihash](https://github.com/multiformats/multihash):
@@ -74,28 +74,28 @@ or by specifying the [cid version](https://github.com/multiformats/cid#versions)
 const CID = require('cids')
 const multihashing = require('multihashing-async')
 
-multihashing(Buffer.from('OMG!'), 'sha2-256', (err, hash) => {
-  const cid = new CID(1, 'dag-pb', hash)
-  console.log(cid.toString())
-  // zdj7WkRPAX9o9nb9zPbXzwG7JEs78uyhwbUs8JSUayB98DWWY
-})
+const hash = await multihashing(Buffer.from('OMG!'), 'sha2-256')
+const cid = new CID(1, 'dag-pb', hash)
+console.log(cid.toString())
+// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
 ```
 
-The string form of CIDs currently defaults to `base58btc` flavour. (This is [soon to change to `base32`](https://github.com/ipfs/ipfs/issues/337). When creating a new instance you can optionally specify the default multibase to use when calling `toBaseEncodedString()` or `toString()`
+The string form of v1 CIDs defaults to `base32` encoding (v0 CIDs are always `base58btc` encoded). When creating a new instance you can optionally specify the default multibase to use when calling `toBaseEncodedString()` or `toString()`
 
 
 ```js
-const cid = new CID(1, 'raw', hash, 'base32')
+const cid = new CID(1, 'raw', hash, 'base64')
 console.log(cid.toString())
-// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
+// mAXASIN69ets85WVE0ipva5M5b2mAqAZ8LME08PeAG2MxCSuV
 ```
 
 If you construct an instance from a valid CID string, the base you provided will be preserved as the default.
 
 ```js
-const cid = new CID('bafkreigh2akiscaildcqabsyg3dfr6chu3fgpregiymsck7e7aqa4s52zy')
+// e.g. a base64url encoded CID
+const cid = new CID('uAXASIHJSUj5lkfuP5VPWf_VahvhARLRqPkF24QxY-lKaSqvV')
 cid.toString()
-// bafkreigh2akiscaildcqabsyg3dfr6chu3fgpregiymsck7e7aqa4s52zy
+// uAXASIHJSUj5lkfuP5VPWf_VahvhARLRqPkF24QxY-lKaSqvV
 ```
 
 
