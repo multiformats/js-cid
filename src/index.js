@@ -46,7 +46,7 @@ class CID {
    *   -> construct CID by parts
    * ```
    *
-   * @param {string|Buffer} version
+   * @param {string|Buffer|CID} version
    * @param {string} [codec]
    * @param {Buffer} [multihash]
    * @param {string} [multibaseName]
