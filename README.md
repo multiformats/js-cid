@@ -121,7 +121,7 @@ instance. Returns true if valid, false if not valid.
 
 `multihash` must be a `Buffer` instance of a valid [multihash](https://github.com/multiformats/multihash).
 
-`multibaseName` optional string. Must be a valid [multibase](https://github.com/multiformats/multibase/blob/master/multibase.csv) name. Default is `base58btc`.
+`multibaseName` optional string. Must be a valid [multibase](https://github.com/multiformats/multibase/blob/master/multibase.csv) name. Default is `base58btc` for v0 CIDs or `base32` for v1 CIDs.
 
 ### new CID(baseEncodedString)
 
@@ -169,7 +169,12 @@ Returns the CID encoded in version 1.
 
 #### cid.toBaseEncodedString(base=this.multibaseName)
 
-Returns a base encodec string of the CID. Defaults to the base encoding in `this.multibaseName`
+Returns a base encoded string of the CID. Defaults to the base encoding in `this.multibaseName`.
+
+The value of `this.multibaseName` depends on how the instance was constructed:
+
+1. If the CID was constructed from an object that already had a multibase (a string or an existing CID) then it retains that base.
+2. If the CID was constructed from an object that _did not_ have a multibase (a buffer, or by passing only version + codec + multihash to the constructor), then `multibaseName` will be `base58btc` for a v0 CID or `base32` for a v1 CID.
 
 #### cid.toString(base=this.multibaseName)
 
