@@ -1,3 +1,27 @@
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/multiformats/js-cid/compare/v0.6.0...v0.7.0) (2019-05-09)
+
+
+### Bug Fixes
+
+* broken link to contributing document ([c29d12e](https://github.com/multiformats/js-cid/commit/c29d12e))
+* update typedefs to reflect API changes ([63cd5f3](https://github.com/multiformats/js-cid/commit/63cd5f3)), closes [#77](https://github.com/multiformats/js-cid/issues/77)
+
+
+### Code Refactoring
+
+* default to base32 encoding for v1 CIDs ([2f854c7](https://github.com/multiformats/js-cid/commit/2f854c7))
+
+
+### BREAKING CHANGES
+
+* The default string encoding for v1 CIDs has changed from base58btc to base32.
+
+License: MIT
+Signed-off-by: Alan Shaw <alan.shaw@protocol.ai>
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/multiformats/js-cid/compare/v0.5.8...v0.6.0) (2019-04-08)
 
