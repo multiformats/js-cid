@@ -44,7 +44,7 @@
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "multihashing": "~0.3.3",
-    "multihashing-async": "~0.5.2"
+    "multihashing-async": "~0.7.0"
   },
   "engines": {
     "node": ">=4.0.0",

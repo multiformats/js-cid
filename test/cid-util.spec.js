@@ -13,14 +13,8 @@ const CIDUtil = require('../src/cid-util')
 describe('CIDUtil', () => {
   let hash
 
-  before((done) => {
-    multihashing(Buffer.from('abc'), 'sha2-256', (err, d) => {
-      if (err) {
-        return done(err)
-      }
-      hash = d
-      done()
-    })
+  before(async () => {
+    hash = await multihashing(Buffer.from('abc'), 'sha2-256')
   })
 
   describe('checkCIDComponents()', () => {
