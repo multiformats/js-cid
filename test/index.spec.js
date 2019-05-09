@@ -14,14 +14,8 @@ const CID = require('../src')
 describe('CID', () => {
   let hash
 
-  before((done) => {
-    multihashing(Buffer.from('abc'), 'sha2-256', (err, d) => {
-      if (err) {
-        return done(err)
-      }
-      hash = d
-      done()
-    })
+  before(async () => {
+    hash = await multihashing(Buffer.from('abc'), 'sha2-256')
   })
 
   describe('v0', () => {
@@ -37,21 +31,18 @@ describe('CID', () => {
       expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
     })
 
-    it('handles Buffer multihash', (done) => {
-      multihashing(Buffer.from('hello world'), 'sha2-256', (err, mh) => {
-        expect(err).to.not.exist()
-        const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
+    it('handles Buffer multihash', async () => {
+      const mh = await multihashing(Buffer.from('hello world'), 'sha2-256')
+      const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
-        const cid = new CID(mh)
+      const cid = new CID(mh)
 
-        expect(cid).to.have.property('codec', 'dag-pb')
-        expect(cid).to.have.property('version', 0)
-        expect(cid).to.have.property('multihash').that.eql(mh)
-        expect(cid).to.have.property('multibaseName', 'base58btc')
+      expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('version', 0)
+      expect(cid).to.have.property('multihash').that.eql(mh)
+      expect(cid).to.have.property('multibaseName', 'base58btc')
 
-        expect(cid.toBaseEncodedString()).to.eql(mhStr)
-        done()
-      })
+      expect(cid.toBaseEncodedString()).to.eql(mhStr)
     })
 
     it('create by parts', () => {
@@ -294,61 +285,43 @@ describe('CID', () => {
   })
 
   describe('conversion v0 <-> v1', () => {
-    it('should convert v0 to v1', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(0, 'dag-pb', hash).toV1()
-        expect(cid.version).to.equal(1)
-        done()
-      })
+    it('should convert v0 to v1', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const cid = new CID(0, 'dag-pb', hash).toV1()
+      expect(cid.version).to.equal(1)
     })
 
-    it('should convert v1 to v0', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(1, 'dag-pb', hash).toV0()
-        expect(cid.version).to.equal(0)
-        done()
-      })
+    it('should convert v1 to v0', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const cid = new CID(1, 'dag-pb', hash).toV0()
+      expect(cid.version).to.equal(0)
     })
 
-    it('should not convert v1 to v0 if not dag-pb codec', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(1, 'dag-cbor', hash)
-        expect(() => cid.toV0()).to.throw('Cannot convert a non dag-pb CID to CIDv0')
-        done()
-      })
+    it('should not convert v1 to v0 if not dag-pb codec', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const cid = new CID(1, 'dag-cbor', hash)
+      expect(() => cid.toV0()).to.throw('Cannot convert a non dag-pb CID to CIDv0')
     })
 
-    it('should not convert v1 to v0 if not sha2-256 multihash', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-512', (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(1, 'dag-pb', hash)
-        expect(() => cid.toV0()).to.throw('Cannot convert non sha2-256 multihash CID to CIDv0')
-        done()
-      })
+    it('should not convert v1 to v0 if not sha2-256 multihash', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-512')
+      const cid = new CID(1, 'dag-pb', hash)
+      expect(() => cid.toV0()).to.throw('Cannot convert non sha2-256 multihash CID to CIDv0')
     })
 
-    it('should not convert v1 to v0 if not 32 byte multihash', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', 31, (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(1, 'dag-pb', hash)
-        expect(() => cid.toV0()).to.throw('Cannot convert non 32 byte multihash CID to CIDv0')
-        done()
-      })
+    it('should not convert v1 to v0 if not 32 byte multihash', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', 31)
+      const cid = new CID(1, 'dag-pb', hash)
+      expect(() => cid.toV0()).to.throw('Cannot convert non 32 byte multihash CID to CIDv0')
     })
   })
 
   describe('caching', () => {
-    it('should cache CID as buffer', done => {
-      multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', (err, hash) => {
-        if (err) return done(err)
-        const cid = new CID(1, 'dag-pb', hash)
-        expect(cid.buffer).to.equal(cid.buffer)
-        expect(Object.hasOwnProperty('buffer')).to.be.false()
-        done()
-      })
+    it('should cache CID as buffer', async () => {
+      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const cid = new CID(1, 'dag-pb', hash)
+      expect(cid.buffer).to.equal(cid.buffer)
+      expect(Object.hasOwnProperty('buffer')).to.be.false()
     })
     it('should cache string representation when it matches the multibaseName it was constructed with', () => {
       // not string to cache yet
