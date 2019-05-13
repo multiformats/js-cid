@@ -91,6 +91,18 @@ describe('CID', () => {
       const str = buffer.toString('hex')
       expect(str).to.equals('1220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
     })
+
+    it('should construct from an old CID without a multibaseName', () => {
+      const cidStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+
+      const oldCid = new CID(cidStr)
+      delete oldCid.multibaseName // Fake it
+
+      const newCid = new CID(oldCid)
+
+      expect(newCid.multibaseName).to.equal('base58btc')
+      expect(newCid.toString()).to.equal(cidStr)
+    })
   })
 
   describe('v1', () => {
@@ -176,6 +188,18 @@ describe('CID', () => {
       }).to.throw(
         'Codec `this-codec-doesnt-exist` not found'
       )
+    })
+
+    it('should construct from an old CID without a multibaseName', () => {
+      const cidStr = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
+
+      const oldCid = new CID(cidStr)
+      delete oldCid.multibaseName // Fake it
+
+      const newCid = new CID(oldCid)
+
+      expect(newCid.multibaseName).to.equal('base32')
+      expect(newCid.toString()).to.equal(cidStr)
     })
   })
 
