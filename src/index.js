@@ -60,13 +60,14 @@ class CID {
    * new CID(<cid>)
    */
   constructor (version, codec, multihash, multibaseName) {
-    if (module.exports.isCID(version)) {
+    if (_CID.isCID(version)) {
       // version is an exising CID instance
       const cid = version
       this.version = cid.version
       this.codec = cid.codec
       this.multihash = Buffer.from(cid.multihash)
-      this.multibaseName = cid.multibaseName
+      // Default guard for when a CID < 0.7 is passed with no multibaseName
+      this.multibaseName = cid.multibaseName || (cid.version === 0 ? 'base58btc' : 'base32')
       return
     }
 
