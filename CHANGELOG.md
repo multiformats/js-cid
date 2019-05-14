@@ -1,3 +1,13 @@
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/multiformats/js-cid/compare/v0.7.0...v0.7.1) (2019-05-14)
+
+
+### Bug Fixes
+
+* create new CID from old CID ([c888183](https://github.com/multiformats/js-cid/commit/c888183))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/multiformats/js-cid/compare/v0.6.0...v0.7.0) (2019-05-09)
 
