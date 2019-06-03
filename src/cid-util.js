@@ -26,10 +26,12 @@ var CIDUtil = {
 
     if (other.version === 0) {
       if (other.codec !== 'dag-pb') {
-        return `codec must be 'dag-pb' for CIDv0`
+        console.log(`codec must be 'dag - pb' for CIDv0`)
+        // return `codec must be 'dag-pb' for CIDv0`
       }
       if (other.multibaseName !== 'base58btc') {
-        return `multibaseName must be 'base58btc' for CIDv0`
+        console.log(`multibaseName must be 'base58btc' for CIDv0`)
+        // return `multibaseName must be 'base58btc' for CIDv0`
       }
     }
 
