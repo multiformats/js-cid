@@ -173,6 +173,23 @@ describe('CID', () => {
       expect(cid.prefix.toString('hex')).to.equal('01711220')
     })
 
+    it('.prefix identity multihash', () => {
+      const mh = multihash.encode(Buffer.from('abc'), 'identity')
+      const cid0 = new CID(0, 'dag-pb', mh)
+
+      expect(cid0).to.have.property('codec', 'dag-pb')
+      expect(cid0).to.have.property('version', 0)
+      expect(cid0).to.have.property('multihash').that.eql(mh)
+      expect(cid0.toBaseEncodedString()).to.eql('161g3c')
+
+      const cid1 = new CID(1, 'dag-cbor', mh)
+
+      expect(cid1).to.have.property('codec', 'dag-cbor')
+      expect(cid1).to.have.property('version', 1)
+      expect(cid1).to.have.property('multihash').that.eql(mh)
+      expect(cid1.toBaseEncodedString()).to.eql('bafyqaa3bmjrq')
+    })
+
     it('.buffer', () => {
       const codec = 'dag-cbor' // Invalid codec will cause an error: Issue #46
       const cid = new CID(1, codec, hash)
