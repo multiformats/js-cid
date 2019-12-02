@@ -21,7 +21,7 @@ export class CID {
   toString(): BaseEncodedString
   toJSON(): { codec: Codec, version: Version, hash: Multihash }
   equals(other: any): boolean
-  static codecs: Record<string, Codec>
+  static codecs: Record<Codec, Buffer>
   static isCID(mixed: any): boolean
   static validateCID(other: any): void
 }
