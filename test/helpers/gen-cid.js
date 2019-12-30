@@ -16,6 +16,7 @@ const cid = Buffer.concat([
 
 const cidStr = multibase.encode('base58btc', cid).toString()
 
+/* eslint-disable no-console */
 console.log('CID String (multibase included)')
 console.log(cidStr)
 console.log('CID in hex (multibase not included)')
