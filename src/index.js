@@ -3,7 +3,7 @@
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
-const codecs = require('multicodec/src/base-table')
+const codecs = require('multicodec/src/base-table.json')
 const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
 
