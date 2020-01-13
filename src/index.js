@@ -281,7 +281,7 @@ class CID {
    * @returns {void}
    */
   static validateCID (other) {
-    let errorMsg = CIDUtil.checkCIDComponents(other)
+    const errorMsg = CIDUtil.checkCIDComponents(other)
     if (errorMsg) {
       throw new Error(errorMsg)
     }
