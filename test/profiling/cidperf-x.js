@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict'
 
 const multihashing = require('multihashing')
@@ -44,7 +45,7 @@ console.log(`Test: Will run "new CID()" ${reps} times.`)
 // We just give ~1 second for the JS engine to start and 'rest', etc.
 // before starting new tests.
 sleep(1000).then(() => {
-  console.log(`Starting a test...`)
+  console.log('Starting a test...')
   console.time('run'); [...Array(reps).keys()].map(i => {
     cidPerf.run(i)
   })
