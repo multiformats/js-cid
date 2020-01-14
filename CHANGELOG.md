@@ -1,3 +1,20 @@
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/multiformats/js-cid/compare/v0.7.1...v0.7.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* codecs -> record of codec: buffer ([4cf17bb](https://github.com/multiformats/js-cid/commit/4cf17bb))
+* explicitly require .json ext of base-table ([a9898ff](https://github.com/multiformats/js-cid/commit/a9898ff)), closes [#96](https://github.com/multiformats/js-cid/issues/96)
+
+
+### Features
+
+* typescript types ([3b27338](https://github.com/multiformats/js-cid/commit/3b27338))
+* update types in package.json ([e01f19d](https://github.com/multiformats/js-cid/commit/e01f19d))
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/multiformats/js-cid/compare/v0.7.0...v0.7.1) (2019-05-14)
 
