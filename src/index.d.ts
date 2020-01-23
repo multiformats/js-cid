@@ -28,77 +28,79 @@ declare class CID {
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
    */
-  constructor(version: 0 | 1, codec: string, multhash: Buffer, multibaseName?: string)
-  constructor(cidStr: string)
-  constructor(cidBuf: Buffer)
-  constructor(cidMultihash: Buffer)
-  constructor(cid: CID)
-  
-  /**
-   * The codec of the CID.
-   */
-  codec: string
-
-  /**
-   * The multihash of the CID.
-   */
-  multihash: Buffer
-
-  /**
-   * Multibase name as string.
-   */
-  multibaseName: string
-
-  /**
-   * The CID as a `Buffer`
-   */
-  readonly buffer: Buffer
-  
-  /**
-   * The prefix of the CID.
-   */
-  readonly prefix: Buffer
+  constructor(
+    version: 0 | 1,
+    codec: string,
+    multhash: Buffer,
+    multibaseName?: string
+  );
+  constructor(cid: CID);
+  constructor(str: string);
+  constructor(buf: Buffer);
 
   /**
    * The version of the CID.
    */
-  version: number
+  version: number;
+
+  /**
+   * The codec of the CID.
+   */
+  codec: string;
+
+  /**
+   * The multihash of the CID.
+   */
+  multihash: Buffer;
+
+  /**
+   * Multibase name as string.
+   */
+  multibaseName: string;
+
+  /**
+   * The CID as a `Buffer`
+   */
+  readonly buffer: Buffer;
+
+  /**
+   * The prefix of the CID.
+   */
+  readonly prefix: Buffer;
 
   /**
    * Convert to a CID of version `0`.
    */
-  toV0(): CID
+  toV0(): CID;
 
   /**
    * Convert to a CID of version `1`.
    */
-  toV1(): CID
+  toV1(): CID;
+
   /**
    * Encode the CID into a string.
    *
    * @param base Base encoding to use.
    */
-  toBaseEncodedString(base?: string): string
+  toBaseEncodedString(base?: string): string;
 
   /**
    * Encode the CID into a string.
    */
-  toString(base?: string): string
+  toString(base?: string): string;
 
   /**
    * Serialize to a plain object.
    */
-  toJSON(): { codec: string, version: 0 | 1, hash: Buffer }
-  
+  toJSON(): { codec: string; version: 0 | 1; hash: Buffer };
+
   /**
    * Compare equality with another CID.
    *
    * @param other The other CID.
    */
-  equals(other: any): boolean
-  
-  static codecs: Record<string, Buffer>
-  static isCID(mixed: any): boolean
+  equals(other: any): boolean;
 
   /**
    * Test if the given input is a valid CID object.
@@ -106,7 +108,11 @@ declare class CID {
    *
    * @param other The other CID.
    */
-  static validateCID(other: any): void
+  static validateCID(other: any): void;
+
+  static isCID(mixed: any): boolean;
+
+  static codecs: Record<string, number>;
 }
 
 export = CID
