@@ -83,7 +83,7 @@ declare class CID {
   /**
    * Encode the CID into a string.
    */
-  toString(): string
+  toString(base?: string): string
 
   /**
    * Serialize to a plain object.
