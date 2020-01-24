@@ -1,3 +1,19 @@
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/multiformats/js-cid/compare/v0.7.2...v0.7.3) (2020-01-24)
+
+
+### Bug Fixes
+
+* address review requests + ordering ([29e2def](https://github.com/multiformats/js-cid/commit/29e2def))
+* update toString to include optional base ([5aff196](https://github.com/multiformats/js-cid/commit/5aff196))
+
+
+### Features
+
+* more correct type defs + docs ([4eb0c60](https://github.com/multiformats/js-cid/commit/4eb0c60))
+
+
+
 <a name="0.7.2"></a>
 ## [0.7.2](https://github.com/multiformats/js-cid/compare/v0.7.1...v0.7.2) (2020-01-14)
 
