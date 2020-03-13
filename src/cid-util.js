@@ -1,7 +1,7 @@
 'use strict'
 
 const mh = require('multihashes')
-
+const { Buffer } = require('buffer')
 var CIDUtil = {
   /**
    * Test if the given input is a valid CID object.

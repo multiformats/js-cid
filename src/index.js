@@ -1,5 +1,6 @@
 'use strict'
 
+const { Buffer } = require('buffer')
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
