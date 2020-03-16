@@ -1,3 +1,13 @@
+<a name="0.7.4"></a>
+## [0.7.4](https://github.com/multiformats/js-cid/compare/v0.7.3...v0.7.4) (2020-03-16)
+
+
+### Bug Fixes
+
+* add buffer ([65681ef](https://github.com/multiformats/js-cid/commit/65681ef))
+
+
+
 <a name="0.7.3"></a>
 ## [0.7.3](https://github.com/multiformats/js-cid/compare/v0.7.2...v0.7.3) (2020-01-24)
 
