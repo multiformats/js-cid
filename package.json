@@ -37,16 +37,16 @@
   "dependencies": {
     "buffer": "^5.5.0",
     "class-is": "^1.1.0",
-    "multibase": "~0.6.0",
-    "multicodec": "^1.0.0",
-    "multihashes": "~0.4.15"
+    "multibase": "~0.7.0",
+    "multicodec": "^1.0.1",
+    "multihashes": "~0.4.17"
   },
   "devDependencies": {
-    "aegir": "^21.3.0",
+    "aegir": "^21.4.4",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "multihashing": "~0.3.3",
-    "multihashing-async": "~0.8.0"
+    "multihashing-async": "~0.8.1"
   },
   "engines": {
     "node": ">=4.0.0",
