@@ -1,3 +1,18 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/multiformats/js-cid/compare/v0.7.5...v0.8.0) (2020-03-24)
+
+
+### Chores
+
+* update deps ([ff2c247](https://github.com/multiformats/js-cid/commit/ff2c247))
+
+
+### BREAKING CHANGES
+
+* base1 support was removed
+
+
+
 <a name="0.7.5"></a>
 ## [0.7.5](https://github.com/multiformats/js-cid/compare/v0.7.4...v0.7.5) (2020-03-24)
 
