@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
@@ -72,6 +72,7 @@
     "Rod Vagg <rod@vagg.org>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
     "Volker Mische <volker.mische@gmail.com>",
+    "bluelovers <codelovers@users.sourceforge.net>",
     "greenkeeper[bot] <greenkeeper[bot]@users.noreply.github.com>",
     "kumavis <kumavis@users.noreply.github.com>"
   ]
