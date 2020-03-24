@@ -245,6 +245,15 @@ class CID {
     return str
   }
 
+  /**
+   * CID(QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n)
+   *
+   * @returns {String}
+   */
+  [Symbol.for('nodejs.util.inspect.custom')] () {
+    return 'CID(' + this.toString() + ')'
+  }
+
   toString (base) {
     return this.toBaseEncodedString(base)
   }
