@@ -110,7 +110,7 @@ declare class CID {
    */
   static validateCID(other: any): void;
 
-  static isCID(mixed: any): boolean;
+  static isCID(mixed: any): mixed is CID;
 
   static codecs: Record<string, number>;
 }
