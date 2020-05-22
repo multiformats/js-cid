@@ -1,3 +1,13 @@
+<a name="0.8.1"></a>
+## [0.8.1](https://github.com/multiformats/js-cid/compare/v0.8.0...v0.8.1) (2020-05-22)
+
+
+### Features
+
+* support type predicates ([f7ede61](https://github.com/multiformats/js-cid/commit/f7ede61))
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/multiformats/js-cid/compare/v0.7.5...v0.8.0) (2020-03-24)
 
