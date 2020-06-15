@@ -1,3 +1,13 @@
+<a name="0.8.2"></a>
+## [0.8.2](https://github.com/multiformats/js-cid/compare/v0.8.1...v0.8.2) (2020-06-15)
+
+
+### Features
+
+* support Base36 ([ea5a7f2](https://github.com/multiformats/js-cid/commit/ea5a7f2))
+
+
+
 <a name="0.8.1"></a>
 ## [0.8.1](https://github.com/multiformats/js-cid/compare/v0.8.0...v0.8.1) (2020-05-22)
 
