@@ -35,14 +35,14 @@
     "url": "https://github.com/multiformats/js-cid/issues"
   },
   "dependencies": {
-    "buffer": "^5.5.0",
+    "buffer": "^5.6.0",
     "class-is": "^1.1.0",
     "multibase": "^1.0.0",
     "multicodec": "^1.0.1",
-    "multihashes": "~0.4.17"
+    "multihashes": "~0.4.19"
   },
   "devDependencies": {
-    "aegir": "^21.4.4",
+    "aegir": "^23.0.0",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "multihashing": "~0.3.3",
