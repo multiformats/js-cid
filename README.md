@@ -111,7 +111,7 @@ order to handle CID objects from different versions of this module.
 ### CID.validateCID(cid)
 
 Validates the different components (version, codec, multihash, multibaseName) of the CID
-instance. Returns true if valid, false if not valid.
+instance. Throws an `Error` if not valid.
 
 ### new CID(version, codec, multihash, [multibaseName])
 

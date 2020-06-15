@@ -1,9 +1,10 @@
 'use strict'
 
+const { Buffer } = require('buffer')
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
-const codecs = require('multicodec/src/base-table')
+const codecs = require('multicodec/src/base-table.json')
 const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
 
@@ -244,6 +245,15 @@ class CID {
     return str
   }
 
+  /**
+   * CID(QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n)
+   *
+   * @returns {String}
+   */
+  [Symbol.for('nodejs.util.inspect.custom')] () {
+    return 'CID(' + this.toString() + ')'
+  }
+
   toString (base) {
     return this.toBaseEncodedString(base)
   }
@@ -281,7 +291,7 @@ class CID {
    * @returns {void}
    */
   static validateCID (other) {
-    let errorMsg = CIDUtil.checkCIDComponents(other)
+    const errorMsg = CIDUtil.checkCIDComponents(other)
     if (errorMsg) {
       throw new Error(errorMsg)
     }

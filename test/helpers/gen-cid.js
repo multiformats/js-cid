@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict'
 
 // CID String: <mbase><version><mcodec><mhash>

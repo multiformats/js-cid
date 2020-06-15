@@ -1,3 +1,91 @@
+<a name="0.8.2"></a>
+## [0.8.2](https://github.com/multiformats/js-cid/compare/v0.8.1...v0.8.2) (2020-06-15)
+
+
+### Features
+
+* support Base36 ([ea5a7f2](https://github.com/multiformats/js-cid/commit/ea5a7f2))
+
+
+
+<a name="0.8.1"></a>
+## [0.8.1](https://github.com/multiformats/js-cid/compare/v0.8.0...v0.8.1) (2020-05-22)
+
+
+### Features
+
+* support type predicates ([f7ede61](https://github.com/multiformats/js-cid/commit/f7ede61))
+
+
+
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/multiformats/js-cid/compare/v0.7.5...v0.8.0) (2020-03-24)
+
+
+### Chores
+
+* update deps ([ff2c247](https://github.com/multiformats/js-cid/commit/ff2c247))
+
+
+### BREAKING CHANGES
+
+* base1 support was removed
+
+
+
+<a name="0.7.5"></a>
+## [0.7.5](https://github.com/multiformats/js-cid/compare/v0.7.4...v0.7.5) (2020-03-24)
+
+
+### Features
+
+* add nodejs.util.inspect.custom ([fe953c1](https://github.com/multiformats/js-cid/commit/fe953c1))
+
+
+
+<a name="0.7.4"></a>
+## [0.7.4](https://github.com/multiformats/js-cid/compare/v0.7.3...v0.7.4) (2020-03-16)
+
+
+### Bug Fixes
+
+* add buffer ([65681ef](https://github.com/multiformats/js-cid/commit/65681ef))
+
+
+
+<a name="0.7.3"></a>
+## [0.7.3](https://github.com/multiformats/js-cid/compare/v0.7.2...v0.7.3) (2020-01-24)
+
+
+### Bug Fixes
+
+* address review requests + ordering ([29e2def](https://github.com/multiformats/js-cid/commit/29e2def))
+* update toString to include optional base ([5aff196](https://github.com/multiformats/js-cid/commit/5aff196))
+
+
+### Features
+
+* more correct type defs + docs ([4eb0c60](https://github.com/multiformats/js-cid/commit/4eb0c60))
+
+
+
+<a name="0.7.2"></a>
+## [0.7.2](https://github.com/multiformats/js-cid/compare/v0.7.1...v0.7.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* codecs -> record of codec: buffer ([4cf17bb](https://github.com/multiformats/js-cid/commit/4cf17bb))
+* explicitly require .json ext of base-table ([a9898ff](https://github.com/multiformats/js-cid/commit/a9898ff)), closes [#96](https://github.com/multiformats/js-cid/issues/96)
+
+
+### Features
+
+* typescript types ([3b27338](https://github.com/multiformats/js-cid/commit/3b27338))
+* update types in package.json ([e01f19d](https://github.com/multiformats/js-cid/commit/e01f19d))
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/multiformats/js-cid/compare/v0.7.0...v0.7.1) (2019-05-14)
 

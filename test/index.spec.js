@@ -63,13 +63,13 @@ describe('CID', () => {
     it('throws on trying to create a CIDv0 with a codec other than dag-pb', () => {
       expect(
         () => new CID(0, 'dag-cbor', hash)
-      ).to.throw(`codec must be 'dag-pb' for CIDv0`)
+      ).to.throw("codec must be 'dag-pb' for CIDv0")
     })
 
     it('throws on trying to create a CIDv0 with a base other than base58btc', () => {
       expect(
         () => new CID(0, 'dag-pb', hash, 'base32')
-      ).to.throw(`multibaseName must be 'base58btc' for CIDv0`)
+      ).to.throw("multibaseName must be 'base58btc' for CIDv0")
     })
 
     it('throws on trying to base encode CIDv0 in other base than base58btc', () => {
@@ -131,6 +131,19 @@ describe('CID', () => {
       expect(cid).to.have.property('multibaseName', 'base32')
 
       expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
+    })
+
+    it('handles ED25519 PeerID as CID in Base36', () => {
+      const peerIdStr = 'k51qzi5uqu5dj16qyiq0tajolkojyl9qdkr254920wxv7ghtuwcz593tp69z9m'
+
+      const cid = new CID(peerIdStr)
+
+      expect(cid).to.have.property('codec', 'libp2p-key')
+      expect(cid).to.have.property('version', 1)
+      expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base36')
+
+      expect(cid.toBaseEncodedString()).to.be.eql(peerIdStr)
     })
 
     it('create by parts', () => {
@@ -362,7 +375,9 @@ describe('CID', () => {
       const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(1, 'dag-pb', hash)
       expect(cid.buffer).to.equal(cid.buffer)
-      expect(Object.hasOwnProperty('buffer')).to.be.false()
+      // Make sure custom implementation detail properties don't leak into
+      // the prototype
+      expect(Object.prototype.hasOwnProperty.call(cid, 'buffer')).to.be.false()
     })
     it('should cache string representation when it matches the multibaseName it was constructed with', () => {
       // not string to cache yet
@@ -378,7 +393,9 @@ describe('CID', () => {
 
       // it cached!
       expect(cid.string).to.equal(base32String)
-      expect(Object.hasOwnProperty('_string')).to.be.false()
+      // Make sure custom implementation detail properties don't leak into
+      // the prototype
+      expect(Object.prototype.hasOwnProperty.call(cid, '_string')).to.be.false()
       expect(cid.toBaseEncodedString()).to.equal(base32String)
       expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
 
