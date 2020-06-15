@@ -133,6 +133,19 @@ describe('CID', () => {
       expect(cid.toBaseEncodedString()).to.be.eql(cidStr)
     })
 
+    it('handles ED25519 PeerID as CID in Base36', () => {
+      const peerIdStr = 'k51qzi5uqu5dj16qyiq0tajolkojyl9qdkr254920wxv7ghtuwcz593tp69z9m'
+
+      const cid = new CID(peerIdStr)
+
+      expect(cid).to.have.property('codec', 'libp2p-key')
+      expect(cid).to.have.property('version', 1)
+      expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base36')
+
+      expect(cid.toBaseEncodedString()).to.be.eql(peerIdStr)
+    })
+
     it('create by parts', () => {
       const cid = new CID(1, 'dag-cbor', hash)
 
