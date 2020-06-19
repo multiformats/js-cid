@@ -9,6 +9,7 @@ chai.use(dirtyChai)
 const multihashing = require('multihashing-async')
 const CID = require('../src')
 const CIDUtil = require('../src/cid-util')
+const { Buffer } = require('buffer')
 
 describe('CIDUtil', () => {
   let hash

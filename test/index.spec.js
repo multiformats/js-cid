@@ -8,6 +8,7 @@ const expect = chai.expect
 chai.use(dirtyChai)
 const multihash = require('multihashes')
 const multihashing = require('multihashing-async')
+const { Buffer } = require('buffer')
 
 const CID = require('../src')
 
