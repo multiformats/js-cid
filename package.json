@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
@@ -66,6 +66,7 @@
     "Real Harry <sidewaybot@gmail.com>",
     "bluelovers <codelovers@users.sourceforge.net>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
+    "Alex Potsides <alex@achingbrain.net>",
     "Henrique Dias <hacdias@gmail.com>",
     "Mitar <mitar.github@tnode.com>",
     "Richard Littauer <richard.littauer@gmail.com>",
