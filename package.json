@@ -39,13 +39,12 @@
     "class-is": "^1.1.0",
     "multibase": "^1.0.0",
     "multicodec": "^1.0.1",
-    "multihashes": "~0.4.19"
+    "multihashes": "^1.0.1"
   },
   "devDependencies": {
     "aegir": "^23.0.0",
     "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
-    "multihashing": "~0.3.3",
     "multihashing-async": "~0.8.1"
   },
   "engines": {
