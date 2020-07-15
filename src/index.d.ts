@@ -113,6 +113,8 @@ declare class CID {
   static isCID(mixed: any): mixed is CID;
 
   static codecs: Record<string, number>;
+
+  static CID: typeof CID;
 }
 
 export = CID

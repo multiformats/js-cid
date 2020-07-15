@@ -27,7 +27,10 @@ declare class CID<a> {
   static codecs: { [string]: Codec };
   static isCID(mixed): boolean;
   static validateCID(mixed): void;
+  static CID: typeof CID;
 }
+
+export { CID }
 
 export default CID
 export type { CID }

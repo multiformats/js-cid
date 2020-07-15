@@ -305,4 +305,6 @@ const _CID = withIs(CID, {
 
 _CID.codecs = codecs
 
+_CID.CID = _CID
+
 module.exports = _CID
