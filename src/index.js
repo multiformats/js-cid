@@ -251,7 +251,7 @@ class CID {
    * @returns {String}
    */
   [Symbol.for('nodejs.util.inspect.custom')] () {
-    return 'CID(' + this.toString() + ')'
+    return 'CID(' + this.toString(this.multibaseName) + ')'
   }
 
   toString (base) {
