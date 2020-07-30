@@ -6,16 +6,16 @@
 const multibase = require('multibase')
 const codecs = require('../../src').codecs
 const multihashing = require('multihashing-async')
-const { Buffer } = require('buffer')
+const utf8ArrayFromString = require('uint8arrays/from-string')
 
 async function main () {
-  const mh = await multihashing(Buffer.from('oh, hey!'), 'sha2-256')
+  const mh = await multihashing(utf8ArrayFromString('oh, hey!'), 'sha2-256')
 
-  const cid = Buffer.concat([
-    Buffer.from('01', 'hex'),
-    Buffer.from([codecs['dag-pb']]),
-    mh
-  ])
+  const cid = Uint8Array.of(
+    1,
+    codecs['dag-pb'],
+    ...mh
+  )
 
   const cidStr = multibase.encode('base58btc', cid).toString()
 

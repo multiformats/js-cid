@@ -1,8 +1,8 @@
 'use strict'
 
 const mh = require('multihashes')
-const { Buffer } = require('buffer')
-var CIDUtil = {
+
+const CIDUtil = {
   /**
    * Test if the given input is a valid CID object.
    * Returns an error message if it is not.
@@ -33,8 +33,8 @@ var CIDUtil = {
       }
     }
 
-    if (!Buffer.isBuffer(other.multihash)) {
-      return 'multihash must be a Buffer'
+    if (!(other.multihash instanceof Uint8Array)) {
+      return 'multihash must be a Uint8Array'
     }
 
     try {

@@ -1,4 +1,4 @@
-# js-cid
+# js-cid  <!-- omit in toc -->
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai/)
 [![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
@@ -10,15 +10,34 @@
 
 > [CID](https://github.com/multiformats/cid) implementation in JavaScript.
 
-## Lead Maintainer
+## Lead Maintainer   <!-- omit in toc -->
 
 [Volker Mische](https://github.com/vmx)
 
-## Table of Contents
+## Table of Contents   <!-- omit in toc -->
 
 - [Install](#install)
+  - [In Node.js through npm](#in-nodejs-through-npm)
+  - [Browser: Browserify, Webpack, other bundlers](#browser-browserify-webpack-other-bundlers)
+  - [In the Browser through `<script>` tag](#in-the-browser-through-script-tag)
 - [Usage](#usage)
 - [API](#api)
+  - [CID.isCID(cid)](#cidiscidcid)
+  - [CID.validateCID(cid)](#cidvalidatecidcid)
+  - [new CID(version, codec, multihash, [multibaseName])](#new-cidversion-codec-multihash-multibasename)
+  - [new CID(baseEncodedString)](#new-cidbaseencodedstring)
+  - [new CID(Uint8Array)](#new-ciduint8array)
+    - [cid.codec](#cidcodec)
+    - [cid.version](#cidversion)
+    - [cid.multihash](#cidmultihash)
+    - [cid.multibaseName](#cidmultibasename)
+    - [cid.bytes](#cidbytes)
+    - [cid.prefix](#cidprefix)
+    - [cid.toV0()](#cidtov0)
+    - [cid.toV1()](#cidtov1)
+    - [cid.toBaseEncodedString(base=this.multibaseName)](#cidtobaseencodedstringbasethismultibasename)
+    - [cid.toString(base=this.multibaseName)](#cidtostringbasethismultibasename)
+    - [cid.equals(cid)](#cidequalscid)
 - [Contribute](#contribute)
 - [License](#license)
 
@@ -48,13 +67,9 @@ Loading this module through a script tag will make the ```Cids``` obj available 
 <script src="https://unpkg.com/cids/dist/index.js"></script>
 ```
 
-#### Gotchas
-
-You will need to use Node.js `Buffer` API compatible, if you are running inside the browser, you can access it by `multihash.Buffer` or you can install Feross's [Buffer](https://github.com/feross/buffer).
-
 ## Usage
 
-You can create an instance from a CID string or CID Buffer
+You can create an instance from a CID string or CID Uint8Array
 
 ```js
 const CID = require('cids')
@@ -73,8 +88,9 @@ or by specifying the [cid version](https://github.com/multiformats/cid#versions)
 ```js
 const CID = require('cids')
 const multihashing = require('multihashing-async')
+const bytes = new TextEncoder('utf8').encode('OMG!')
 
-const hash = await multihashing(Buffer.from('OMG!'), 'sha2-256')
+const hash = await multihashing(bytes, 'sha2-256')
 const cid = new CID(1, 'dag-pb', hash)
 console.log(cid.toString())
 // bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
@@ -119,7 +135,7 @@ instance. Throws an `Error` if not valid.
 
 `codec` must be a string of a valid [registered codec](https://github.com/multiformats/multicodec/blob/master/table.csv).
 
-`multihash` must be a `Buffer` instance of a valid [multihash](https://github.com/multiformats/multihash).
+`multihash` must be a `Uint8Array` instance of a valid [multihash](https://github.com/multiformats/multihash).
 
 `multibaseName` optional string. Must be a valid [multibase](https://github.com/multiformats/multibase/blob/master/multibase.csv) name. Default is `base58btc` for v0 CIDs or `base32` for v1 CIDs.
 
@@ -128,9 +144,9 @@ instance. Throws an `Error` if not valid.
 Additionally, you can instantiate an instance from a base encoded
 string.
 
-### new CID(Buffer)
+### new CID(Uint8Array)
 
-Additionally, you can instantiate an instance from a buffer.
+Additionally, you can instantiate an instance from a `Uint8Array`.
 
 #### cid.codec
 
@@ -142,19 +158,19 @@ Property containing the CID version integer.
 
 #### cid.multihash
 
-Property containing the multihash buffer.
+Property containing the multihash `Uint8Array`.
 
 #### cid.multibaseName
 
 Property containing the default base to use when calling `.toString`
 
-#### cid.buffer
+#### cid.bytes
 
-Property containing the full CID encoded as a `Buffer`.
+Property containing the full CID encoded as a `Uint8Array`.
 
 #### cid.prefix
 
-Proprety containing a buffer of the CID version, codec, and the prefix
+Proprety containing a `Uint8Array` of the CID version, codec, and the prefix
 section of the multihash.
 
 #### cid.toV0()
@@ -174,7 +190,7 @@ Returns a base encoded string of the CID. Defaults to the base encoding in `this
 The value of `this.multibaseName` depends on how the instance was constructed:
 
 1. If the CID was constructed from an object that already had a multibase (a string or an existing CID) then it retains that base.
-2. If the CID was constructed from an object that _did not_ have a multibase (a buffer, or by passing only version + codec + multihash to the constructor), then `multibaseName` will be `base58btc` for a v0 CID or `base32` for a v1 CID.
+2. If the CID was constructed from an object that _did not_ have a multibase (a `Uint8Array`, or by passing only version + codec + multihash to the constructor), then `multibaseName` will be `base58btc` for a v0 CID or `base32` for a v1 CID.
 
 #### cid.toString(base=this.multibaseName)
 

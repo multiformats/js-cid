@@ -1,18 +1,19 @@
 'use strict'
 
-const { Buffer } = require('buffer')
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table.json')
 const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
+const uint8ArrayConcat = require('uint8arrays/concat')
+const uint8ArrayToString = require('uint8arrays/to-string')
 
 /**
  * @typedef {Object} SerializedCID
  * @param {string} codec
  * @param {number} version
- * @param {Buffer} multihash
+ * @param {Uint8Array} multihash
  */
 
 /**
@@ -40,22 +41,22 @@ class CID {
    * else if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
-   * else if (Buffer)
+   * else if (Uint8Array)
    *   if (1st byte is 0 or 1) -> CID
    *   else -> multihash
    * else if (Number)
    *   -> construct CID by parts
    * ```
    *
-   * @param {string|Buffer|CID} version
+   * @param {string|Uint8Array|CID} version
    * @param {string} [codec]
-   * @param {Buffer} [multihash]
+   * @param {Uint8Array} [multihash]
    * @param {string} [multibaseName]
    *
    * @example
    * new CID(<version>, <codec>, <multihash>, <multibaseName>)
    * new CID(<cidStr>)
-   * new CID(<cid.buffer>)
+   * new CID(<cid.bytes>)
    * new CID(<multihash>)
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
@@ -66,7 +67,7 @@ class CID {
       const cid = version
       this.version = cid.version
       this.codec = cid.codec
-      this.multihash = Buffer.from(cid.multihash)
+      this.multihash = cid.multihash
       // Default guard for when a CID < 0.7 is passed with no multibaseName
       this.multibaseName = cid.multibaseName || (cid.version === 0 ? 'base58btc' : 'base32')
       return
@@ -94,18 +95,18 @@ class CID {
       return
     }
 
-    if (Buffer.isBuffer(version)) {
+    if (version instanceof Uint8Array) {
       const firstByte = version.slice(0, 1)
       const v = parseInt(firstByte.toString('hex'), 16)
       if (v === 1) {
-        // version is a CID buffer
+        // version is a CID Uint8Array
         const cid = version
         this.version = v
         this.codec = multicodec.getCodec(cid.slice(1))
         this.multihash = multicodec.rmPrefix(cid.slice(1))
         this.multibaseName = 'base32'
       } else {
-        // version is a raw multihash buffer, so v0
+        // version is a raw multihash Uint8Array, so v0
         this.version = 0
         this.codec = 'dag-pb'
         this.multihash = version
@@ -128,7 +129,7 @@ class CID {
     this.codec = codec
 
     /**
-     * @type {Buffer}
+     * @type {Uint8Array}
      */
     this.multihash = multihash
 
@@ -141,48 +142,49 @@ class CID {
   }
 
   /**
-   * The CID as a `Buffer`
+   * The CID as a `Uint8Array`
    *
-   * @return {Buffer}
+   * @return {Uint8Array}
    * @readonly
    *
    * @memberOf CID
    */
-  get buffer () {
-    let buffer = this._buffer
+  get bytes () {
+    let bytes = this._bytes
 
-    if (!buffer) {
+    if (!bytes) {
       if (this.version === 0) {
-        buffer = this.multihash
+        bytes = this.multihash
       } else if (this.version === 1) {
-        buffer = Buffer.concat([
-          Buffer.from('01', 'hex'),
-          multicodec.getCodeVarint(this.codec),
-          this.multihash
-        ])
+        const codec = multicodec.getCodeVarint(this.codec)
+        bytes = uint8ArrayConcat([
+          [1], codec, this.multihash
+        ], 1 + codec.byteLength + this.multihash.byteLength)
       } else {
         throw new Error('unsupported version')
       }
 
-      // Cache this buffer so it doesn't have to be recreated
-      Object.defineProperty(this, '_buffer', { value: buffer })
+      // Cache this Uint8Array so it doesn't have to be recreated
+      Object.defineProperty(this, '_bytes', { value: bytes })
     }
 
-    return buffer
+    return bytes
   }
 
   /**
    * Get the prefix of the CID.
    *
-   * @returns {Buffer}
+   * @returns {Uint8Array}
    * @readonly
    */
   get prefix () {
-    return Buffer.concat([
-      Buffer.from(`0${this.version}`, 'hex'),
-      multicodec.getCodeVarint(this.codec),
-      mh.prefix(this.multihash)
-    ])
+    const codec = multicodec.getCodeVarint(this.codec)
+    const multihash = mh.prefix(this.multihash)
+    const prefix = uint8ArrayConcat([
+      [this.version], codec, multihash
+    ], 1 + codec.byteLength + multihash.byteLength)
+
+    return prefix
   }
 
   /**
@@ -234,7 +236,7 @@ class CID {
       }
       str = mh.toB58String(this.multihash)
     } else if (this.version === 1) {
-      str = multibase.encode(base, this.buffer).toString()
+      str = uint8ArrayToString(multibase.encode(base, this.bytes))
     } else {
       throw new Error('unsupported version')
     }
