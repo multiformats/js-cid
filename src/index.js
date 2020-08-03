@@ -8,6 +8,7 @@ const CIDUtil = require('./cid-util')
 const withIs = require('class-is')
 const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
+const uint8ArrayEquals = require('uint8arrays/equals')
 
 /**
  * @typedef {Object} SerializedCID
@@ -282,7 +283,7 @@ class CID {
   equals (other) {
     return this.codec === other.codec &&
       this.version === other.version &&
-      this.multihash.equals(other.multihash)
+      uint8ArrayEquals(this.multihash, other.multihash)
   }
 
   /**

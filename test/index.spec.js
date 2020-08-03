@@ -276,6 +276,15 @@ describe('CID', () => {
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })
 
+    it('.equals a similar CID with a Uint8Array multihash', () => {
+      const str = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+      const cid = new CID(str)
+      const cidA = new CID(cid.version, cid.codec, Uint8Array.from(cid.multihash))
+      const cidB = new CID(str)
+
+      expect(cidA.equals(cidB)).to.equal(true)
+    })
+
     it('.isCid', () => {
       expect(
         CID.isCID(new CID(h1))
