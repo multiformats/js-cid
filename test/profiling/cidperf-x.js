@@ -6,6 +6,7 @@ const multihashing = require('multihashing-async')
 // const CID = require('cids')
 // [2] New/proposed implementation.
 const CID = require('../../src')
+const uint8ArrayFromString = require('uint8arrays/from-string')
 
 // Used to delay the testing for a few seconds.
 function sleep (ms) {
@@ -47,7 +48,7 @@ sleep(1000).then(async () => {
   console.log('Starting a test...')
   console.time('run')
 
-  const mh = await multihashing(Buffer.from('oh, hey!'), 'sha2-256')
+  const mh = await multihashing(uint8ArrayFromString('oh, hey!'), 'sha2-256')
   const cidPerf = new CIDPerfX(mh);
 
   [...Array(reps).keys()].map(i => {

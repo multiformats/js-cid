@@ -13,7 +13,7 @@ declare class CID {
    * else if (str)
    *   if (1st char is on multibase table) -> CID String
    *   else -> bs58 encoded multihash
-   * else if (Buffer)
+   * else if (Uint8Array)
    *   if (1st byte is 0 or 1) -> CID
    *   else -> multihash
    * else if (Number)
@@ -23,7 +23,7 @@ declare class CID {
    * @example
    * new CID(<version>, <codec>, <multihash>, <multibaseName>)
    * new CID(<cidStr>)
-   * new CID(<cid.buffer>)
+   * new CID(<cid.bytes>)
    * new CID(<multihash>)
    * new CID(<bs58 encoded multihash>)
    * new CID(<cid>)
@@ -31,12 +31,12 @@ declare class CID {
   constructor(
     version: 0 | 1,
     codec: string,
-    multhash: Buffer,
+    multhash: Uint8Array,
     multibaseName?: string
   );
   constructor(cid: CID);
   constructor(str: string);
-  constructor(buf: Buffer);
+  constructor(buf: Uint8Array);
 
   /**
    * The version of the CID.
@@ -51,7 +51,7 @@ declare class CID {
   /**
    * The multihash of the CID.
    */
-  multihash: Buffer;
+  multihash: Uint8Array;
 
   /**
    * Multibase name as string.
@@ -59,14 +59,14 @@ declare class CID {
   multibaseName: string;
 
   /**
-   * The CID as a `Buffer`
+   * The CID as a `Uint8Array`
    */
-  readonly buffer: Buffer;
+  readonly bytes: Uint8Array;
 
   /**
    * The prefix of the CID.
    */
-  readonly prefix: Buffer;
+  readonly prefix: Uint8Array;
 
   /**
    * Convert to a CID of version `0`.
@@ -93,7 +93,7 @@ declare class CID {
   /**
    * Serialize to a plain object.
    */
-  toJSON(): { codec: string; version: 0 | 1; hash: Buffer };
+  toJSON(): { codec: string; version: 0 | 1; hash: Uint8Array };
 
   /**
    * Compare equality with another CID.

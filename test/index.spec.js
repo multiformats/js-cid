@@ -2,21 +2,18 @@
 /* eslint max-nested-callbacks: ["error", 8] */
 'use strict'
 
-const chai = require('chai')
-const dirtyChai = require('dirty-chai')
-const expect = chai.expect
-chai.use(dirtyChai)
+const { expect } = require('aegir/utils/chai')
 const multihash = require('multihashes')
 const multihashing = require('multihashing-async')
-const { Buffer } = require('buffer')
-
+const uint8ArrayFromString = require('uint8arrays/from-string')
+const uint8ArrayToString = require('uint8arrays/to-string')
 const CID = require('../src')
 
 describe('CID', () => {
   let hash
 
   before(async () => {
-    hash = await multihashing(Buffer.from('abc'), 'sha2-256')
+    hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
   })
 
   describe('v0', () => {
@@ -32,8 +29,8 @@ describe('CID', () => {
       expect(cid.toBaseEncodedString()).to.be.eql(mhStr)
     })
 
-    it('handles Buffer multihash', async () => {
-      const mh = await multihashing(Buffer.from('hello world'), 'sha2-256')
+    it('handles Uint8Array multihash', async () => {
+      const mh = await multihashing(uint8ArrayFromString('hello world'), 'sha2-256')
       const mhStr = 'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L4'
 
       const cid = new CID(mh)
@@ -81,15 +78,15 @@ describe('CID', () => {
 
     it('.prefix', () => {
       const cid = new CID(0, 'dag-pb', hash)
-      expect(cid.prefix.toString('hex')).to.equal('00701220')
+      expect(uint8ArrayToString(cid.prefix, 'base16')).to.equal('00701220')
     })
 
-    it('.buffer', () => {
+    it('.bytes', () => {
       const codec = 'dag-pb'
       const cid = new CID(0, codec, hash)
-      const buffer = cid.buffer
-      expect(buffer).to.exist()
-      const str = buffer.toString('hex')
+      const bytes = cid.bytes
+      expect(bytes).to.exist()
+      const str = uint8ArrayToString(bytes, 'base16')
       expect(str).to.equals('1220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
     })
 
@@ -122,7 +119,7 @@ describe('CID', () => {
 
     it('handles CID (no multibase)', () => {
       const cidStr = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
-      const cidBuf = Buffer.from('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'hex')
+      const cidBuf = uint8ArrayFromString('017012207252523e6591fb8fe553d67ff55a86f84044b46a3e4176e10c58fa529a4aabd5', 'base16')
 
       const cid = new CID(cidBuf)
 
@@ -167,7 +164,7 @@ describe('CID', () => {
     })
 
     it('handles multibyte varint encoded codec codes', () => {
-      const ethBlockHash = Buffer.from('8a8e84c797605fbe75d5b5af107d4220a2db0ad35fd66d9be3d38d87c472b26d', 'hex')
+      const ethBlockHash = uint8ArrayFromString('8a8e84c797605fbe75d5b5af107d4220a2db0ad35fd66d9be3d38d87c472b26d', 'base16')
       const mh = multihash.encode(ethBlockHash, 'keccak-256')
       const cid1 = new CID(1, 'eth-block', mh)
       const cid2 = new CID(cid1.toBaseEncodedString())
@@ -184,11 +181,11 @@ describe('CID', () => {
 
     it('.prefix', () => {
       const cid = new CID(1, 'dag-cbor', hash)
-      expect(cid.prefix.toString('hex')).to.equal('01711220')
+      expect(uint8ArrayToString(cid.prefix, 'base16')).to.equal('01711220')
     })
 
     it('.prefix identity multihash', () => {
-      const mh = multihash.encode(Buffer.from('abc'), 'identity')
+      const mh = multihash.encode(uint8ArrayFromString('abc'), 'identity')
       const cid0 = new CID(0, 'dag-pb', mh)
 
       expect(cid0).to.have.property('codec', 'dag-pb')
@@ -204,12 +201,12 @@ describe('CID', () => {
       expect(cid1.toBaseEncodedString()).to.eql('bafyqaa3bmjrq')
     })
 
-    it('.buffer', () => {
+    it('.bytes', () => {
       const codec = 'dag-cbor' // Invalid codec will cause an error: Issue #46
       const cid = new CID(1, codec, hash)
-      const buffer = cid.buffer
-      expect(buffer).to.exist()
-      const str = buffer.toString('hex')
+      const bytes = cid.bytes
+      expect(bytes).to.exist()
+      const str = uint8ArrayToString(bytes, 'base16')
       expect(str).to.equals('01711220ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad')
     })
 
@@ -279,6 +276,15 @@ describe('CID', () => {
       expect(cidV1.multihash).to.eql(cidV0.multihash)
     })
 
+    it('.equals a similar CID with a Uint8Array multihash', () => {
+      const str = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
+      const cid = new CID(str)
+      const cidA = new CID(cid.version, cid.codec, Uint8Array.from(cid.multihash))
+      const cidB = new CID(str)
+
+      expect(cidA.equals(cidB)).to.equal(true)
+    })
+
     it('.isCid', () => {
       expect(
         CID.isCID(new CID(h1))
@@ -289,7 +295,7 @@ describe('CID', () => {
       ).to.equal(false)
 
       expect(
-        CID.isCID(Buffer.from('hello world'))
+        CID.isCID(uint8ArrayFromString('hello world'))
       ).to.equal(false)
 
       expect(
@@ -306,24 +312,24 @@ describe('CID', () => {
     const invalid = [
       'hello world',
       'QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT3L',
-      Buffer.from('hello world'),
-      Buffer.from('QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT')
+      uint8ArrayFromString('hello world'),
+      uint8ArrayFromString('QmaozNR7DZHQK1ZcU9p7QdrshMvXqWK6gpu5rmrkPdT')
     ]
 
-    invalid.forEach((i) => it(`new CID(${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+    invalid.forEach((i) => it(`new CID(${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
       expect(() => new CID(i)).to.throw()
     }))
 
-    invalid.forEach((i) => it(`new CID(0, 'dag-pb', ${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+    invalid.forEach((i) => it(`new CID(0, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
       expect(() => new CID(0, 'dag-pb', i)).to.throw()
     }))
 
-    invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${Buffer.isBuffer(i) ? 'buffer' : 'string'}<${i.toString()}>)`, () => {
+    invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
 
     const invalidVersions = [-1, 2]
-    invalidVersions.forEach((i) => it(`new CID(${i}, 'dag-pb', buffer)`, () => {
+    invalidVersions.forEach((i) => it(`new CID(${i}, 'dag-pb', bytes)`, () => {
       expect(() => new CID(i, 'dag-pb', hash)).to.throw()
     }))
   })
@@ -341,44 +347,44 @@ describe('CID', () => {
 
   describe('conversion v0 <-> v1', () => {
     it('should convert v0 to v1', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(0, 'dag-pb', hash).toV1()
       expect(cid.version).to.equal(1)
     })
 
     it('should convert v1 to v0', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(1, 'dag-pb', hash).toV0()
       expect(cid.version).to.equal(0)
     })
 
     it('should not convert v1 to v0 if not dag-pb codec', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(1, 'dag-cbor', hash)
       expect(() => cid.toV0()).to.throw('Cannot convert a non dag-pb CID to CIDv0')
     })
 
     it('should not convert v1 to v0 if not sha2-256 multihash', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-512')
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-512')
       const cid = new CID(1, 'dag-pb', hash)
       expect(() => cid.toV0()).to.throw('Cannot convert non sha2-256 multihash CID to CIDv0')
     })
 
     it('should not convert v1 to v0 if not 32 byte multihash', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256', 31)
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256', 31)
       const cid = new CID(1, 'dag-pb', hash)
       expect(() => cid.toV0()).to.throw('Cannot convert non 32 byte multihash CID to CIDv0')
     })
   })
 
   describe('caching', () => {
-    it('should cache CID as buffer', async () => {
-      const hash = await multihashing(Buffer.from(`TEST${Date.now()}`), 'sha2-256')
+    it('should cache CID as bytes', async () => {
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(1, 'dag-pb', hash)
-      expect(cid.buffer).to.equal(cid.buffer)
+      expect(cid.bytes).to.equal(cid.bytes)
       // Make sure custom implementation detail properties don't leak into
       // the prototype
-      expect(Object.prototype.hasOwnProperty.call(cid, 'buffer')).to.be.false()
+      expect(Object.prototype.hasOwnProperty.call(cid, 'bytes')).to.be.false()
     })
     it('should cache string representation when it matches the multibaseName it was constructed with', () => {
       // not string to cache yet
