@@ -30,7 +30,7 @@ declare class CID {
    */
   constructor(
     version: 0 | 1,
-    codec: string,
+    codec: string | number,
     multhash: Uint8Array,
     multibaseName?: string
   );
@@ -47,6 +47,11 @@ declare class CID {
    * The codec of the CID.
    */
   codec: string;
+
+  /**
+   * The codec of the CID in its number form.
+   */
+  code: number;
 
   /**
    * The multihash of the CID.

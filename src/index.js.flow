@@ -2,16 +2,19 @@
 
 export type Version = 0 | 1
 export type Codec = string
+export type CodecCode = number
 export type Multihash = Uint8Array
 export type BaseEncodedString = string
 export type MultibaseName = string
 
 declare class CID<a> {
   constructor(Version, Codec, Multihash, multibaseName?:MultibaseName): void;
+  constructor(Version, CodecCode, Multihash, multibaseName?:MultibaseName): void;
   constructor(BaseEncodedString): void;
   constructor(Uint8Array): void;
 
   +codec: Codec;
+  +code: CodecCode;
   +multihash: Multihash;
   +bytes: Uint8Array;
   +prefix: Uint8Array;

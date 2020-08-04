@@ -28,6 +28,7 @@
   - [new CID(baseEncodedString)](#new-cidbaseencodedstring)
   - [new CID(Uint8Array)](#new-ciduint8array)
     - [cid.codec](#cidcodec)
+    - [cid.code](#cidcode)
     - [cid.version](#cidversion)
     - [cid.multihash](#cidmultihash)
     - [cid.multibaseName](#cidmultibasename)
@@ -78,6 +79,7 @@ const cid = new CID('bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
 
 cid.version       // 1
 cid.codec         // 'dag-pb'
+cid.code          // 112
 cid.multibaseName // 'base32'
 cid.toString()
 // 'bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu'
@@ -92,6 +94,14 @@ const bytes = new TextEncoder('utf8').encode('OMG!')
 
 const hash = await multihashing(bytes, 'sha2-256')
 const cid = new CID(1, 'dag-pb', hash)
+console.log(cid.toString())
+// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
+```
+
+The multicodec integer code can also be used to create a new CID:
+
+```js
+const cid = new CID(1, 112, hash)
 console.log(cid.toString())
 // bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu
 ```
@@ -150,7 +160,11 @@ Additionally, you can instantiate an instance from a `Uint8Array`.
 
 #### cid.codec
 
-Property containing the codec string.
+Property containing the string identifier of the codec.
+
+#### cid.code
+
+Property containing the integer identifier of the codec.
 
 #### cid.version
 

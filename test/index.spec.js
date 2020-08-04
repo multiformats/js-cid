@@ -22,6 +22,7 @@ describe('CID', () => {
       const cid = new CID(mhStr)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash').that.eql(multihash.fromB58String(mhStr))
       expect(cid).to.have.property('multibaseName', 'base58btc')
@@ -36,6 +37,7 @@ describe('CID', () => {
       const cid = new CID(mh)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash').that.eql(mh)
       expect(cid).to.have.property('multibaseName', 'base58btc')
@@ -47,6 +49,17 @@ describe('CID', () => {
       const cid = new CID(0, 'dag-pb', hash)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
+      expect(cid).to.have.property('version', 0)
+      expect(cid).to.have.property('multihash')
+      expect(cid).to.have.property('multibaseName', 'base58btc')
+    })
+
+    it('create by parts (int codec)', () => {
+      const cid = new CID(0, 112, hash)
+
+      expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
       expect(cid).to.have.property('version', 0)
       expect(cid).to.have.property('multihash')
       expect(cid).to.have.property('multibaseName', 'base58btc')
@@ -110,6 +123,7 @@ describe('CID', () => {
       const cid = new CID(cidStr)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
       expect(cid).to.have.property('multibaseName', 'base58btc')
@@ -124,6 +138,7 @@ describe('CID', () => {
       const cid = new CID(cidBuf)
 
       expect(cid).to.have.property('codec', 'dag-pb')
+      expect(cid).to.have.property('code', 112)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
       expect(cid).to.have.property('multibaseName', 'base32')
@@ -137,6 +152,7 @@ describe('CID', () => {
       const cid = new CID(peerIdStr)
 
       expect(cid).to.have.property('codec', 'libp2p-key')
+      expect(cid).to.have.property('code', 114)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
       expect(cid).to.have.property('multibaseName', 'base36')
@@ -148,6 +164,7 @@ describe('CID', () => {
       const cid = new CID(1, 'dag-cbor', hash)
 
       expect(cid).to.have.property('codec', 'dag-cbor')
+      expect(cid).to.have.property('code', 113)
       expect(cid).to.have.property('version', 1)
       expect(cid).to.have.property('multihash')
       expect(cid).to.have.property('multibaseName', 'base32')
@@ -158,6 +175,7 @@ describe('CID', () => {
       const cid2 = new CID(cid1.toBaseEncodedString())
 
       expect(cid1).to.have.property('codec').that.eql(cid2.codec)
+      expect(cid1).to.have.property('code').that.eql(cid2.code)
       expect(cid1).to.have.property('version').that.eql(cid2.version)
       expect(cid1).to.have.property('multihash').that.eql(cid2.multihash)
       expect(cid1).to.have.property('multibaseName').that.eql(cid2.multibaseName)
@@ -170,6 +188,7 @@ describe('CID', () => {
       const cid2 = new CID(cid1.toBaseEncodedString())
 
       expect(cid1).to.have.property('codec', 'eth-block')
+      expect(cid1).to.have.property('code', 144)
       expect(cid1).to.have.property('version', 1)
       expect(cid1).to.have.property('multihash').that.eql(mh)
       expect(cid1).to.have.property('multibaseName', 'base32')
@@ -189,6 +208,7 @@ describe('CID', () => {
       const cid0 = new CID(0, 'dag-pb', mh)
 
       expect(cid0).to.have.property('codec', 'dag-pb')
+      expect(cid0).to.have.property('code', 112)
       expect(cid0).to.have.property('version', 0)
       expect(cid0).to.have.property('multihash').that.eql(mh)
       expect(cid0.toBaseEncodedString()).to.eql('161g3c')
@@ -196,6 +216,7 @@ describe('CID', () => {
       const cid1 = new CID(1, 'dag-cbor', mh)
 
       expect(cid1).to.have.property('codec', 'dag-cbor')
+      expect(cid1).to.have.property('code', 113)
       expect(cid1).to.have.property('version', 1)
       expect(cid1).to.have.property('multihash').that.eql(mh)
       expect(cid1.toBaseEncodedString()).to.eql('bafyqaa3bmjrq')

@@ -10,6 +10,11 @@ const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
 
+const codecInts = Object.keys(codecs).reduce((p, name) => {
+  p[codecs[name]] = name
+  return p
+}, {})
+
 /**
  * @typedef {Object} SerializedCID
  * @param {string} codec
@@ -50,7 +55,7 @@ class CID {
    * ```
    *
    * @param {string|Uint8Array|CID} version
-   * @param {string} [codec]
+   * @param {string|number} [codec]
    * @param {Uint8Array} [multihash]
    * @param {string} [multibaseName]
    *
@@ -124,6 +129,10 @@ class CID {
      */
     this.version = version
 
+    if (typeof codec === 'number') {
+      codec = codecInts[codec]
+    }
+
     /**
      * @type {string}
      */
@@ -186,6 +195,10 @@ class CID {
     ], 1 + codec.byteLength + multihash.byteLength)
 
     return prefix
+  }
+
+  get code () {
+    return codecs[this.codec]
   }
 
   /**
