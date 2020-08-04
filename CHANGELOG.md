@@ -1,3 +1,25 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/multiformats/js-cid/compare/v0.8.3...v1.0.0) (2020-08-04)
+
+
+### Bug Fixes
+
+* replace node buffers with uint8arrays ([#117](https://github.com/multiformats/js-cid/issues/117)) ([a7ae250](https://github.com/multiformats/js-cid/commit/a7ae250))
+
+
+### Features
+
+* expose codec code and allow construction by code ([59469b6](https://github.com/multiformats/js-cid/commit/59469b6)), closes [/github.com/multiformats/js-cid/pull/117#issuecomment-668131658](https://github.com//github.com/multiformats/js-cid/pull/117/issues/issuecomment-668131658)
+
+
+### BREAKING CHANGES
+
+* - node `Buffer`s have been replaced with `Uint8Array`s
+- the `.buffer` property has been renamed to `.bytes` and is now a `Uint8Array`
+- the `.prefix` property is now a `Uint8Array`
+
+
+
 <a name="0.8.3"></a>
 ## [0.8.3](https://github.com/multiformats/js-cid/compare/v0.8.2...v0.8.3) (2020-06-19)
 
