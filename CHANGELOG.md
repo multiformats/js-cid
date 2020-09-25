@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/multiformats/js-cid/compare/v1.0.0...v1.0.1) (2020-09-25)
+
+
+### Bug Fixes
+
+* never return Node.js Buffers ([3c45871](https://github.com/multiformats/js-cid/commit/3c45871)), closes [#126](https://github.com/multiformats/js-cid/issues/126)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/multiformats/js-cid/compare/v0.8.3...v1.0.0) (2020-08-04)
 
