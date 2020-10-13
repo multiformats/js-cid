@@ -29,7 +29,7 @@ declare class CID {
    * new CID(<cid>)
    */
   constructor(
-    version: 0 | 1,
+    version: number,
     codec: string | number,
     multhash: Uint8Array,
     multibaseName?: string
