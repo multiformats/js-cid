@@ -29,39 +29,39 @@ declare class CID {
    * new CID(<cid>)
    */
   constructor(
-    version: 0 | 1,
+    version: CIDVersion,
     codec: string | number,
     multhash: Uint8Array,
     multibaseName?: string
   );
-  constructor(cid: CID);
-  constructor(str: string);
-  constructor(buf: Uint8Array);
+  constructor(cid: CID|string|Uint8Array);
 
   /**
    * The version of the CID.
    */
-  version: number;
+  readonly version: CIDVersion;
 
   /**
    * The codec of the CID.
+   * @deprecated
    */
-  codec: string;
+  readonly codec: string;
 
   /**
    * The codec of the CID in its number form.
    */
-  code: number;
+  readonly code: number;
 
   /**
    * The multihash of the CID.
    */
-  multihash: Uint8Array;
+  readonly multihash: Uint8Array;
 
   /**
    * Multibase name as string.
+   * @deprecated
    */
-  multibaseName: string;
+  readonly multibaseName: string;
 
   /**
    * The CID as a `Uint8Array`
@@ -70,6 +70,7 @@ declare class CID {
 
   /**
    * The prefix of the CID.
+   * @deprecated
    */
   readonly prefix: Uint8Array;
 
@@ -119,5 +120,7 @@ declare class CID {
 
   static codecs: Record<string, number>;
 }
+
+type CIDVersion = 0|1
 
 export = CID
