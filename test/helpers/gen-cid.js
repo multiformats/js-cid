@@ -22,7 +22,7 @@ async function main () {
   console.log('CID String (multibase included)')
   console.log(cidStr)
   console.log('CID in hex (multibase not included)')
-  console.log(cid.toString('hex'))
+  console.log(cid.toString())
 }
 
 main()

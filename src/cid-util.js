@@ -9,7 +9,7 @@ const CIDUtil = {
    * Returns undefined if it is a valid CID.
    *
    * @param {any} other
-   * @returns {string}
+   * @returns {string|undefined}
    */
   checkCIDComponents: function (other) {
     if (other == null) {
