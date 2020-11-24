@@ -26,6 +26,7 @@ class CIDPerfX {
   // i: Running-counter.
   // print: If true, it'll print/dump the CID data.
   run (i, print) {
+    // @ts-ignore
     const cid = new CID(this.version, this.codec, this.mh)
     if (print === true) {
       console.log('i=' + i, cid)

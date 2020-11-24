@@ -5,7 +5,6 @@ const multibase = require('multibase')
 const multicodec = require('multicodec')
 const codecs = require('multicodec/src/base-table.json')
 const CIDUtil = require('./cid-util')
-const withIs = require('class-is')
 const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
@@ -15,25 +14,23 @@ const codecInts = Object.keys(codecs).reduce((p, name) => {
   return p
 }, {})
 
-/**
- * @typedef {Object} SerializedCID
- * @param {string} codec
- * @param {number} version
- * @param {Uint8Array} multihash
- */
+const symbol = Symbol.for('@ipld/js-cid/CID')
 
 /**
- * Test if the given input is a CID.
- * @function isCID
- * @memberof CID
- * @static
- * @param {any} other
- * @returns {bool}
+ * @typedef {Object} SerializedCID
+ * @property {string} codec
+ * @property {number} version
+ * @property {Uint8Array} hash
+ */
+/**
+ * @typedef {0|1} CIDVersion
+ * @typedef {import('multibase').BaseNameOrCode} BaseNameOrCode
  */
 
 /**
  * Class representing a CID `<mbase><version><mcodec><mhash>`
  * , as defined in [ipld/cid](https://github.com/multiformats/cid).
+ *
  * @class CID
  */
 class CID {
@@ -54,7 +51,7 @@ class CID {
    *   -> construct CID by parts
    * ```
    *
-   * @param {string|Uint8Array|CID} version
+   * @param {CIDVersion | string | Uint8Array | CID} version
    * @param {string|number} [codec]
    * @param {Uint8Array} [multihash]
    * @param {string} [multibaseName]
@@ -68,9 +65,10 @@ class CID {
    * new CID(<cid>)
    */
   constructor (version, codec, multihash, multibaseName) {
-    if (_CID.isCID(version)) {
+    Object.defineProperty(this, symbol, { value: true })
+    if (CID.isCID(version)) {
       // version is an exising CID instance
-      const cid = version
+      const cid = /** @type {CID} */(version)
       this.version = cid.version
       this.codec = cid.codec
       this.multihash = cid.multihash
@@ -85,7 +83,7 @@ class CID {
       if (baseName) {
         // version is a CID String encoded with multibase, so v1
         const cid = multibase.decode(version)
-        this.version = parseInt(cid.slice(0, 1).toString('hex'), 16)
+        this.version = parseInt(cid[0].toString(), 16)
         this.codec = multicodec.getCodec(cid.slice(1))
         this.multihash = multicodec.rmPrefix(cid.slice(1))
         this.multibaseName = baseName
@@ -97,13 +95,12 @@ class CID {
         this.multibaseName = 'base58btc'
       }
       CID.validateCID(this)
-      Object.defineProperty(this, 'string', { value: version })
+      this.string = version
       return
     }
 
     if (version instanceof Uint8Array) {
-      const firstByte = version.slice(0, 1)
-      const v = parseInt(firstByte.toString('hex'), 16)
+      const v = parseInt(version[0].toString(), 16)
       if (v === 1) {
         // version is a CID Uint8Array
         const cid = version
@@ -125,7 +122,9 @@ class CID {
     // otherwise, assemble the CID from the parameters
 
     /**
-     * @type {number}
+     * The version of the CID.
+     *
+     * @type {CIDVersion}
      */
     this.version = version
 
@@ -134,16 +133,23 @@ class CID {
     }
 
     /**
+     * The codec of the CID.
+     *
      * @type {string}
      */
     this.codec = codec
 
     /**
+     * The multihash of the CID.
+     *
      * @type {Uint8Array}
      */
     this.multihash = multihash
 
     /**
+     * Multibase name as string.
+     *
+     * @deprecated
      * @type {string}
      */
     this.multibaseName = multibaseName || (version === 0 ? 'base58btc' : 'base32')
@@ -154,10 +160,8 @@ class CID {
   /**
    * The CID as a `Uint8Array`
    *
-   * @return {Uint8Array}
-   * @readonly
+   * @returns {Uint8Array}
    *
-   * @memberOf CID
    */
   get bytes () {
     let bytes = this._bytes
@@ -175,17 +179,16 @@ class CID {
       }
 
       // Cache this Uint8Array so it doesn't have to be recreated
-      Object.defineProperty(this, '_bytes', { value: bytes })
+      this._bytes = bytes
     }
 
     return bytes
   }
 
   /**
-   * Get the prefix of the CID.
+   * The prefix of the CID.
    *
    * @returns {Uint8Array}
-   * @readonly
    */
   get prefix () {
     const codec = multicodec.getCodeVarint(this.codec)
@@ -197,6 +200,11 @@ class CID {
     return prefix
   }
 
+  /**
+   * The codec of the CID in its number form.
+   *
+   * @returns {number}
+   */
   get code () {
     return codecs[this.codec]
   }
@@ -221,7 +229,7 @@ class CID {
       throw new Error('Cannot convert non 32 byte multihash CID to CIDv0')
     }
 
-    return new _CID(0, this.codec, this.multihash)
+    return new CID(0, this.codec, this.multihash)
   }
 
   /**
@@ -230,20 +238,20 @@ class CID {
    * @returns {CID}
    */
   toV1 () {
-    return new _CID(1, this.codec, this.multihash)
+    return new CID(1, this.codec, this.multihash)
   }
 
   /**
    * Encode the CID into a string.
    *
-   * @param {string} [base=this.multibaseName] - Base encoding to use.
+   * @param {BaseNameOrCode} [base=this.multibaseName] - Base encoding to use.
    * @returns {string}
    */
   toBaseEncodedString (base = this.multibaseName) {
-    if (this.string && base === this.multibaseName) {
+    if (this.string && this.string.length !== 0 && base === this.multibaseName) {
       return this.string
     }
-    let str = null
+    let str
     if (this.version === 0) {
       if (base !== 'base58btc') {
         throw new Error('not supported with CIDv0, to support different bases, please migrate the instance do CIDv1, you can do that through cid.toV1()')
@@ -256,7 +264,7 @@ class CID {
     }
     if (base === this.multibaseName) {
       // cache the string value
-      Object.defineProperty(this, 'string', { value: str })
+      this.string = str
     }
     return str
   }
@@ -264,12 +272,18 @@ class CID {
   /**
    * CID(QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n)
    *
-   * @returns {String}
+   * @returns {string}
    */
   [Symbol.for('nodejs.util.inspect.custom')] () {
     return 'CID(' + this.toString() + ')'
   }
 
+  /**
+   * Encode the CID into a string.
+   *
+   * @param {BaseNameOrCode} [base=this.multibaseName] - Base encoding to use.
+   * @returns {string}
+   */
   toString (base) {
     return this.toBaseEncodedString(base)
   }
@@ -291,7 +305,7 @@ class CID {
    * Compare equality with another CID.
    *
    * @param {CID} other
-   * @returns {bool}
+   * @returns {boolean}
    */
   equals (other) {
     return this.codec === other.codec &&
@@ -303,7 +317,7 @@ class CID {
    * Test if the given input is a valid CID object.
    * Throws if it is not.
    *
-   * @param {any} other
+   * @param {any} other - The other CID.
    * @returns {void}
    */
   static validateCID (other) {
@@ -312,13 +326,18 @@ class CID {
       throw new Error(errorMsg)
     }
   }
+
+  /**
+   * Check if object is a CID instance
+   *
+   * @param {any} value
+   * @returns {boolean}
+   */
+  static isCID (value) {
+    return value instanceof CID || Boolean(value && value[symbol])
+  }
 }
 
-const _CID = withIs(CID, {
-  className: 'CID',
-  symbolName: '@ipld/js-cid/CID'
-})
+CID.codecs = codecs
 
-_CID.codecs = codecs
-
-module.exports = _CID
+module.exports = CID

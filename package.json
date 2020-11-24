@@ -17,6 +17,10 @@
     "coverage": "aegir coverage",
     "docs": "aegir docs"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "pre-push": [
     "lint",
     "test"
@@ -35,19 +39,21 @@
     "url": "https://github.com/multiformats/js-cid/issues"
   },
   "dependencies": {
-    "class-is": "^1.1.0",
     "multibase": "^3.0.1",
     "multicodec": "^2.0.1",
     "multihashes": "^3.0.1",
     "uint8arrays": "^1.1.0"
   },
   "devDependencies": {
-    "aegir": "^26.0.0",
+    "aegir": "^29.0.1",
     "multihashing-async": "^2.0.1"
   },
   "engines": {
     "node": ">=4.0.0",
     "npm": ">=3.0.0"
+  },
+  "eslintConfig": {
+    "extends": "ipfs"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",

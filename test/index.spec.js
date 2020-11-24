@@ -107,6 +107,7 @@ describe('CID', () => {
       const cidStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
 
       const oldCid = new CID(cidStr)
+      // @ts-ignore
       delete oldCid.multibaseName // Fake it
 
       const newCid = new CID(oldCid)
@@ -243,6 +244,7 @@ describe('CID', () => {
       const cidStr = 'bafybeidskjjd4zmr7oh6ku6wp72vvbxyibcli2r6if3ocdcy7jjjusvl2u'
 
       const oldCid = new CID(cidStr)
+      // @ts-ignore
       delete oldCid.multibaseName // Fake it
 
       const newCid = new CID(oldCid)
@@ -351,6 +353,7 @@ describe('CID', () => {
 
     const invalidVersions = [-1, 2]
     invalidVersions.forEach((i) => it(`new CID(${i}, 'dag-pb', bytes)`, () => {
+      // @ts-expect-error
       expect(() => new CID(i, 'dag-pb', hash)).to.throw()
     }))
   })
@@ -410,16 +413,19 @@ describe('CID', () => {
     it('should cache string representation when it matches the multibaseName it was constructed with', () => {
       // not string to cache yet
       const cid = new CID(1, 'dag-pb', hash, 'base32')
+      // @ts-ignore
       expect(cid.string).to.be.undefined()
 
       // we dont cache alternate base encodings yet.
       expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
+      // @ts-ignore
       expect(cid.string).to.be.undefined()
 
       const base32String = 'bafybeif2pall7dybz7vecqka3zo24irdwabwdi4wc55jznaq75q7eaavvu'
       expect(cid.toBaseEncodedString()).to.equal(base32String)
 
       // it cached!
+      // @ts-ignore
       expect(cid.string).to.equal(base32String)
       // Make sure custom implementation detail properties don't leak into
       // the prototype
@@ -428,13 +434,16 @@ describe('CID', () => {
       expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
 
       // alternate base not cached!
+      // @ts-ignore
       expect(cid.string).to.equal(base32String)
     })
     it('should cache string representation when constructed with one', () => {
       const base32String = 'bafybeif2pall7dybz7vecqka3zo24irdwabwdi4wc55jznaq75q7eaavvu'
       const cid = new CID(base32String)
+      // @ts-ignore
       expect(cid.string).to.equal(base32String)
       expect(cid.toBaseEncodedString('base64')).to.equal('mAXASILp4Fr+PAc/qQUFA3l2uIiOwA2Gjlhd6nLQQ/2HyABWt')
+      // @ts-ignore
       expect(cid.string).to.equal(base32String)
       expect(cid.toBaseEncodedString()).to.equal(base32String)
     })

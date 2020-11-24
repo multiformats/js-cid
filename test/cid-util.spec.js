@@ -51,14 +51,14 @@ describe('CIDUtil', () => {
 
       invalid.forEach((i) => it(`new CID(0, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
         expect(() => {
-          const errMsg = CIDUtil.checkCIDComponents(0, 'dag-pb', i)
+          const errMsg = CIDUtil.checkCIDComponents(0)
           expect(errMsg).to.exist()
         }).to.not.throw()
       }))
 
       invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
         expect(() => {
-          const errMsg = CIDUtil.checkCIDComponents(1, 'dag-pb', i)
+          const errMsg = CIDUtil.checkCIDComponents(1)
           expect(errMsg).to.exist()
         }).to.not.throw()
       }))
