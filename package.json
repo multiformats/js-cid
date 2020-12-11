@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
@@ -65,8 +65,8 @@
     "Enrico Marino <enrico.marino@email.com>",
     "Irakli Gozalishvili <contact@gozala.io>",
     "Oli Evans <oli@tableflip.io>",
-    "Alex Potsides <alex@achingbrain.net>",
     "Hugo Dias <hugomrdias@gmail.com>",
+    "Alex Potsides <alex@achingbrain.net>",
     "Marcin Rataj <lidel@lidel.org>",
     "Real Harry <sidewaybot@gmail.com>",
     "Rod Vagg <rod@vagg.org>",
