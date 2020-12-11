@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/multiformats/js-cid/compare/v1.0.2...v1.1.0) (2020-12-11)
+
+
+### Features
+
+* add ts types with aegir ([0e11f03](https://github.com/multiformats/js-cid/commit/0e11f035c9230e7f6d79c159ace9b80de88cb5eb))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/multiformats/js-cid/compare/v1.0.1...v1.0.2) (2020-10-14)
 
