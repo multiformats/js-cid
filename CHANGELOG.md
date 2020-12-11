@@ -1,3 +1,13 @@
+## [1.1.2](https://github.com/multiformats/js-cid/compare/v1.1.1...v1.1.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* pin multicodec to version 2.0.4 ([14e55a1](https://github.com/multiformats/js-cid/commit/14e55a155e1135ce9f45ef74a645798480d79df0))
+* turn isCID to a type guard ([7413819](https://github.com/multiformats/js-cid/commit/7413819b7b5e20238c87091f22f22665f4cef8eb))
+
+
+
 ## [1.1.1](https://github.com/multiformats/js-cid/compare/v1.1.0...v1.1.1) (2020-12-11)
 
 
