@@ -15,7 +15,8 @@
     "release-minor": "aegir release --type minor --docs",
     "release-major": "aegir release --type major --docs",
     "coverage": "aegir coverage",
-    "docs": "aegir docs"
+    "docs": "aegir docs",
+    "prepare": "aegir ts -p types"
   },
   "files": [
     "src",
