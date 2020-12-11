@@ -95,7 +95,7 @@ class CID {
         this.multibaseName = 'base58btc'
       }
       CID.validateCID(this)
-      this.string = version
+      Object.defineProperty(this, 'string', { value: version })
       return
     }
 
@@ -164,6 +164,7 @@ class CID {
    *
    */
   get bytes () {
+    // @ts-ignore
     let bytes = this._bytes
 
     if (!bytes) {
@@ -179,7 +180,7 @@ class CID {
       }
 
       // Cache this Uint8Array so it doesn't have to be recreated
-      this._bytes = bytes
+      Object.defineProperty(this, '_bytes', { value: bytes })
     }
 
     return bytes
@@ -248,7 +249,9 @@ class CID {
    * @returns {string}
    */
   toBaseEncodedString (base = this.multibaseName) {
+    // @ts-ignore non enumerable cache property
     if (this.string && this.string.length !== 0 && base === this.multibaseName) {
+      // @ts-ignore non enumerable cache property
       return this.string
     }
     let str
@@ -264,7 +267,7 @@ class CID {
     }
     if (base === this.multibaseName) {
       // cache the string value
-      this.string = str
+      Object.defineProperty(this, 'string', { value: str })
     }
     return str
   }
