@@ -8,6 +8,7 @@ const multihashing = require('multihashing-async')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const CID = require('../src')
+const { deepEqual } = require('@sinonjs/samsam')
 
 describe('CID', () => {
   let hash
@@ -446,6 +447,49 @@ describe('CID', () => {
       // @ts-ignore
       expect(cid.string).to.equal(base32String)
       expect(cid.toBaseEncodedString()).to.equal(base32String)
+    })
+  })
+
+  describe('equality', () => {
+    it('should be deeply equal', () => {
+      const cid1 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      const cid2 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+
+      expect(deepEqual(cid1, cid2)).to.be.true()
+    })
+
+    it('should be deeply equal when constructed from another CID', () => {
+      const cid1 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      const cid2 = new CID(cid1)
+
+      expect(deepEqual(cid1, cid2)).to.be.true()
+    })
+
+    it('should be deeply equal when constructed from an Uint8Array', () => {
+      const cid1 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      const cid2 = new CID(cid1.multihash)
+
+      expect(deepEqual(cid1, cid2)).to.be.true()
+    })
+
+    it('should still be deeply equal after turning one into a base encoded string', () => {
+      const cid1 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      const cid2 = new CID(cid1.multihash)
+      const cid3 = new CID(cid1.multihash)
+
+      cid3.toBaseEncodedString()
+
+      expect(deepEqual(cid2, cid3)).to.be.true()
+    })
+
+    it('should still be deeply equal after turning one into bytes', () => {
+      const cid1 = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      const cid2 = new CID(cid1.multihash)
+      const cid3 = new CID(cid1.multihash)
+
+      cid3.bytes // eslint-disable-line no-unused-expressions
+
+      expect(deepEqual(cid2, cid3)).to.be.true()
     })
   })
 })
