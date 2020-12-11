@@ -3,7 +3,7 @@
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
-const codecs = require('multicodec/src/base-table.json')
+const { baseTable: codecs } = require('multicodec/src/base-table.js')
 const CIDUtil = require('./cid-util')
 const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
