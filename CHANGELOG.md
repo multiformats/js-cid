@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/multiformats/js-cid/compare/v1.1.2...v1.1.3) (2020-12-11)
+
+
+### Bug Fixes
+
+* use latest multicodec release ([6cc387f](https://github.com/multiformats/js-cid/commit/6cc387ffe12bf29b243eb593545629200a3b5be1))
+
+
+
 ## [1.1.2](https://github.com/multiformats/js-cid/compare/v1.1.1...v1.1.2) (2020-12-11)
 
 
