@@ -1,1370 +1,398 @@
 <!doctype html>
-<html lang="en">
+<html class="default no-js">
 <head>
-  <meta charset='utf-8'>
-  <title>cids 1.0.2 | Documentation</title>
-  <meta name='description' content='CID Implementation in JavaScript'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>cids - v1.1.0</title>
+	<meta name="description" content="Documentation for cids - v1.1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link href="https://unpkg.com/nord-highlightjs@0.1.0/dist/nord.css" rel="stylesheet" type="text/css" />
+	<style>
+        .toolbar-icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .toolbar-icon-search {
+            box-sizing: border-box;
+            position: absolute;
+            overflow: hidden;
+            right: -40px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @media (min-width: 901px){
+                display: none
+            }
+        }
+            @media (min-width: 901px){
+                .toolbar-icon-menu {
+                    display: none
+                }
+                .toolbar-icon-options {
+                    display: none
+                }
+            }
+
+        .gg-menu {
+            transform: scale(var(--ggs,1))
+        }
+        .gg-menu,
+        .gg-menu::after,
+        .gg-menu::before {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            width: 20px;
+            height: 2px;
+            border-radius: 3px;
+            background: currentColor
+        }
+        .gg-menu::after,
+        .gg-menu::before {
+            content: "";
+            position: absolute;
+            top: -6px
+        }
+        .gg-menu::after {
+            top: 6px
+        }
+        .gg-options {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            transform: scale(var(--ggs,1));
+            width: 10px;
+            height: 2px;
+            box-shadow:
+                -3px 4px 0 0,
+                3px -4px 0 0
+        }
+        .gg-options::after,
+        .gg-options::before {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 2px solid;
+            border-radius: 100%
+        }
+        .gg-options::before {
+            top: -7px;
+            left: -4px
+        }
+        .gg-options::after {
+            bottom: -7px;
+            right: -4px
+        }
+        .gg-search {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            transform: scale(var(--ggs,1));
+            width: 16px;
+            height: 16px;
+            border: 2px solid;
+            border-radius: 100%;
+            margin-left: -4px;
+            margin-top: -4px
+        }
+        .gg-search::after {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            position: absolute;
+            border-radius: 3px;
+            width: 2px;
+            height: 8px;
+            background: currentColor;
+            transform: rotate(-45deg);
+            top: 10px;
+            left: 12px
+        }
+    </style>
 </head>
-<body class='documentation m0'>
-    <div class='flex'>
-      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
-        <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'>cids</h3>
-          <div class='mb1'><code>1.0.2</code></div>
-          <input
-            placeholder='Filter'
-            id='filter-input'
-            class='col12 block input'
-            spellcheck='false'
-            autocapitalize='off'
-            autocorrect='off'
-            type='text' />
-          <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#serializedcid'
-                  class="">
-                  SerializedCID
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#bytes'
-                  class="">
-                  bytes
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#prefix'
-                  class="">
-                  prefix
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tov0'
-                  class="">
-                  toV0
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tov1'
-                  class="">
-                  toV1
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tobaseencodedstring'
-                  class="">
-                  toBaseEncodedString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tostring'
-                  class="">
-                  toString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tojson'
-                  class="">
-                  toJSON
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#equals'
-                  class="">
-                  equals
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#validatecid'
-                  class="">
-                  validateCID
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#cid'
-                  class=" toggle-sibling">
-                  CID
-                  <span class='icon'>▸</span>
-                </a>
-                
-                <div class='toggle-target display-none'>
-                  
-                  <ul class='list-reset py1-ul pl1'>
-                    <li class='h5'><span>Static members</span></li>
-                    
-                      <li><a
-                        href='#cidiscid'
-                        class='regular pre-open'>
-                        .isCID
-                      </a></li>
-                    
-                    </ul>
-                  
-                  
-                    <ul class='list-reset py1-ul pl1'>
-                      <li class='h5'><span>Instance members</span></li>
-                      
-                      <li><a
-                        href='#cidversion'
-                        class='regular pre-open'>
-                        #version
-                      </a></li>
-                      
-                      <li><a
-                        href='#cidcodec'
-                        class='regular pre-open'>
-                        #codec
-                      </a></li>
-                      
-                      <li><a
-                        href='#cidmultihash'
-                        class='regular pre-open'>
-                        #multihash
-                      </a></li>
-                      
-                      <li><a
-                        href='#cidmultibasename'
-                        class='regular pre-open'>
-                        #multibaseName
-                      </a></li>
-                      
-                    </ul>
-                  
-                  
-                  
-                </div>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#checkcidcomponents'
-                  class="">
-                  checkCIDComponents
-                  
-                </a>
-                
-                </li>
-              
-            </ul>
-          </div>
-          <div class='mt1 h6 quiet'>
-            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
-          </div>
-        </div>
-      </div>
-      <div id='split-right' class='relative overflow-auto height-viewport-100'>
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='serializedcid'>
-      SerializedCID
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L18-L23'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>SerializedCID</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>codec</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>version</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>multihash</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='bytes'>
-      bytes
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L162-L182'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>The CID as a <code>Uint8Array</code></p>
-
-    <div class='pre p1 fill-light mt0'>bytes</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='prefix'>
-      prefix
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L190-L198'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Get the prefix of the CID.</p>
-
-    <div class='pre p1 fill-light mt0'>prefix</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tov0'>
-      toV0
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L209-L225'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Convert to a CID of version <code>0</code>.</p>
-
-    <div class='pre p1 fill-light mt0'>toV0(): <a href="#cid">CID</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#cid">CID</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tov1'>
-      toV1
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L232-L234'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Convert to a CID of version <code>1</code>.</p>
-
-    <div class='pre p1 fill-light mt0'>toV1(): <a href="#cid">CID</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#cid">CID</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tobaseencodedstring'>
-      toBaseEncodedString
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L242-L262'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Encode the CID into a string.</p>
-
-    <div class='pre p1 fill-light mt0'>toBaseEncodedString(base: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>base</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>this.multibaseName</code>)</code>
-	    Base encoding to use.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tostring'>
-      toString
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L269-L271'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>CID(QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n)</p>
-
-    <div class='pre p1 fill-light mt0'>toString(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tojson'>
-      toJSON
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L282-L288'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Serialize to a plain object.</p>
-
-    <div class='pre p1 fill-light mt0'>toJSON(): <a href="#serializedcid">SerializedCID</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#serializedcid">SerializedCID</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='equals'>
-      equals
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L296-L300'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Compare equality with another CID.</p>
-
-    <div class='pre p1 fill-light mt0'>equals(other: <a href="#cid">CID</a>): bool</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>other</span> <code class='quiet'>(<a href="#cid">CID</a>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>bool</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='validatecid'>
-      validateCID
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L309-L314'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Test if the given input is a valid CID object.
-Throws if it is not.</p>
-
-    <div class='pre p1 fill-light mt0'>validateCID(other: any): void</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>other</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>void</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='cid'>
-      CID
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L39-L315'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Class representing a CID <code>&#x3C;mbase>&#x3C;version>&#x3C;mcodec>&#x3C;mhash></code>
-, as defined in <a href="https://github.com/multiformats/cid">ipld/cid</a>.</p>
-
-    <div class='pre p1 fill-light mt0'>new CID()</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Static Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='cidiscid'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>isCID(other)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L39-L315'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Test if the given input is a CID.</p>
-
-    <div class='pre p1 fill-light mt0'>isCID(other: any): bool</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>other</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>bool</code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="toolbar-icon toolbar-icon-search"><i class="gg-search"></i></label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">cids - v1.1.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<a href="#" class="toolbar-icon toolbar-icon-menu" data-toggle="menu"><i class="gg-menu"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+			</ul>
+			<h1>cids - v1.1.0</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#js-cid--" id="js-cid--" style="color: inherit; text-decoration: none;">
+					<h1>js-cid  <!-- omit in toc --></h1>
+				</a>
+				<p><a href="http://protocol.ai/"><img src="https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square" alt=""></a>
+					<a href="http://webchat.freenode.net/?channels=%23ipfs"><img src="https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square" alt=""></a>
+					<a href="https://travis-ci.com/multiformats/js-cid"><img src="https://flat.badgen.net/travis/multiformats/js-cid" alt="Travis CI"></a>
+					<a href="https://coveralls.io/github/multiformats/js-cid?branch=master"><img src="https://coveralls.io/repos/github/multiformats/js-cid/badge.svg?branch=master" alt="Coverage Status"></a>
+					<a href="https://david-dm.org/multiformats/js-cid"><img src="https://david-dm.org/multiformats/js-cid.svg?style=flat-square" alt="Dependency Status"></a>
+					<a href="https://github.com/feross/standard"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square" alt="js-standard-style"></a>
+				<a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/multiformats/js-cid.svg" alt="Greenkeeper badge"></a></p>
+				<blockquote>
+					<p><a href="https://github.com/multiformats/cid">CID</a> implementation in JavaScript.</p>
+				</blockquote>
+				<a href="#lead-maintainer---" id="lead-maintainer---" style="color: inherit; text-decoration: none;">
+					<h2>Lead Maintainer   <!-- omit in toc --></h2>
+				</a>
+				<p><a href="https://github.com/vmx">Volker Mische</a></p>
+				<a href="#table-of-contents---" id="table-of-contents---" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents   <!-- omit in toc --></h2>
+				</a>
+				<ul>
+					<li><a href="#install">Install</a><ul>
+							<li><a href="#in-nodejs-through-npm">In Node.js through npm</a></li>
+							<li><a href="#browser-browserify-webpack-other-bundlers">Browser: Browserify, Webpack, other bundlers</a></li>
+							<li><a href="#in-the-browser-through-script-tag">In the Browser through <code>&lt;script&gt;</code> tag</a></li>
+						</ul>
+					</li>
+					<li><a href="#usage">Usage</a></li>
+					<li><a href="#api">API</a><ul>
+							<li><a href="#cidiscidcid">CID.isCID(cid)</a></li>
+							<li><a href="#cidvalidatecidcid">CID.validateCID(cid)</a></li>
+							<li><a href="#new-cidversion-codec-multihash-multibasename">new CID(version, codec, multihash, [multibaseName])</a></li>
+							<li><a href="#new-cidbaseencodedstring">new CID(baseEncodedString)</a></li>
+							<li><a href="#new-ciduint8array">new CID(Uint8Array)</a><ul>
+									<li><a href="#cidcodec">cid.codec</a></li>
+									<li><a href="#cidcode">cid.code</a></li>
+									<li><a href="#cidversion">cid.version</a></li>
+									<li><a href="#cidmultihash">cid.multihash</a></li>
+									<li><a href="#cidmultibasename">cid.multibaseName</a></li>
+									<li><a href="#cidbytes">cid.bytes</a></li>
+									<li><a href="#cidprefix">cid.prefix</a></li>
+									<li><a href="#cidtov0">cid.toV0()</a></li>
+									<li><a href="#cidtov1">cid.toV1()</a></li>
+									<li><a href="#cidtobaseencodedstringbasethismultibasename">cid.toBaseEncodedString(base=this.multibaseName)</a></li>
+									<li><a href="#cidtostringbasethismultibasename">cid.toString(base=this.multibaseName)</a></li>
+									<li><a href="#cidequalscid">cid.equals(cid)</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#contribute">Contribute</a></li>
+					<li><a href="#license">License</a></li>
+				</ul>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<a href="#in-nodejs-through-npm" id="in-nodejs-through-npm" style="color: inherit; text-decoration: none;">
+					<h3>In Node.js through npm</h3>
+				</a>
+				<pre><code class="language-bash">$ npm install --save cids</code></pre>
+				<a href="#browser-browserify-webpack-other-bundlers" id="browser-browserify-webpack-other-bundlers" style="color: inherit; text-decoration: none;">
+					<h3>Browser: Browserify, Webpack, other bundlers</h3>
+				</a>
+				<p>The code published to npm that gets loaded on require is in fact an ES5 transpiled version with the right shims added. This means that you can require it and use with your favourite bundler without having to adjust asset management process.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> CID = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;cids&#x27;</span>)</code></pre>
+				<a href="#in-the-browser-through-ltscriptgt-tag" id="in-the-browser-through-ltscriptgt-tag" style="color: inherit; text-decoration: none;">
+					<h3>In the Browser through <code>&lt;script&gt;</code> tag</h3>
+				</a>
+				<p>Loading this module through a script tag will make the <code>Cids</code> obj available in the global namespace.</p>
+				<pre><code><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/cids/dist/index.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-comment">&lt;!-- OR --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/cids/dist/index.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>You can create an instance from a CID string or CID Uint8Array</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> CID = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;cids&#x27;</span>)
+
+<span class="hljs-keyword">const</span> cid = <span class="hljs-keyword">new</span> CID(<span class="hljs-string">&#x27;bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu&#x27;</span>)
+
+cid.version       <span class="hljs-comment">// 1</span>
+cid.codec         <span class="hljs-comment">// &#x27;dag-pb&#x27;</span>
+cid.code          <span class="hljs-comment">// 112</span>
+cid.multibaseName <span class="hljs-comment">// &#x27;base32&#x27;</span>
+cid.toString()
+<span class="hljs-comment">// &#x27;bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu&#x27;</span></code></pre>
+				<p>or by specifying the <a href="https://github.com/multiformats/cid#versions">cid version</a>, <a href="https://github.com/multiformats/multicodec/blob/master/table.csv">multicodec name</a> and <a href="https://github.com/multiformats/multihash">multihash</a>:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> CID = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;cids&#x27;</span>)
+<span class="hljs-keyword">const</span> multihashing = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;multihashing-async&#x27;</span>)
+<span class="hljs-keyword">const</span> bytes = <span class="hljs-keyword">new</span> TextEncoder(<span class="hljs-string">&#x27;utf8&#x27;</span>).encode(<span class="hljs-string">&#x27;OMG!&#x27;</span>)
+
+<span class="hljs-keyword">const</span> hash = <span class="hljs-keyword">await</span> multihashing(bytes, <span class="hljs-string">&#x27;sha2-256&#x27;</span>)
+<span class="hljs-keyword">const</span> cid = <span class="hljs-keyword">new</span> CID(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;dag-pb&#x27;</span>, hash)
+<span class="hljs-built_in">console</span>.log(cid.toString())
+<span class="hljs-comment">// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu</span></code></pre>
+				<p>The multicodec integer code can also be used to create a new CID:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> cid = <span class="hljs-keyword">new</span> CID(<span class="hljs-number">1</span>, <span class="hljs-number">112</span>, hash)
+<span class="hljs-built_in">console</span>.log(cid.toString())
+<span class="hljs-comment">// bafybeig6xv5nwphfmvcnektpnojts33jqcuam7bmye2pb54adnrtccjlsu</span></code></pre>
+				<p>The string form of v1 CIDs defaults to <code>base32</code> encoding (v0 CIDs are always <code>base58btc</code> encoded). When creating a new instance you can optionally specify the default multibase to use when calling <code>toBaseEncodedString()</code> or <code>toString()</code></p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> cid = <span class="hljs-keyword">new</span> CID(<span class="hljs-number">1</span>, <span class="hljs-string">&#x27;raw&#x27;</span>, hash, <span class="hljs-string">&#x27;base64&#x27;</span>)
+<span class="hljs-built_in">console</span>.log(cid.toString())
+<span class="hljs-comment">// mAXASIN69ets85WVE0ipva5M5b2mAqAZ8LME08PeAG2MxCSuV</span></code></pre>
+				<p>If you construct an instance from a valid CID string, the base you provided will be preserved as the default.</p>
+				<pre><code class="language-js"><span class="hljs-comment">// e.g. a base64url encoded CID</span>
+<span class="hljs-keyword">const</span> cid = <span class="hljs-keyword">new</span> CID(<span class="hljs-string">&#x27;uAXASIHJSUj5lkfuP5VPWf_VahvhARLRqPkF24QxY-lKaSqvV&#x27;</span>)
+cid.toString()
+<span class="hljs-comment">// uAXASIHJSUj5lkfuP5VPWf_VahvhARLRqPkF24QxY-lKaSqvV</span></code></pre>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<a href="#cidiscidcid" id="cidiscidcid" style="color: inherit; text-decoration: none;">
+					<h3>CID.isCID(cid)</h3>
+				</a>
+				<p>Returns true if object is a valid CID instance, false if not valid.</p>
+				<p>It&#39;s important to use this method rather than <code>instanceof</code> checks in
+				order to handle CID objects from different versions of this module.</p>
+				<a href="#cidvalidatecidcid" id="cidvalidatecidcid" style="color: inherit; text-decoration: none;">
+					<h3>CID.validateCID(cid)</h3>
+				</a>
+				<p>Validates the different components (version, codec, multihash, multibaseName) of the CID
+				instance. Throws an <code>Error</code> if not valid.</p>
+				<a href="#new-cidversion-codec-multihash-multibasename" id="new-cidversion-codec-multihash-multibasename" style="color: inherit; text-decoration: none;">
+					<h3>new CID(version, codec, multihash, [multibaseName])</h3>
+				</a>
+				<p><code>version</code> must be <a href="https://github.com/multiformats/cid#versions">either 0 or 1</a>.</p>
+				<p><code>codec</code> must be a string of a valid <a href="https://github.com/multiformats/multicodec/blob/master/table.csv">registered codec</a>.</p>
+				<p><code>multihash</code> must be a <code>Uint8Array</code> instance of a valid <a href="https://github.com/multiformats/multihash">multihash</a>.</p>
+				<p><code>multibaseName</code> optional string. Must be a valid <a href="https://github.com/multiformats/multibase/blob/master/multibase.csv">multibase</a> name. Default is <code>base58btc</code> for v0 CIDs or <code>base32</code> for v1 CIDs.</p>
+				<a href="#new-cidbaseencodedstring" id="new-cidbaseencodedstring" style="color: inherit; text-decoration: none;">
+					<h3>new CID(baseEncodedString)</h3>
+				</a>
+				<p>Additionally, you can instantiate an instance from a base encoded
+				string.</p>
+				<a href="#new-ciduint8array" id="new-ciduint8array" style="color: inherit; text-decoration: none;">
+					<h3>new CID(Uint8Array)</h3>
+				</a>
+				<p>Additionally, you can instantiate an instance from a <code>Uint8Array</code>.</p>
+				<a href="#cidcodec" id="cidcodec" style="color: inherit; text-decoration: none;">
+					<h4>cid.codec</h4>
+				</a>
+				<p>Property containing the string identifier of the codec.</p>
+				<a href="#cidcode" id="cidcode" style="color: inherit; text-decoration: none;">
+					<h4>cid.code</h4>
+				</a>
+				<p>Property containing the integer identifier of the codec.</p>
+				<a href="#cidversion" id="cidversion" style="color: inherit; text-decoration: none;">
+					<h4>cid.version</h4>
+				</a>
+				<p>Property containing the CID version integer.</p>
+				<a href="#cidmultihash" id="cidmultihash" style="color: inherit; text-decoration: none;">
+					<h4>cid.multihash</h4>
+				</a>
+				<p>Property containing the multihash <code>Uint8Array</code>.</p>
+				<a href="#cidmultibasename" id="cidmultibasename" style="color: inherit; text-decoration: none;">
+					<h4>cid.multibaseName</h4>
+				</a>
+				<p>Property containing the default base to use when calling <code>.toString</code></p>
+				<a href="#cidbytes" id="cidbytes" style="color: inherit; text-decoration: none;">
+					<h4>cid.bytes</h4>
+				</a>
+				<p>Property containing the full CID encoded as a <code>Uint8Array</code>.</p>
+				<a href="#cidprefix" id="cidprefix" style="color: inherit; text-decoration: none;">
+					<h4>cid.prefix</h4>
+				</a>
+				<p>Proprety containing a <code>Uint8Array</code> of the CID version, codec, and the prefix
+				section of the multihash.</p>
+				<a href="#cidtov0" id="cidtov0" style="color: inherit; text-decoration: none;">
+					<h4>cid.toV0()</h4>
+				</a>
+				<p>Returns the CID encoded in version 0. Only works for <code>dag-pb</code> codecs.</p>
+				<p>Throws if codec is not <code>dag-pb</code>.</p>
+				<a href="#cidtov1" id="cidtov1" style="color: inherit; text-decoration: none;">
+					<h4>cid.toV1()</h4>
+				</a>
+				<p>Returns the CID encoded in version 1.</p>
+				<a href="#cidtobaseencodedstringbasethismultibasename" id="cidtobaseencodedstringbasethismultibasename" style="color: inherit; text-decoration: none;">
+					<h4>cid.toBaseEncodedString(base=this.multibaseName)</h4>
+				</a>
+				<p>Returns a base encoded string of the CID. Defaults to the base encoding in <code>this.multibaseName</code>.</p>
+				<p>The value of <code>this.multibaseName</code> depends on how the instance was constructed:</p>
+				<ol>
+					<li>If the CID was constructed from an object that already had a multibase (a string or an existing CID) then it retains that base.</li>
+					<li>If the CID was constructed from an object that <em>did not</em> have a multibase (a <code>Uint8Array</code>, or by passing only version + codec + multihash to the constructor), then <code>multibaseName</code> will be <code>base58btc</code> for a v0 CID or <code>base32</code> for a v1 CID.</li>
+				</ol>
+				<a href="#cidtostringbasethismultibasename" id="cidtostringbasethismultibasename" style="color: inherit; text-decoration: none;">
+					<h4>cid.toString(base=this.multibaseName)</h4>
+				</a>
+				<p>Shorthand for <code>cid.toBaseEncodedString</code> described above.</p>
+				<a href="#cidequalscid" id="cidequalscid" style="color: inherit; text-decoration: none;">
+					<h4>cid.equals(cid)</h4>
+				</a>
+				<p>Compare cid instance. Returns true if CID&#39;s are identical, false if
+				otherwise.</p>
+				<a href="#contribute" id="contribute" style="color: inherit; text-decoration: none;">
+					<h2>Contribute</h2>
+				</a>
+				<p><a href="https://github.com/ipfs/community/blob/master/contributing.md"><img src="https://cdn.rawgit.com/jbenet/contribute-ipfs-gif/master/img/contribute.gif" alt=""></a></p>
+				<p>Contributions welcome. Please check out <a href="https://github.com/multiformats/js-cid/issues">the issues</a>.</p>
+				<p>Check out our <a href="https://github.com/ipfs/community/blob/master/CONTRIBUTING_JS.md">contributing document</a> for more information on how we work, and about contributing in general. Please be aware that all interactions related to multiformats are subject to the IPFS <a href="https://github.com/ipfs/community/blob/master/code-of-conduct.md">Code of Conduct</a>.</p>
+				<p>Small note: If editing the Readme, please conform to the <a href="https://github.com/RichardLitt/standard-readme">standard-readme</a> specification.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>MIT</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" tsd-kind-module">
+						<a href="modules/__cids_.html"> cids</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_cid_util_.html">cid-util</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='cidversion'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>version</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L130-L130'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>version</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='cidcodec'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>codec</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L139-L139'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>codec</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='cidmultihash'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>multihash</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L144-L144'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>multihash</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array">Uint8Array</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='cidmultibasename'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>multibaseName</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/index.js#L149-L149'>
-      <span>src/index.js</span>
-      </a>
-    
-  </div>
-  
-
-  
-    <div class='pre p1 fill-light mt0'>multibaseName</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-</div>
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='checkcidcomponents'>
-      checkCIDComponents
-    </h3>
-    
-    
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://github.com/multiformats/js-cid/blob/c9afd3766e9a9ff86aaff9f86a96a5533e10c4e6/src/cid-util.js#L14-L49'>
-      <span>src/cid-util.js</span>
-      </a>
-    
-  </div>
-  
-
-  <p>Test if the given input is a valid CID object.
-Returns an error message if it is not.
-Returns undefined if it is a valid CID.</p>
-
-    <div class='pre p1 fill-light mt0'>checkCIDComponents(other: any): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>other</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-      </div>
-    </div>
-  <script src='assets/anchor.js'></script>
-  <script src='assets/split.js'></script>
-  <script src='assets/site.js'></script>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
