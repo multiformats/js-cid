@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "multibase": "^3.0.1",
-    "multicodec": "^2.0.1",
+    "multicodec": "=2.0.4",
     "multihashes": "^3.0.1",
     "uint8arrays": "^1.1.0"
   },
