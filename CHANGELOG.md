@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/multiformats/js-cid/compare/v1.1.0...v1.1.1) (2020-12-11)
+
+
+### Bug Fixes
+
+* allow CIDs to be compared through deep equality ([127745e](https://github.com/multiformats/js-cid/commit/127745ea90bbeecc80c0bd1f58d24660d832ba14)), closes [#131](https://github.com/multiformats/js-cid/issues/131)
+
+
+
 # [1.1.0](https://github.com/multiformats/js-cid/compare/v1.0.2...v1.1.0) (2020-12-11)
 
 
