@@ -334,7 +334,7 @@ class CID {
    * Check if object is a CID instance
    *
    * @param {any} value
-   * @returns {boolean}
+   * @returns {value is CID}
    */
   static isCID (value) {
     return value instanceof CID || Boolean(value && value[symbol])
