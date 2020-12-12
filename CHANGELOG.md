@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/multiformats/js-cid/compare/v1.1.3...v1.1.4) (2020-12-12)
+
+
+### Bug Fixes
+
+* typing mappings ([f5839b9](https://github.com/multiformats/js-cid/commit/f5839b9788abe231e8d563d64f0fe3db61363c5c)), closes [#131](https://github.com/multiformats/js-cid/issues/131)
+
+
+
 ## [1.1.3](https://github.com/multiformats/js-cid/compare/v1.1.2...v1.1.3) (2020-12-11)
 
 
