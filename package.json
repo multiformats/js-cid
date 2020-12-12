@@ -1,12 +1,17 @@
 {
   "name": "cids",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
   "types": "dist/src/index.d.ts",
   "typesVersions": {
-    "*": { "src/*": ["dist/src/*", "dist/src/*/index"] }
+    "*": {
+      "src/*": [
+        "dist/src/*",
+        "dist/src/*/index"
+      ]
+    }
   },
   "scripts": {
     "lint": "aegir lint",
@@ -66,9 +71,9 @@
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
     "Alan Shaw <alan.shaw@protocol.ai>",
     "Mikeal Rogers <mikeal.rogers@gmail.com>",
+    "Irakli Gozalishvili <contact@gozala.io>",
     "Carson Farmer <carson.farmer@gmail.com>",
     "Enrico Marino <enrico.marino@email.com>",
-    "Irakli Gozalishvili <contact@gozala.io>",
     "Oli Evans <oli@tableflip.io>",
     "Hugo Dias <hugomrdias@gmail.com>",
     "Alex Potsides <alex@achingbrain.net>",
