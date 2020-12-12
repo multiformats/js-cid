@@ -4,7 +4,10 @@
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "types": "dist/src/index.d.ts",
+  "typesVersions": {
+    "*": { "src/*": ["dist/src/*", "dist/src/*/index"] }
+  },
   "scripts": {
     "lint": "aegir lint",
     "test": "aegir test",
