@@ -5,6 +5,7 @@
 const { expect } = require('aegir/utils/chai')
 const multihash = require('multihashes')
 const multihashing = require('multihashing-async')
+const multicodec = require('multicodec')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const CID = require('../src')
@@ -490,6 +491,18 @@ describe('CID', () => {
       cid3.bytes // eslint-disable-line no-unused-expressions
 
       expect(deepEqual(cid2, cid3)).to.be.true()
+    })
+  })
+
+  describe('multicodec', () => {
+    it('should have .code compatible with multicodec.getName', () => {
+      const cid = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      expect(multicodec.getName(cid.code)).equal('dag-pb')
+    })
+
+    it('should have .codec compatible with multicodec.getCode', () => {
+      const cid = new CID('QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n')
+      expect(multicodec.getNumber(cid.codec)).equal(cid.code)
     })
   })
 })
