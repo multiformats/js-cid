@@ -25,6 +25,8 @@ const symbol = Symbol.for('@ipld/js-cid/CID')
 /**
  * @typedef {0|1} CIDVersion
  * @typedef {import('multibase').BaseNameOrCode} BaseNameOrCode
+ * @typedef {import('multicodec').CodecName} CodecName
+ * @typedef {import('multicodec').CodecNumber} CodecNumber
  */
 
 /**
@@ -65,6 +67,34 @@ class CID {
    * new CID(<cid>)
    */
   constructor (version, codec, multihash, multibaseName) {
+    // We have below three blank field accessors only because
+    // otherwise TS will not pick them up if done after assignemnts
+
+    /**
+     * The version of the CID.
+     *
+     * @type {CIDVersion}
+     */
+    // eslint-disable-next-line no-unused-expressions
+    this.version
+
+    /**
+     * The codec of the CID.
+     *
+     * @deprecated
+     * @type {CodecName}
+     */
+    // eslint-disable-next-line no-unused-expressions
+    this.codec
+
+    /**
+     * The multihash of the CID.
+     *
+     * @type {Uint8Array}
+     */
+    // eslint-disable-next-line no-unused-expressions
+    this.multihash
+
     Object.defineProperty(this, symbol, { value: true })
     if (CID.isCID(version)) {
       // version is an exising CID instance
@@ -83,7 +113,7 @@ class CID {
       if (baseName) {
         // version is a CID String encoded with multibase, so v1
         const cid = multibase.decode(version)
-        this.version = parseInt(cid[0].toString(), 16)
+        this.version = /** @type {CIDVersion} */(parseInt(cid[0].toString(), 16))
         this.codec = multicodec.getCodec(cid.slice(1))
         this.multihash = multicodec.rmPrefix(cid.slice(1))
         this.multibaseName = baseName
@@ -121,30 +151,15 @@ class CID {
 
     // otherwise, assemble the CID from the parameters
 
-    /**
-     * The version of the CID.
-     *
-     * @type {CIDVersion}
-     */
     this.version = version
 
     if (typeof codec === 'number') {
       codec = codecInts[codec]
     }
 
-    /**
-     * The codec of the CID.
-     *
-     * @type {string}
-     */
-    this.codec = codec
+    this.codec = /** @type {CodecName} */ (codec)
 
-    /**
-     * The multihash of the CID.
-     *
-     * @type {Uint8Array}
-     */
-    this.multihash = multihash
+    this.multihash = /** @type {Uint8Array} */ (multihash)
 
     /**
      * Multibase name as string.
@@ -204,7 +219,7 @@ class CID {
   /**
    * The codec of the CID in its number form.
    *
-   * @returns {number}
+   * @returns {CodecNumber}
    */
   get code () {
     return codecs[this.codec]
