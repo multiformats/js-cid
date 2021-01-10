@@ -64,7 +64,7 @@ sleep(1000).then(async () => {
   const cidPerf = new CIDPerfX(mh);
 
   [...Array(reps).keys()].map(i => {
-    cidPerf.run(i)
+    return cidPerf.run(i)
   })
   console.timeEnd('run')
 })
