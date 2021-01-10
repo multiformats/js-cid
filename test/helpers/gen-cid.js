@@ -5,6 +5,7 @@
 
 const multibase = require('multibase')
 const codecs = require('../../src').codecs
+// @ts-ignore
 const multihashing = require('multihashing-async')
 const utf8ArrayFromString = require('uint8arrays/from-string')
 

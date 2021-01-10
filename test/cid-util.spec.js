@@ -3,17 +3,14 @@
 'use strict'
 
 const { expect } = require('aegir/utils/chai')
+// @ts-ignore
 const multihashing = require('multihashing-async')
 const CID = require('../src')
 const CIDUtil = require('../src/cid-util')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 
-describe('CIDUtil', () => {
-  let hash
-
-  before(async () => {
-    hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
-  })
+describe('CIDUtil', async () => {
+  const hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
 
   describe('checkCIDComponents()', () => {
     describe('returns undefined on valid CID', () => {
