@@ -12,7 +12,7 @@ const uint8ArrayToString = require('uint8arrays/to-string')
 const CID = require('../src')
 const { deepEqual } = require('@sinonjs/samsam')
 
-describe('CID', async () => {
+describe('CID', () => {
   /** @type {Uint8Array} */
   let hash
   before(async () => {

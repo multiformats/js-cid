@@ -9,7 +9,7 @@ const CID = require('../src')
 const CIDUtil = require('../src/cid-util')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 
-describe('CIDUtil', async () => {
+describe('CIDUtil', () => {
   /** @type {Uint8Array} */
   let hash
 
