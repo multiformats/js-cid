@@ -14,8 +14,10 @@ const { deepEqual } = require('@sinonjs/samsam')
 
 describe('CID', async () => {
   /** @type {Uint8Array} */
-  const hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
-
+  let hash
+  before(async () => {
+    hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
+  })
   describe('v0', () => {
     it('handles B58Str multihash', () => {
       const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'

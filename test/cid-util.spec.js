@@ -10,7 +10,12 @@ const CIDUtil = require('../src/cid-util')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 
 describe('CIDUtil', async () => {
-  const hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
+  /** @type {Uint8Array} */
+  let hash
+
+  before(async () => {
+    hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
+  })
 
   describe('checkCIDComponents()', () => {
     describe('returns undefined on valid CID', () => {
