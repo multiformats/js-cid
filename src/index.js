@@ -9,10 +9,10 @@ const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
 
-const codecInts = Object.keys(codecs).reduce((p, name) => {
+const codecInts = /** @type {CodecName[]} */(Object.keys(codecs)).reduce((p, name) => {
   p[codecs[name]] = name
   return p
-}, {})
+}, /** @type {Record<CodecNumber, CodecName>} */({}))
 
 const symbol = Symbol.for('@ipld/js-cid/CID')
 
@@ -103,6 +103,7 @@ class CID {
       this.codec = cid.codec
       this.multihash = cid.multihash
       // Default guard for when a CID < 0.7 is passed with no multibaseName
+      // @ts-ignore
       this.multibaseName = cid.multibaseName || (cid.version === 0 ? 'base58btc' : 'base32')
       return
     }
@@ -154,6 +155,7 @@ class CID {
     this.version = version
 
     if (typeof codec === 'number') {
+      // @ts-ignore
       codec = codecInts[codec]
     }
 

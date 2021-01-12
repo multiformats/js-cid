@@ -4,6 +4,7 @@
 
 const { expect } = require('aegir/utils/chai')
 const multihash = require('multihashes')
+// @ts-ignore
 const multihashing = require('multihashing-async')
 const multicodec = require('multicodec')
 const uint8ArrayFromString = require('uint8arrays/from-string')
@@ -12,12 +13,11 @@ const CID = require('../src')
 const { deepEqual } = require('@sinonjs/samsam')
 
 describe('CID', () => {
+  /** @type {Uint8Array} */
   let hash
-
   before(async () => {
     hash = await multihashing(uint8ArrayFromString('abc'), 'sha2-256')
   })
-
   describe('v0', () => {
     it('handles B58Str multihash', () => {
       const mhStr = 'QmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n'
@@ -346,10 +346,12 @@ describe('CID', () => {
     }))
 
     invalid.forEach((i) => it(`new CID(0, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
+      // @ts-expect-error - string should throw
       expect(() => new CID(0, 'dag-pb', i)).to.throw()
     }))
 
     invalid.forEach((i) => it(`new CID(1, 'dag-pb', ${i instanceof Uint8Array ? 'Uint8Array' : 'String'}<${i.toString()}>)`, () => {
+      // @ts-expect-error - string should throw
       expect(() => new CID(1, 'dag-pb', i)).to.throw()
     }))
 

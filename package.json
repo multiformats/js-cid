@@ -5,14 +5,6 @@
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
   "types": "dist/src/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "src/*": [
-        "dist/src/*",
-        "dist/src/*/index"
-      ]
-    }
-  },
   "scripts": {
     "lint": "aegir lint",
     "test": "aegir test",
@@ -50,12 +42,12 @@
   "dependencies": {
     "multibase": "^3.0.1",
     "multicodec": "^2.1.0",
-    "multihashes": "^3.0.1",
-    "uint8arrays": "^1.1.0"
+    "multihashes": "^3.1.0",
+    "uint8arrays": "^2.0.5"
   },
   "devDependencies": {
     "@sinonjs/samsam": "^5.3.0",
-    "aegir": "^29.0.1",
+    "aegir": "^30.3.0",
     "multihashing-async": "^2.0.1"
   },
   "engines": {

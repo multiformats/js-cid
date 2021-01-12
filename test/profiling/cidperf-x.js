@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 'use strict'
 
+// @ts-ignore
 const multihashing = require('multihashing-async')
 // [1] Original/existing implementation.
 // const CID = require('cids')
@@ -9,6 +10,9 @@ const CID = require('../../src')
 const uint8ArrayFromString = require('uint8arrays/from-string')
 
 // Used to delay the testing for a few seconds.
+/**
+ * @param {number} ms
+ */
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -17,6 +21,9 @@ function sleep (ms) {
 // The purpose of this class is
 // to simply test the CID ctor (and, primarily, CID.isCID() method).
 class CIDPerfX {
+  /**
+   * @param {any} mh
+   */
   constructor (mh) {
     this.version = 1
     this.codec = 'dag-pb'
@@ -25,6 +32,10 @@ class CIDPerfX {
 
   // i: Running-counter.
   // print: If true, it'll print/dump the CID data.
+  /**
+   * @param {string | number} i
+   * @param {boolean | undefined} [print]
+   */
   run (i, print) {
     // @ts-ignore
     const cid = new CID(this.version, this.codec, this.mh)
@@ -53,7 +64,7 @@ sleep(1000).then(async () => {
   const cidPerf = new CIDPerfX(mh);
 
   [...Array(reps).keys()].map(i => {
-    cidPerf.run(i)
+    return cidPerf.run(i)
   })
   console.timeEnd('run')
 })
