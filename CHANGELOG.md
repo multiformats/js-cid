@@ -1,3 +1,13 @@
+## [1.1.5](https://github.com/multiformats/js-cid/compare/v1.1.4...v1.1.5) (2021-01-13)
+
+
+### Bug Fixes
+
+* fix types and remove typesVersions ([#139](https://github.com/multiformats/js-cid/issues/139)) ([83f3848](https://github.com/multiformats/js-cid/commit/83f38486575c0963f1acf94a3810e0cb918f3981)), closes [/github.com/libp2p/js-libp2p/issues/839#issuecomment-756407072](https://github.com//github.com/libp2p/js-libp2p/issues/839/issues/issuecomment-756407072)
+* types to align with multicodec api ([4a5904b](https://github.com/multiformats/js-cid/commit/4a5904bea86a64ab451c9f12c78933e423661b4b))
+
+
+
 ## [1.1.4](https://github.com/multiformats/js-cid/compare/v1.1.3...v1.1.4) (2020-12-12)
 
 
