@@ -3,12 +3,12 @@
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
-const { nameToCode: codecs } = require('multicodec')
 const CIDUtil = require('./cid-util')
 const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
 const uint8ArrayEquals = require('uint8arrays/equals')
 
+const codecs = multicodec.nameToCode
 const codecInts = /** @type {CodecName[]} */(Object.keys(codecs)).reduce((p, name) => {
   p[codecs[name]] = name
   return p
