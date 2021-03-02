@@ -3,7 +3,7 @@
 const mh = require('multihashes')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
-const { baseTable: codecs } = require('multicodec/src/base-table.js')
+const { baseTable: codecs } = require('multicodec/src/generated-table')
 const CIDUtil = require('./cid-util')
 const uint8ArrayConcat = require('uint8arrays/concat')
 const uint8ArrayToString = require('uint8arrays/to-string')
@@ -12,7 +12,7 @@ const uint8ArrayEquals = require('uint8arrays/equals')
 const codecInts = /** @type {CodecName[]} */(Object.keys(codecs)).reduce((p, name) => {
   p[codecs[name]] = name
   return p
-}, /** @type {Record<CodecNumber, CodecName>} */({}))
+}, /** @type {Record<CodecCode, CodecName>} */({}))
 
 const symbol = Symbol.for('@ipld/js-cid/CID')
 
@@ -26,7 +26,7 @@ const symbol = Symbol.for('@ipld/js-cid/CID')
  * @typedef {0|1} CIDVersion
  * @typedef {import('multibase').BaseNameOrCode} BaseNameOrCode
  * @typedef {import('multicodec').CodecName} CodecName
- * @typedef {import('multicodec').CodecNumber} CodecNumber
+ * @typedef {import('multicodec').CodecCode} CodecCode
  */
 
 /**
@@ -221,7 +221,7 @@ class CID {
   /**
    * The codec of the CID in its number form.
    *
-   * @returns {CodecNumber}
+   * @returns {CodecCode}
    */
   get code () {
     return codecs[this.codec]
