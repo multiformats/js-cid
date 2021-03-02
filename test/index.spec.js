@@ -238,7 +238,7 @@ describe('CID', () => {
       expect(() => {
         new CID(1, 'this-codec-doesnt-exist', hash).toBaseEncodedString()
       }).to.throw(
-        'Codec `this-codec-doesnt-exist` not found'
+        'Codec "this-codec-doesnt-exist" not found'
       )
     })
 
