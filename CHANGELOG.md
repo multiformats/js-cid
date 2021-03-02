@@ -1,3 +1,12 @@
+## [1.1.6](https://github.com/multiformats/js-cid/compare/v1.1.5...v1.1.6) (2021-03-02)
+
+
+### Bug Fixes
+
+* update to aegir 31 and others deps ([#141](https://github.com/multiformats/js-cid/issues/141)) ([bcf2ba2](https://github.com/multiformats/js-cid/commit/bcf2ba2eeeb360da7daa4939459beae76c057993))
+
+
+
 ## [1.1.5](https://github.com/multiformats/js-cid/compare/v1.1.4...v1.1.5) (2021-01-13)
 
 
