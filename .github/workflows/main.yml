@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: yarn
-    - run: yarn lint
-    - run: yarn build
-    - uses: gozala/typescript-error-reporter-action@v1.0.4
-    - run: yarn aegir dep-check -- -i aegir
+    - run: npm install
+    - run: npx aegir lint
+    - run: npx aegir ts -p check
+    # or
+    # - uses: gozala/typescript-error-reporter-action@v1.0.8
+    - run: npx aegir build
+    - run: npx aegir dep-check
     - uses: ipfs/aegir/actions/bundle-size@master
-      name: size
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
   test-node:
@@ -34,34 +35,45 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn
-      - run: npx nyc --reporter=lcov npm run test:node -- --bail
+      - run: npm install
+      - run: npx aegir test -t node --bail --cov
       - uses: codecov/codecov-action@v1
   test-chrome:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: yarn aegir test -t browser -t webworker
+      - uses: microsoft/playwright-github-action@v1
+      - run: npm install
+      - run: npx aegir test -t browser -t webworker --bail --cov
+      - uses: codecov/codecov-action@v1
   test-firefox:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: yarn aegir test -t browser -t webworker -- --browsers FirefoxHeadless
+      - uses: microsoft/playwright-github-action@v1
+      - run: npm install
+      - run: npx aegir test -t browser -t webworker --bail -- --browser firefox
+  test-webkit:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: microsoft/playwright-github-action@v1
+      - run: npm install
+      - run: npx aegir test -t browser -t webworker --bail -- --browser webkit
   test-electron-main:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: npx xvfb-maybe yarn aegir test -t electron-main --bail
+      - run: npm install
+      - run: npx xvfb-maybe aegir test -t electron-main --bail
   test-electron-renderer:
     needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn
-      - run: npx xvfb-maybe yarn aegir test -t electron-renderer --bail
+      - run: npm install
+      - run: npx xvfb-maybe aegir test -t electron-renderer --bail
