@@ -256,7 +256,7 @@ class CID {
    * @returns {CID}
    */
   toV1 () {
-    return new CID(1, this.codec, this.multihash)
+    return new CID(1, this.codec, this.multihash, this.multibaseName)
   }
 
   /**
