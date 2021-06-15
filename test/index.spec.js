@@ -386,6 +386,12 @@ describe('CID', () => {
       expect(cid.version).to.equal(0)
     })
 
+    it('should convert v1 to v1', async () => {
+      const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
+      const cid = new CID(1, 'dag-pb', hash, 'base2').toV1()
+      expect(cid.multibaseName).to.equal('base2')
+    })
+
     it('should not convert v1 to v0 if not dag-pb codec', async () => {
       const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(1, 'dag-cbor', hash)
