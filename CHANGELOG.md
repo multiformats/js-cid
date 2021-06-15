@@ -1,3 +1,12 @@
+## [1.1.7](https://github.com/multiformats/js-cid/compare/v1.1.6...v1.1.7) (2021-06-15)
+
+
+### Bug Fixes
+
+* add test for v1->v1 conversion ([de28c1f](https://github.com/multiformats/js-cid/commit/de28c1fbbf22ddc47df9193ef5ea73e86fe8d191))
+
+
+
 ## [1.1.6](https://github.com/multiformats/js-cid/compare/v1.1.5...v1.1.6) (2021-03-02)
 
 
