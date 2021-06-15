@@ -1,6 +1,6 @@
 {
   "name": "cids",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "CID Implementation in JavaScript",
   "leadMaintainer": "Volker Mische <volker.mische@gmail.com>",
   "main": "src/index.js",
@@ -67,16 +67,16 @@
     "Enrico Marino <enrico.marino@email.com>",
     "Carson Farmer <carson.farmer@gmail.com>",
     "Hugo Dias <hugomrdias@gmail.com>",
-    "Oli Evans <oli@tableflip.io>",
     "Alex Potsides <alex@achingbrain.net>",
+    "Oli Evans <oli@tableflip.io>",
     "Chris Dukakis <chrisdukakis@gmail.com>",
     "Marcin Rataj <lidel@lidel.org>",
     "Real Harry <sidewaybot@gmail.com>",
     "Rod Vagg <rod@vagg.org>",
     "bluelovers <codelovers@users.sourceforge.net>",
     "Victor Bjelkholm <victorbjelkholm@gmail.com>",
-    "Richard Littauer <richard.littauer@gmail.com>",
+    "Mitar <mitar.github@tnode.com>",
     "Henrique Dias <hacdias@gmail.com>",
-    "Mitar <mitar.github@tnode.com>"
+    "Richard Littauer <richard.littauer@gmail.com>"
   ]
 }
