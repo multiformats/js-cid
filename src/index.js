@@ -256,6 +256,10 @@ class CID {
    * @returns {CID}
    */
   toV1 () {
+    if (this.version === 0) {
+      return new CID(1, this.codec, this.multihash, 'base32')
+    }
+
     return new CID(1, this.codec, this.multihash, this.multibaseName)
   }
 

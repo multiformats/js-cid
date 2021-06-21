@@ -378,6 +378,7 @@ describe('CID', () => {
       const hash = await multihashing(uint8ArrayFromString(`TEST${Date.now()}`), 'sha2-256')
       const cid = new CID(0, 'dag-pb', hash).toV1()
       expect(cid.version).to.equal(1)
+      expect(cid.multibaseName).to.equal('base32')
     })
 
     it('should convert v1 to v0', async () => {
