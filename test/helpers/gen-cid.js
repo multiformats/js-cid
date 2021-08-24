@@ -7,7 +7,7 @@ const multibase = require('multibase')
 const codecs = require('../../src').codecs
 // @ts-ignore
 const multihashing = require('multihashing-async')
-const utf8ArrayFromString = require('uint8arrays/from-string')
+const { fromString: utf8ArrayFromString } = require('uint8arrays/from-string')
 
 async function main () {
   const mh = await multihashing(utf8ArrayFromString('oh, hey!'), 'sha2-256')
