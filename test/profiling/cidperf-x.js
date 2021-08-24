@@ -7,7 +7,7 @@ const multihashing = require('multihashing-async')
 // const CID = require('cids')
 // [2] New/proposed implementation.
 const CID = require('../../src')
-const uint8ArrayFromString = require('uint8arrays/from-string')
+const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
 
 // Used to delay the testing for a few seconds.
 /**

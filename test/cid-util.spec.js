@@ -7,7 +7,7 @@ const { expect } = require('aegir/utils/chai')
 const multihashing = require('multihashing-async')
 const CID = require('../src')
 const CIDUtil = require('../src/cid-util')
-const uint8ArrayFromString = require('uint8arrays/from-string')
+const { fromString: uint8ArrayFromString } = require('uint8arrays/from-string')
 
 describe('CIDUtil', () => {
   /** @type {Uint8Array} */
