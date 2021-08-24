@@ -1,3 +1,7 @@
+## [1.1.8](https://github.com/multiformats/js-cid/compare/v1.1.7...v1.1.8) (2021-08-24)
+
+
+
 ## [1.1.7](https://github.com/multiformats/js-cid/compare/v1.1.6...v1.1.7) (2021-06-15)
 
 
